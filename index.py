@@ -1,18 +1,9 @@
-import os
+import sys, os
+abspath = os.path.dirname(__file__)
+sys.path.append(abspath)
+os.chdir(abspath)
 import web
-urls = (
-	'/', 'index',
-	'/.*', 'index'
-)
-
-web.config.debug = True
-
-render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/tpl/', base='layout')
-
-class index:
-    def GET(self):
-    	text = 'hello world!'
-        return render.index(text)
+from config.config import *
 
 app = web.application(urls, globals(), autoreload=False)
 application = app.wsgifunc()
