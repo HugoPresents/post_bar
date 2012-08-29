@@ -1,9 +1,10 @@
+# -- coding: utf8 --
 import web
 from config.config import render
+from models import post_model
 
-render = config.render
-
-class Index:
+class index:
     def GET(self):
-    	text = 'hello world!'
-        return render.index(text)
+    	title = '首页'
+    	posts = post_model.get_posts()
+        return render.index(posts, title)

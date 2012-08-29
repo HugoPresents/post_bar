@@ -1,5 +1,9 @@
-$def with (text)
-$var title: $text
-<div>
-$:text
+$def with (posts, title)
+$var title: $title
+<div class="posts">
+$for post in posts:
+	<div class="post">
+		<h2 class="post_title">$post.title</h2>
+		<div class="post_content">$post.content</div>
+	</div>
 </div>
