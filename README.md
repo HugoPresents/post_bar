@@ -13,8 +13,11 @@ web.py 的贴吧
 ---------------------
 
 1. Apache + mod_wsgi + mysql 环境
+
 2. 修改 config 目录下 config.py 文件为你的配置
+
 3. 在Apache中创建虚拟主机 example:
+
 <pre>
     &lt;VirtualHost *:80&gt;
 		ServerAdmin admin@localhost
