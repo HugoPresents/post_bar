@@ -24,8 +24,8 @@ web.py 的贴吧
 		DocumentRoot E:/htdocs/python/post_bar
 		ServerName post_bar.localhost
 		AddDefaultCharset UTF-8   
-		ErrorLog "logs/jia2.log"
-	    CustomLog "logs/jia2.log" combined
+		ErrorLog "logs/post_bar.log"
+	    CustomLog "logs/post_bar.log" combined
 		WSGIScriptAlias / "E:/htdocs/python/post_bar/index.py/"
 		Alias /static "E:/htdocs/python/post_bar/static/"
 		AddType text/html .py
