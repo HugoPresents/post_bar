@@ -1,5 +1,8 @@
-$def with (posts, title)
-$var title: $title
+$def with (posts, node)
+$var title: $node.description
+<div class="node_info">
+	<a href="/post/create/$node.name">创建主题</a>
+</div>
 <div class="posts">
 $for post in posts:
 	<div class="post">

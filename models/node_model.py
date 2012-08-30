@@ -15,10 +15,13 @@ def get_nodes_with_cat():
     for cat in cats:
         conditions = {'category_id' : cat.id}
         nodes = get_nodes(conditions)
-        nodes_all.update({'$cat.name' : nodes})
+        nodes_all.update({cat.name : nodes})
     return nodes_all
         
 
 def get_node(conditions = None):
     where = dict2where(conditions)
-    return db.select(tb, where = where)[0]
+    try:
+        return db.select(tb, where = where)[0]
+    except IndexError:
+        return None

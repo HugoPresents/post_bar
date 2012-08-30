@@ -1,23 +1,20 @@
 $def with (cat_nodes, posts, title)
 $var title: $title
-<div class="nodes">
-	$for node in nodes:
-	<span title="$node.description">$node.name</span>
-</div>
 <div class="posts">
 $for post in posts:
 	<div class="post">
-		<h2 class="post_title"><a href="/post/view/$post.id">$post.title</a></h2>
+		<h2 class="post_title"><a href="/post/$post.id">$post.title</a></h2>
 		<div class="post_content">$post.content</div>
 	</div>
 </div>
 <div class="nodes">
 	<ul>
 		$for cat_name, nodes in cat_nodes.items():
-			<li>$catname
-				<ul>$for node in nodes:
-					<li>$node.name</li>
-				</ul>
-			</li>
+		<li>cat_name
+			<ul>
+				$for node in nodes:
+				<li><a href="/node/$node.name">$node.display_name</a></li>
+			</ul>
+		</li>
 	</ul>
 </div>

@@ -8,8 +8,8 @@ class index:
     def GET(self, node_name):
         node = node_model.get_node({'name': node_name})
         if node is None:
-            return render.not_fount('未找到节点', '未发现改节点')
+            return render.not_fount('未找到节点', '未找到节点')
         else:
             post_conditions = {'node_id' : node.id}
             posts = post_model.get_posts(conditions = post_conditions)
-            return render.list(posts, node.description)
+            return render.list(posts, node)
