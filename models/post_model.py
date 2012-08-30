@@ -13,5 +13,11 @@ form = web.form.Form(
 def get_posts(offset = 0, limit = 10):
 	return db.select(tb, offset = offset, limit = limit)
 
+def get_post(id):
+	try:
+		return db.select(tb, where = 'id=' + id)[0]
+	except IndexError:
+		return None
+
 def insert(title, content):
 	db.insert(tb, title = title, content = content, time = time.time(), user_id = 1, node_id = 1)
