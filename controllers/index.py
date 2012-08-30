@@ -2,9 +2,11 @@
 import web
 from config.config import render
 from models import post_model
+from models import node_model
 
 class index:
     def GET(self):
     	title = '首页'
     	posts = post_model.get_posts()
-        return render.index(posts, title)
+        nodes = node_model.get_nodes()
+        return render.index(nodes, posts, title)

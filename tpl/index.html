@@ -1,5 +1,9 @@
-$def with (posts, title)
+$def with (nodes, posts, title)
 $var title: $title
+<div class="nodes">
+	$for node in nodes:
+	<span title="$node.description">$node.name</span>
+</div>
 <div class="posts">
 $for post in posts:
 	<div class="post">
