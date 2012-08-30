@@ -1,6 +1,8 @@
+# -- coding: utf8 --
 import web
 import time
 from config.config import db
+from libraries.helper import *
 
 tb = 'post'
 
@@ -10,8 +12,9 @@ form = web.form.Form(
 	web.form.Button('Post entry'),
 )
 
-def get_posts(offset = 0, limit = 10):
-	return db.select(tb, offset = offset, limit = limit)
+def get_posts(conditions = None, offset = None, limit = 10):
+	where = dict2where(conditions)
+	return db.select(tb, where = where, offset = offset, limit = limit)
 
 def get_post(id):
 	try:
