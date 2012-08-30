@@ -1,3 +1,4 @@
+# -- coding: utf8 --
 import web
 from config.config import db
 from models import cat_model
@@ -9,6 +10,7 @@ def get_nodes(conditions = None):
     where = dict2where(conditions)
     return db.select(tb, where = where)
 
+# 将节点按照分类取出返回字典
 def get_nodes_with_cat():
     cats = cat_model.get_cats()
     nodes_all = {}

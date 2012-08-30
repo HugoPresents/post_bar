@@ -20,3 +20,4 @@ urls = (
 )
 
 web.template.Template.globals['render'] = render
+web.template.Template.globals['site_title'] = 'Post_bar'

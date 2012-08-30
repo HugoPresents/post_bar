@@ -1,5 +1,5 @@
-$def with (cat_nodes, posts, title)
-$var title: $title
+$def with (cat_nodes, posts, title = None)
+$var title : $title
 <div class="posts">
 $for post in posts:
 	<div class="post">
@@ -10,7 +10,7 @@ $for post in posts:
 <div class="nodes">
 	<ul>
 		$for cat_name, nodes in cat_nodes.items():
-		<li>cat_name
+		<li>$cat_name
 			<ul>
 				$for node in nodes:
 				<li><a href="/node/$node.name">$node.display_name</a></li>
