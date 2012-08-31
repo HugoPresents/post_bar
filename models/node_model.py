@@ -19,7 +19,6 @@ def get_nodes_with_cat():
         nodes = get_nodes(conditions)
         nodes_all.update({cat.name : nodes})
     return nodes_all
-        
 
 def get_node(conditions = None):
     where = dict2where(conditions)

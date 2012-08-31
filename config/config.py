@@ -14,7 +14,7 @@ pre_fix = 'controllers.'
 urls = (
 	'/index', pre_fix + 'index.index',
 	'/post/(\d+)', pre_fix + 'post.view',
-	'/post/create/(\w+)', pre_fix + 'post.create',
+	'/create/(\w+)', pre_fix + 'post.create',
 	'/node/(\w+)', pre_fix + 'node.index',
 	'/.*', pre_fix + 'index.index'
 )
