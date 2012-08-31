@@ -14,9 +14,9 @@ $:content
 	<div id="slider_bar">
 		$session.session_id
 		$if session.user_id:
-			<a href="#">你好！</a>
+			<a href="#">$session.name</a>你好！
 		$else:
-			<a href="#">请登录</a>
+			<a href="/login">请登录</a> | <a href="/signup">注册</a>
 	</div>
 		<div id="page_footer">
 			<p>Post Bar coding by web.py</p>
