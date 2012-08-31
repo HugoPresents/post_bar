@@ -18,7 +18,7 @@ class create:
     form = post_model.form
     
     def GET(self, node_name):
-        if web.config._session.user_id == 0:
+        if web.config._session.user_id is None:
             raise web.SeeOther('/login')
         conditions = {'name' : node_name}
         node = node_model.get_node(conditions)
@@ -28,7 +28,7 @@ class create:
         return render.create_post(self.form, title)
         
     def POST(self, node_name):
-        if web.config._session.user_id == 0:
+        if web.config._session.user_id is None:
             raise web.SeeOther('/login')
         conditions = {'name' : node_name}
         node = node_model.get_node(conditions)
