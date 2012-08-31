@@ -2,7 +2,7 @@
 import web
 import time
 import hashlib
-from config.config import db
+from config.config import *
 from libraries.helper import *
 from libraries.error import *
 
