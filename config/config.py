@@ -34,3 +34,10 @@ urls = (
 # 模板全局变量
 web.template.Template.globals['render'] = render
 web.template.Template.globals['site_title'] = 'Post_bar'
+
+# 表单验证规则
+notnull = web.form.Validator("必填", bool)
+vname = web.form.regexp(r".{3,20}$", '用户名长度必须在3-20个字符之间')
+vpass = web.form.regexp(r".{5,20}$", '密码长度必须在5-20个字符之间')
+vemail = web.form.regexp(r".*@.*", "请输入正确的电子邮箱")
+vconfirm_pass = web.form.Validator("密码不一致", lambda i: i.password == i.confirm_password)

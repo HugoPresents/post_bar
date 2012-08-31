@@ -9,17 +9,17 @@ from libraries.error import *
 tb = 'user'
 
 login_form = web.form.Form(
-    web.form.Textbox('name', web.form.notnull, size=30, description="Username:"),
-    web.form.Password('password', web.form.notnull, size=30, description="Password"),
-    web.form.Button('Login'),
+    web.form.Textbox('name', notnull, size=30, description="Username:"),
+    web.form.Password('password', notnull, size=30, description="Password"),
+    web.form.Button('Login')
 )
 
 signup_form = web.form.Form(
-    web.form.Textbox('name', web.form.notnull, size=30, description="Username:"),
-    web.form.Textbox('email', web.form.notnull, size=30, description="Email:"),
-    web.form.Password('password', web.form.notnull, size=30, description="Password:"),
-    web.form.Password('confirm_password', web.form.notnull, size=30, description="Confirm password:"),
-    web.form.Button('Sign up'),
+    web.form.Textbox('name', vname, size=30, description="用户名:"),
+    web.form.Textbox('email', vemail, size=30, description="邮箱:"),
+    web.form.Password('password', vpass, size=30, description="密码:"),
+    web.form.Password('confirm_password', vconfirm_pass, size=30, description="确认密码:"),
+    web.form.Button('注册')
 )
 
 def get_user(conditions):

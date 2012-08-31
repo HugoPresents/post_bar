@@ -22,5 +22,5 @@ def get_post(id):
 	except IndexError:
 		return None
 
-def insert(title, content, node_id):
-	db.insert(tb, title = title, content = content, time = time.time(), user_id = 1, node_id = node_id)
+def insert(title, content, node_id, user_id):
+	db.insert(tb, title = title, content = content, time = time.time(), user_id = user_id, node_id = node_id)
