@@ -41,4 +41,10 @@ class signup:
         except ValueExistsError, x:
             return render.signup(self.form, x.message)
         raise web.seeother('/')
-        
+
+# 注销
+class logout:
+    
+    def GET(self):
+        web.config._session.kill()
+        raise web.SeeOther('/')

@@ -12,9 +12,8 @@ $else:
 	<body>
 $:content
 	<div id="slider_bar">
-		$session.session_id
 		$if session.user_id:
-			<a href="#">$session.name</a>你好！
+			<a href="#">$session.name</a> 你好！ <a href="/logout">注销</a>
 		$else:
 			<a href="/login">请登录</a> | <a href="/signup">注册</a>
 	</div>

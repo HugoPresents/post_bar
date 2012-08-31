@@ -25,6 +25,8 @@ urls = (
 	'/signup', pre_fix + 'user.signup',
 	# 登录
 	'/login', pre_fix + 'user.login',
+	# 注销
+	'/logout', pre_fix + 'user.logout',
 	# 其他
 	'/.*', pre_fix + 'index.index'
 )
