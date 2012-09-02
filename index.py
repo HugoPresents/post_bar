@@ -1,5 +1,8 @@
 # -- coding: utf8 --
 import sys, os
+if sys.getdefaultencoding() != 'utf-8':
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 abspath = os.path.dirname(__file__)
 sys.path.append(abspath)
 os.chdir(abspath)
