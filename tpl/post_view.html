@@ -1,8 +1,17 @@
-$def with (post)
+$def with (post, comments, form)
 $var title: $post.title
 <div class="post_view">
 	<h2 class="post_title">$post.title</h2>
 	<div class="post_content">
 		$post.content
+	</div>
+	<div id="post_comment">
+		$for comment in comments:
+		<li>$comment.content</li>
+	</div>
+	<div id="add_comment">
+		<form action="/comment/$post.id" method="post">
+			$:form.render()
+		</form>
 	</div>
 </div>

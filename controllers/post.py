@@ -3,6 +3,7 @@ import web
 from config.config import render
 from models import post_model
 from models import node_model
+from models import comment_model
 
 class view:
     
@@ -11,7 +12,10 @@ class view:
         if post is None:
             return render.post_nf('主题未找到')
         else:
-            return render.post_view(post)
+            condition = {'post_id' : id}
+            comments = comment_model.get_comments(condition)
+            form = comment_model.form
+            return render.post_view(post, comments, form)
 
 class create:
     

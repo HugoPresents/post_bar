@@ -1,15 +1,15 @@
 # -- coding: utf8 --
 import web
 import time
-from config.config import db
+from config.config import *
 from libraries.helper import *
 
 tb = 'post'
 
 form = web.form.Form(
-	web.form.Textbox('title', web.form.notnull, size=30, description="Post title:"),
-	web.form.Textarea('content', web.form.notnull, rows=20, cols=80, description="Post content"),
-	web.form.Button('Post entry'),
+	web.form.Textbox('title', notnull, size=30, description="标题"),
+	web.form.Textarea('content', notnull, rows=20, cols=80, description="正文"),
+	web.form.Button('发表')
 )
 
 def get_posts(conditions = None, offset = None, limit = 10):

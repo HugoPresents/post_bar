@@ -21,6 +21,8 @@ urls = (
 	'/create/(\w+)', pre_fix + 'post.create',
 	# 节点主题列表
 	'/node/(\w+)', pre_fix + 'node.index',
+	# 评论主题
+	'/comment/(\d+)', pre_fix + 'comment.add',
 	# 注册
 	'/signup', pre_fix + 'user.signup',
 	# 登录
