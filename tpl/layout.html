@@ -6,11 +6,70 @@ $else:
 <html>
 	<head> 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" href="/static/css/shared.css" />
 		<link rel="stylesheet" href="/static/css/main.css" />
+		<script type="texxt/javascript" src="/static/js/jquery.js"></script>
 		<title>$title</title>
 	</head>
 	<body>
-$:content
+		<div id="Top">
+	        <div class="content">
+	            <div style="padding-top: 6px;">
+	            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	                <tbody><tr>
+	                    <td width="120" align="left"><a href="./V2EX_files/V2EX.htm" name="top"><img src="/static/img/logo@2x.png" border="0" align="default" alt="V2EX" width="94" height="30"></a></td>
+	                    <td width="auto" align="left">
+	                        <script type="text/javascript">
+	                            var dispatch = function() {
+	                                q = document.getElementById("q");
+	                                if (q.value != "") {
+	                                    window.open('http://www.google.com/search?q=site:v2ex.com/t%20' + q.value, "_blank");
+	                                    return false;
+	                                } else {
+	                                    return false;
+	                                }
+	                            }
+	                        </script>
+	                        <div id="Search"><form onsubmit="return dispatch()"><div style="width: 276px; height: 28px; background-image: url('/static/img/qbar.png'); background-repeat: no-repeat; display: inline-block;"><input type="text" maxlength="40" name="q" id="q" value=""></div></form></div>
+	                    </td>
+	                    <td width="500" align="right" style="padding-top: 2px;"><a href="./V2EX_files/V2EX.htm" class="top">首页</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/member/Rabbit52" class="top">Rabbit52</a>&nbsp;&nbsp;&nbsp;<a href="https://workspace.v2ex.com/" target="_blank" class="top">工作空间</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/notes" class="top">记事本</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/events" class="top">活动</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/place/222.210.206.64" class="top">附近</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/signout" class="top">登出</a></td>
+	                </tr>
+	            </tbody></table>
+	            </div>
+	        </div>
+	    </div>
+		<div id="wrapper">
+			<div class="content">
+				<div id="Leftbar"></div>
+				<div id="Rightbar">
+					<div class="sep20"></div>
+					<div class="box">
+	                    <div class="cell">
+	                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	                            <tbody><tr>
+	                                <td width="48" valign="top"><a href="http://www.v2ex.com/member/Rabbit52"><img src="./V2EX_files/23312_large.png" class="avatar" border="0" align="default" width="48"></a></td>
+	                                <td width="10" valign="top"></td>
+	                                <td width="auto" align="left"><span class="bigger"><a href="http://www.v2ex.com/member/Rabbit52">Rabbit52</a></span>
+	                                    <div class="sep5"></div>
+	                                    <span class="fade">Python是新欢，PHP是旧爱</span>
+	                                </td>
+	                            </tr>
+	                        </tbody></table>
+	                        <div class="sep10"></div>
+	                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	                            <tbody><tr>
+	                                <td width="33%" align="center"><a href="http://www.v2ex.com/my/nodes" class="dark" style="display: block;"><span class="bigger">9</span><div class="sep3"></div><span class="fade">节点收藏</span></a></td>
+	                                <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="http://www.v2ex.com/my/topics" class="dark" style="display: block;"><span class="bigger">9</span><div class="sep3"></div><span class="fade">主题收藏</span></a></td>
+	                                <td width="33%" align="center"><a href="http://www.v2ex.com/my/following" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
+	                            </tr>
+	                        </tbody></table>
+	                    </div>
+	                    <div class="inner"><div class="fr" id="money"><a href="http://www.v2ex.com/balance" class="balance_area" style="">23 <img src="/static/img/silver.png" alt="S" align="absmiddle" border="0" style="padding-bottom: 2px;"> 72 <img src="/static/img/bronze.png" alt="B" align="absmiddle" border="0"></a></div><a href="http://www.v2ex.com/notifications" class="fade">0 条未读提醒</a></div>
+	                 </div>
+                 </div>
+                 $:content
+			</div>
+		</div>
 	<div id="slider_bar">
 		$if session.user_id:
 			<a href="#">$session.name</a> 你好！ <a href="/logout">注销</a>
