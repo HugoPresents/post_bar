@@ -3,6 +3,7 @@ import web
 import time
 from config.config import *
 from libraries.helper import *
+from libraries.db import *
 
 tb = 'post'
 
@@ -13,7 +14,9 @@ form = web.form.Form(
 )
 
 def get_posts(conditions = None, offset = None, limit = 10):
-	where = dict2where(conditions)
+	#where = dict2where(conditions)
+	join = {'user' : ['user_id', 'id']}
+	return fetch_join(tb = tb, condition = conditions, join = join)
 	return db.select(tb, where = where, offset = offset, limit = limit)
 
 def get_post(id):
