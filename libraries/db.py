@@ -13,13 +13,14 @@ def fetch_join(tb = None, condition = None, join = None, limit = 10, offset = 0)
     result = db.select(tb, where = where, limit = limit, offset = offset)
     if join is None:
         return result
-    result_joined = {}
+    result_joined = []
     for row in result:
         for join_table, join_fields in join.items():
-            print row.user_id
-            condition = {join_fields[1] : row.join_fields[0]}
+            #test = join_fields[0]
+            #test = row.__getattr__(join_fields[0])
+            condition = {join_fields[1] : getattr(row, join_fields[0])}
             where = dict2where(condition)
             join_table_result = db.select(join_table, where = where)
-            result_joined += {tb : row, join_table : join_table_result}
+            result_joined.append({tb : row, join_table : join_table_result})
     del result
     return result_joined

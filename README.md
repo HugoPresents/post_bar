@@ -26,15 +26,8 @@ web.py 的贴吧
 		AddDefaultCharset UTF-8   
 		ErrorLog "logs/post_bar.log"
 	    CustomLog "logs/post_bar.log" combined
-		WSGIScriptAlias / "E:/htdocs/python/post_bar/index.py/"
-		Alias /static "E:/htdocs/python/post_bar/static/"
+		WSGIScriptAlias / "E:/htdocs/python/post_bar/index.py"
+		Alias /static "E:/htdocs/python/post_bar/static"
 		AddType text/html .py
-		&lt;Directory "E:/htdocs/python/post_bar/"&gt;
-			AllowOverride all
-			Options Indexes FollowSymLinks  ExecCGI
-			Order deny,allow
-			SetHandler wsgi-script
-			Allow from all
-		&lt;/Directory&gt;
 	&lt;/VirtualHost&gt;
 </pre>
