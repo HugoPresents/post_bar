@@ -32,10 +32,9 @@ class signup:
         return render.signup(self.form, title)
     
     def POST(self):
+        #return self.form.d.password + '|' + self.form.d.confirm_password
         if not self.form.validates():
             return render.signup(self.form, '注册失败，请重注')
-        elif self.form.d.password != self.form.d.confirm_password:
-            return render.signup(self.form, '密码不一致，请重注')
         try:
             user_model.insert(self.form.d.name, self.form.d.email, self.form.d.password)
         except ValueExistsError, x:

@@ -32,7 +32,7 @@ $else:
 	                        </script>
 	                        <div id="Search"><form onsubmit="return dispatch()"><div style="width: 276px; height: 28px; background-image: url('/static/img/qbar.png'); background-repeat: no-repeat; display: inline-block;"><input type="text" maxlength="40" name="q" id="q" value=""></div></form></div>
 	                    </td>
-	                    <td width="500" align="right" style="padding-top: 2px;"><a href="./V2EX_files/V2EX.htm" class="top">首页</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/member/Rabbit52" class="top">Rabbit52</a>&nbsp;&nbsp;&nbsp;<a href="https://workspace.v2ex.com/" target="_blank" class="top">工作空间</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/notes" class="top">记事本</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/events" class="top">活动</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/place/222.210.206.64" class="top">附近</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/signout" class="top">登出</a></td>
+	                    <td width="500" align="right" style="padding-top: 2px;"><a href="./V2EX_files/V2EX.htm" class="top">首页</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/member/Rabbit52" class="top">Rabbit52</a>&nbsp;&nbsp;&nbsp;<a href="https://workspace.v2ex.com/" target="_blank" class="top">工作空间</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/notes" class="top">记事本</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/events" class="top">活动</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/place/222.210.206.64" class="top">附近</a>&nbsp;&nbsp;&nbsp;<a href="http://www.v2ex.com/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;<a href="/logout" class="top">登出</a></td>
 	                </tr>
 	            </tbody></table>
 	            </div>
@@ -43,41 +43,94 @@ $else:
 				<div id="Leftbar"></div>
 				<div id="Rightbar">
 					<div class="sep20"></div>
-					<div class="box">
-	                    <div class="cell">
-	                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-	                            <tbody><tr>
-	                                <td width="48" valign="top"><a href="http://www.v2ex.com/member/Rabbit52"><img src="./V2EX_files/23312_large.png" class="avatar" border="0" align="default" width="48"></a></td>
-	                                <td width="10" valign="top"></td>
-	                                <td width="auto" align="left"><span class="bigger"><a href="http://www.v2ex.com/member/Rabbit52">Rabbit52</a></span>
-	                                    <div class="sep5"></div>
-	                                    <span class="fade">Python是新欢，PHP是旧爱</span>
-	                                </td>
-	                            </tr>
-	                        </tbody></table>
-	                        <div class="sep10"></div>
-	                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-	                            <tbody><tr>
-	                                <td width="33%" align="center"><a href="http://www.v2ex.com/my/nodes" class="dark" style="display: block;"><span class="bigger">9</span><div class="sep3"></div><span class="fade">节点收藏</span></a></td>
-	                                <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="http://www.v2ex.com/my/topics" class="dark" style="display: block;"><span class="bigger">9</span><div class="sep3"></div><span class="fade">主题收藏</span></a></td>
-	                                <td width="33%" align="center"><a href="http://www.v2ex.com/my/following" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
-	                            </tr>
-	                        </tbody></table>
-	                    </div>
-	                    <div class="inner"><div class="fr" id="money"><a href="http://www.v2ex.com/balance" class="balance_area" style="">23 <img src="/static/img/silver.png" alt="S" align="absmiddle" border="0" style="padding-bottom: 2px;"> 72 <img src="/static/img/bronze.png" alt="B" align="absmiddle" border="0"></a></div><a href="http://www.v2ex.com/notifications" class="fade">0 条未读提醒</a></div>
-	                 </div>
-                 </div>
-                 $:content
+$if session.user_id:
+	<div class="box">
+	<div class="cell">
+	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	        <tbody>
+	        	<tr>
+	                <td width="48" valign="top"><a href="http://www.v2ex.com/member/Rabbit52"><img src="./V2EX_files/23312_large.png" class="avatar" border="0" align="default" width="48"></a></td>
+	                <td width="10" valign="top"></td>
+	                <td width="auto" align="left"><span class="bigger"><a href="http://www.v2ex.com/member/Rabbit52">$session.name</a></span>
+	                    <div class="sep5"></div>
+	                    <span class="fade">Python是新欢，PHP是旧爱</span>
+	                </td>
+	            </tr>
+	    	</tbody>
+	    </table>
+	    <div class="sep10"></div>
+	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	        <tbody><tr>
+	            <td width="33%" align="center">
+	            	<a href="http://www.v2ex.com/my/nodes" class="dark" style="display: block;">
+	            		<span class="bigger">9</span>
+	            		<div class="sep3"></div>
+	            		<span class="fade">节点收藏</span>
+	            	</a>
+	            </td>
+	            <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center">
+	            	<a href="http://www.v2ex.com/my/topics" class="dark" style="display: block;">
+	            		<span class="bigger">9</span>
+	            		<div class="sep3"></div>
+	            		<span class="fade">主题收藏</span>
+	            	</a>
+	            </td>
+	            <td width="33%" align="center">
+	            	<a href="http://www.v2ex.com/my/following" class="dark" style="display: block;">
+	            		<span class="bigger">2</span>
+	            		<div class="sep3"></div>
+	            		<span class="fade">特别关注</span>
+	            	</a>
+	            </td>
+	        </tr>
+	    </tbody></table>
+	</div>
+	<div class="inner">
+		<div class="fr" id="money">
+			<a href="http://www.v2ex.com/balance" class="balance_area" style="">23 
+				<img src="/static/img/silver.png" alt="S" align="absmiddle" border="0" style="padding-bottom: 2px;"> 72 
+				<img src="/static/img/bronze.png" alt="B" align="absmiddle" border="0">
+			</a>
+		</div>
+		<a href="http://www.v2ex.com/notifications" class="fade">0 条未读提醒</a>
+	</div>
+	 </div>
+$else:
+	<div class="box">
+        <div class="cell">
+            <strong>V2EX = way to explore</strong>
+            <div class="sep5"></div>
+            <span class="fade">V2EX 是一个关于分享和探索的地方</span>
+        </div>
+        <div class="inner">
+            <div class="sep5"></div>
+            <div align="center"><a href="/signup" class="super normal button">现在注册</a>
+            <div class="sep5"></div>
+            <div class="sep10"></div>
+            已注册用户请 <a href="/login">登入</a></div>
+        </div>
+    </div>
+</div>
+$:content
 			</div>
 		</div>
-	<div id="slider_bar">
-		$if session.user_id:
-			<a href="#">$session.name</a> 你好！ <a href="/logout">注销</a>
-		$else:
-			<a href="/login">请登录</a> | <a href="/signup">注册</a>
-	</div>
-		<div id="page_footer">
-			<p>Post Bar coding by web.py</p>
+		<div id="Bottom">
+			<div class="content">
+				<div class="inner">
+                <div class="sep10"></div>
+                    <div class="fr">
+                        <a href="http://www.linode.com/?r=af313ea8a6bb6f99aff800c67349cabbfee2682f" target="_blank"><img src="/static/img/linode.png" border="0" alt="Linode" width="120"></a><!-- &nbsp; &nbsp; &nbsp; <a href="https://www.upyun.com/?utm_source=upyun-v2ex&utm_medium=ad&utm_campaign=upyun&md=upyun-v2ex" target="_blank"><img src="/static/img/upyun.jpg" border="0" alt="UpYun" width="120" /></a>-->
+                    </div>
+                    <strong><a href="/about" class="dark">关于</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/faq" class="dark">FAQ</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/mission" class="dark">我们的愿景</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/advertise" class="dark">广告投放</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="http://workspace.v2ex.com/" target="_blank" class="dark">工作空间</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/gadgetlab" class="dark">Gadget Lab</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="http://livid.v2ex.com/" target="_blank" class="dark">博客</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/start" class="dark">上网首页</a> &nbsp; <span class="snow">·</span> &nbsp; 285 人在线</strong> &nbsp; <span class="fade">最高记录 362</span>
+                    <div class="sep20"></div>
+                    创意工作者们的社区
+                    <div class="sep5"></div>
+                    Lovingly made by <strong><a href="http://www.olivida.com/" class="dark" target="_blank">OLIVIDA</a></strong>
+                    <div class="sep20"></div>
+                    <span class="small fade">VERSION: 3.0.0-dev · UTC 05:29 · PVG 13:29 · JFK 01:29 · LAX 22:29<br>♥ Do have a faith in what you're doing.</span>
+                <div class="sep10"></div>
+            </div>
+			</div>
 		</div>
 	</body>
 </html>

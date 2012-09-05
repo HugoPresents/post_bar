@@ -17,25 +17,25 @@ $var title : $title
 		<a href="http://www.v2ex.com/?tab=nodes" class="tab">节点收藏</a>
 		<a href="http://www.v2ex.com/?tab=members" class="tab">关注</a>
 	</div>
-	$for post in posts:
-		$ user = post['user'][0]
-		<div class="cell item" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
-		    <table cellpadding="0" cellspacing="0" border="0" width="100%">
-		        <tbody>
-			        <tr>
-			            <td width="48" valign="top" align="center"><a href="http://www.v2ex.com/member/hzlzh"><img src="./V2EX_files/6746_normal.png" class="avatar" border="0" align="default" auto=""></a></td>
-			            <td width="10"></td>
-			            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post['post'].id">$post['post'].title</a></span>
-			            <div class="sep5"></div>
-			            <span class="small fade"><a class="node" href="http://www.v2ex.com/go/share">分享发现</a> &nbsp;•&nbsp; <strong><a href="http://www.v2ex.com/member/hzlzh">$user.name</a></strong> &nbsp;•&nbsp; $post['post'].time &nbsp;•&nbsp; 最后回复来自 <strong><a href="http://www.v2ex.com/member/hzlzh">hzlzh</a></strong></span>
-			            </td>
-			            <td width="50" align="right" valign="middle">
-			                <a href="http://www.v2ex.com/t/46790#reply14" class="count_livid">14</a>
-			            </td>
-			        </tr>
-			    </tbody>
-		    </table>
-		</div>
+$for post in posts:
+	$ user = post['user'][0]
+	<div class="cell item" style="border-top-left-radius: 3px; border-top-right-radius: 3px;">
+	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	        <tbody>
+		        <tr>
+		            <td width="48" valign="top" align="center"><a href="http://www.v2ex.com/member/hzlzh"><img src="./V2EX_files/6746_normal.png" class="avatar" border="0" align="default" auto=""></a></td>
+		            <td width="10"></td>
+		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post['post'].id">$post['post'].title</a></span>
+		            <div class="sep5"></div>
+		            <span class="small fade"><a class="node" href="http://www.v2ex.com/go/share">分享发现</a> &nbsp;•&nbsp; <strong><a href="http://www.v2ex.com/member/hzlzh">$user.name</a></strong> &nbsp;•&nbsp; $post['post'].time &nbsp;•&nbsp; 最后回复来自 <strong><a href="http://www.v2ex.com/member/hzlzh">hzlzh</a></strong></span>
+		            </td>
+		            <td width="50" align="right" valign="middle">
+		                <a href="http://www.v2ex.com/t/46790#reply14" class="count_livid">14</a>
+		            </td>
+		        </tr>
+		    </tbody>
+	    </table>
+	</div>
 </div>
 <div class="sep20"></div>
 <div class="box">

@@ -1,12 +1,47 @@
 $def with (posts, node)
 $var title: $node.description
-<div class="node_info">
-	<a href="/create/$node.name">创建主题</a>
-</div>
-<div class="posts">
+<div id="Main">
+	<div class="sep20">
+	</div>
+	<div class="box">
+		<div class="header">
+			<div style="float: left; display: inline-block; margin-right: 10px; margin-bottom: 10px;">
+				<img src="http://tb.v2ex.com/navatar/9c83/8d2e/291_large.png?m=1338301531" border="0" align="default" width="auto">
+			</div>
+			<div class="fr f12">
+				<span class="snow">主题总数</span> 
+				<strong class="gray">15</strong> 
+				<span class="snow">&nbsp;•&nbsp;</span> 
+				<a href="/favorite/node/291?t=1341908520">收藏这个节点</a>
+			</div>
+			<a href="/">V2EX</a>
+			<span class="chevron">&nbsp;›&nbsp;</span> Facebook
+		    <div class="sep10">
+		    </div>
+		    <span class="f12 gray">Facebook's mission is to give people the power to share and make the world more open and connected.</span>
+		    <div class="sep10">
+		    </div>
+		    <input type="button" class="super normal button" value="创建新主题" onclick="location.href = '/create/$node.name';">
+	    </div>
+	    <div id="TopicsNode">
 $for post in posts:
-	<div class="post">
-		<h2 class="post_title"><a href="/post/$post.id">$post.title</a></h2>
-		<div class="post_content">$post.content</div>
+	$ user = post['user'][0]
+	<div class="cell from_8965">
+	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	        <tbody>
+	        	<tr>
+		            <td width="48" valign="top" align="center"><a href="/member/holsety"><img src="http://tb.v2ex.com/avatar/f8ab/ea41/8965_normal.png?m=1336538012" class="avatar" border="0" align="default" auto=""></a></td>
+		            <td width="10"></td>
+		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post['post'].id">$post['post'].title</a></span>
+		            <div class="sep5"></div>
+		            <span class="small fade"><strong><a href="/member/holsety">$user.name</a></strong> &nbsp;•&nbsp; 22 天前</span>
+		            </td>
+		            <td width="50" align="right" valign="middle">
+		            </td>
+		        </tr>
+		    </tbody>
+	    </table>
+	</div>
+	    </div>
 	</div>
 </div>

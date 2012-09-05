@@ -18,7 +18,6 @@ signup_form = web.form.Form(
     web.form.Textbox('name', vname, size=30, description="用户名:"),
     web.form.Textbox('email', vemail, size=30, description="邮箱:"),
     web.form.Password('password', vpass, size=30, description="密码:"),
-    web.form.Password('confirm_password', vconfirm_pass, size=30, description="确认密码:"),
     web.form.Button('注册')
 )
 
