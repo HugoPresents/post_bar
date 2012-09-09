@@ -1,4 +1,4 @@
-$def with (posts, node)
+$def with (posts, node, crumb)
 $var title: $node.description
 <div id="Main">
 	<div class="sep20">
@@ -14,8 +14,7 @@ $var title: $node.description
 				<span class="snow">&nbsp;•&nbsp;</span> 
 				<a href="/favorite/node/291?t=1341908520">收藏这个节点</a>
 			</div>
-			<a href="/">V2EX</a>
-			<span class="chevron">&nbsp;›&nbsp;</span> Facebook
+			$:crumb
 		    <div class="sep10">
 		    </div>
 		    <span class="f12 gray">Facebook's mission is to give people the power to share and make the world more open and connected.</span>

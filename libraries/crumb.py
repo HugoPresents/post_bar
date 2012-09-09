@@ -4,7 +4,7 @@
 class Crumb:
     
     def __init__(self):
-        self.separator = ' > '
+        self.separator = '<span class="chevron">&nbsp;›&nbsp;</span>'
         self.content = [['首页', '/']]
     
     def set_separator(self, separator):
@@ -19,11 +19,13 @@ class Crumb:
         for item in self.content:
             i += 1
             if item[1] is None:
-                str += item[0] + self.separator
+                str += item[0]
             else:
-                str += '<a href="' + item[1] + '">' + item[0] + '</a>' + self.separator
+                str += '<a href="' + item[1] + '">' + item[0] + '</a>'
+            if i < len(self.content):
+                str += self.separator
         self.reset()
-        return str[:len(str)-len(self.separator)]
+        return str
     
     def reset(self):
         self.__init__()
