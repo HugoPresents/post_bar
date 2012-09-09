@@ -4,18 +4,24 @@ from config.config import render
 from models import post_model
 from models import node_model
 from models import comment_model
+from libraries.crumb import Crumb
 
 class view:
+    
+    crumb = Crumb()
     
     def GET(self, id):
         post = post_model.get_post(id)
         if post is None:
             return render.post_nf('主题未找到')
         else:
-            condition = {'post_id' : id}
+            condition = {'id':post.node_id}
+            node = node_model.get_node(condition)
+            self.crumb.append(node.display_name, '/node/'+node.name)
+            condition = {'post_id' : post.id}
             comments = comment_model.get_comments(condition)
             form = comment_model.form
-            return render.post_view(post, comments, form)
+            return render.post_view(post, comments, form, self.crumb.output())
 
 class create:
     

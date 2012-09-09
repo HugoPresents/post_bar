@@ -1,5 +1,6 @@
-$def with (post, comments, form)
+$def with (post, comments, form, crumb)
 $var title: $post.title
+<div class="crumb">$:crumb</div>
 <div class="post_view">
 	<h2 class="post_title">$post.title</h2>
 	<div class="post_content">
