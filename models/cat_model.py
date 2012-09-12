@@ -1,15 +1,7 @@
-import web
-from config.config import db
-from libraries.helper import *
+# -- coding: utf8 --
+__metaclass__ = type
+from models.model import *
 
-tb = 'category'
-
-def get_cats():
-    return db.select(tb)
-
-def get_cat(conditions = None):
-    where = dict2where(conditions)
-    try:
-        return db.select(tb, where = where)[0]
-    except IndexError:
-        return None
+class post_model(model):
+    def __init__(self):
+        super(post_model, self).__init__('cat')

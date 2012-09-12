@@ -1,4 +1,5 @@
 # -- coding: utf8 --
+__metaclass__ = type
 import web
 from config.config import db
 from libraries.helper import *
@@ -15,9 +16,9 @@ class model:
         except IndexError:
             return None
     
-    def get_all(self, conditions, order = None, limit = None):
+    def get_all(self, conditions = None, order = None, limit = None):
         where = dict2where(conditions)
-        return db.select(self.tb, order = order, limit = limit)
+        return db.select(self.tb, where = where, order = order, limit = limit)
     
     def insert(self, **param):
         if param:

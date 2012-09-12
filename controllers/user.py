@@ -37,6 +37,17 @@ class signup:
             return render.signup(self.form, '注册失败，请重注')
         try:
             user_model.insert(self.form.d.name, self.form.d.email, self.form.d.password)
+            # 对密码进行 md5 加密
+            password = hashlib.md5(self.form.d.password).hexdigest()
+            condition = {'name' : name}
+            user = get_user(condition)
+            if user is not None:
+                raise ValueExistsError('用户名已经存在')
+            condition = {'email' : email}
+            user = get_user(condition)
+            if user is not None:
+                raise ValueExistsError('邮箱已经存在')
+            db.insert(tb, name = name, email = email, password = password, regist_time = time.time())
         except ValueExistsError, x:
             return render.signup(self.form, x.message)
         raise web.seeother('/')
