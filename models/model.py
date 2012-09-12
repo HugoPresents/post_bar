@@ -20,10 +20,17 @@ class model:
         return db.select(self.tb, order = order, limit = limit)
     
     def insert(self, **param):
-        if param is None:
-            return None
+        if param:
+            def q(x): return "(" + x + ")"
+            
+            if values:
+                _keys = SQLQuery.join(values.keys(), ', ')
+                _values = SQLQuery.join([sqlparam(v) for v in values.values()], ', ')
+                sql_query = "INSERT INTO %s " % self.tb + q(_keys) + ' VALUES ' + q(_values)
+                db.query(sql_query)
+                return self.last_insert_id()
         else:
-            #sql = 'INSERT INTO %s' % (self.tb)
-            sql = ''
-            for key, value in param.item():
-                sql += '%s=\'%s\', '
+           return None
+    
+    def last_insert_id(self):
+        return db.query('select last_insert_id() as id')[0].id
