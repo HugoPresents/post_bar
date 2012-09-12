@@ -2,6 +2,6 @@
 __metaclass__ = type
 from models.model import *
 
-class post_model(model):
+class user_model(model):
     def __init__(self):
-        super(post_model, self).__init__('user')
+        super(user_model, self).__init__('user')

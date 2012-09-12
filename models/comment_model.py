@@ -2,6 +2,6 @@
 __metaclass__ = type
 from models.model import *
 
-class post_model(model):
+class comment_model(model):
     def __init__(self):
-        super(post_model, self).__init__('comment')
+        super(comment_model, self).__init__('comment')
