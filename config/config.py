@@ -1,6 +1,7 @@
 # -- coding: utf8 --
 import os
 import web
+from libraries import helper
 
 render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/../tpl/', base='layout')
 
@@ -36,6 +37,7 @@ urls = (
 # 模板全局变量
 web.template.Template.globals['render'] = render
 web.template.Template.globals['site_title'] = 'Post_bar'
+web.template.Template.globals['helper'] = helper
 
 # 表单验证规则
 notnull = web.form.Validator("必填", bool)
