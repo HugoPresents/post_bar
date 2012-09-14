@@ -16,7 +16,7 @@ def dict2where(dict):
 
 def stamp2time(stamp = 0):
     import time
-    cur_time = time.time()
+    cur_time = int(time.time())
     during = cur_time-stamp
     if during < 30:
         return str(during) + '秒前'

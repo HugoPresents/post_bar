@@ -1,5 +1,6 @@
 # -- coding: utf8 --
 import web
+import time
 from config.config import render
 from models.post_model import *
 from models.node_model import *
@@ -47,5 +48,5 @@ class create:
             return render.not_found('节点未找到', '节点未找到')
         if not self.form.validates():
             return render.create_post(self.form, '创建失败， 请重创:D')
-        post_model().insert(self.form.d.title, self.form.d.content, node.id, web.config._session.user_id)
-        raise web.seeother('/')
+        post_id = post_model().insert(title = self.form.d.title, content = self.form.d.content, node_id = node.id, time = time.time(), user_id = web.config._session.user_id)
+        raise web.seeother('/post/' + str(post_id))

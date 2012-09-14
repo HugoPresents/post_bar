@@ -20,16 +20,13 @@ class model:
         where = dict2where(conditions)
         return db.select(self.__tb, where = where, order = order, limit = limit)
     
-    def insert(self, **param):
-        if param:
-            def q(x): return "(" + x + ")"
-            
-            if values:
-                _keys = SQLQuery.join(values.keys(), ', ')
-                _values = SQLQuery.join([sqlparam(v) for v in values.values()], ', ')
-                sql_query = "INSERT INTO %s " % self.__tb + q(_keys) + ' VALUES ' + q(_values)
-                db.query(sql_query)
-                return self.last_insert_id()
+    def insert(self, **values):
+        def q(x): return "(" + x + ")"
+        
+        if values:
+            sql_query = 'INSERT INTO '+ self.__tb + q(', '.join(values.keys())) + ' VALUES' + q(', '.join('\''+str(_value)+'\'' for _value in values.values()))
+            db.query(sql_query)
+            return self.last_insert_id()
         else:
            return None
     
