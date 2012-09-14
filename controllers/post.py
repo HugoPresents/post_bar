@@ -13,6 +13,7 @@ class view:
     crumb = Crumb()
     
     def GET(self, id):
+        post_model().add_view(id)
         post = post_model().get_one({'id':id})
         if post is None:
             return render.post_nf('主题未找到')
