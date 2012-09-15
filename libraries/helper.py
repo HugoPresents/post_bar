@@ -14,7 +14,8 @@ def dict2where(dict):
     else:
         return None
 
-def stamp2time(stamp = 0):
+# 时间戳转为到现在的时间差
+def stamp2during(stamp = 0):
     import time
     cur_time = int(time.time())
     during = cur_time-stamp
@@ -30,4 +31,10 @@ def stamp2time(stamp = 0):
         return str(int(during/(24*3600))) + '天前'
     #return str(int(during/(24*3600))) + '天前'
     ltime=time.localtime(stamp)
-    return time.strftime("%Y-%m-%d %H:%M:%S", ltime)
+    return time.strftime("%Y-%m-%d %H:%m:%S %p", ltime)
+
+# 时间戳转为时间
+def cur_date(format = "%Y-%m-%d %H:%m:%S %p"):
+    import time
+    from datetime import *
+    return datetime.now().strftime(format)

@@ -1,18 +1,80 @@
-$def with (post, comments, form, crumb)
+$def with (post, user, comments, form, crumb)
 $var title: $post.title
-<div class="crumb">$:crumb</div>
-<div class="post_view">
-	<h2 class="post_title">$post.title</h2>
-	<div class="post_content">
-		$post.content
+<div id="Main">
+<div class="sep20"></div>
+<div class="box" style="border-bottom: 0px;">
+    <div class="header"><div class="fr"><a href="/member/liyangdal"><img src="http://tb.v2ex.com/avatar/371b/ce7d/352_large.png?m=1331334161" class="avatar" border="0" align="default" auto=""></a></div>
+    $:crumb
+    <div class="sep10"></div>
+    <h1>$post.title</h1>
+    <small class="gray">By <a href="/member/liyangdal">$user.name</a> at $helper.stamp2during(post.time), $post.views 次点击 &nbsp; </small>
+    </div>
+    <div class="cell">
+        <div class="topic_content">
+        $post.content
+        </div>
+    </div>
+    <div class="topic_buttons">
+    	<div class="fr gray f11" style="line-height: 12px; padding-top: 3px; text-shadow: 0px 1px 0px #fff;">$post.views 次点击 &nbsp;</div>
+	    <a href="/favorite/topic/47442?t=1341908520" class="tb">加入收藏</a> &nbsp;
+	    <a href="#;" onclick="window.open('https://twitter.com/share?url=http://www.v2ex.com/t/47442?r\u003DRabbit52&amp;related=v2ex&amp;hashtags=babel&amp;text=有没有类似v2ex风格的php论坛？', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tb">Tweet</a> &nbsp;<a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url=http://www.v2ex.com/t/47442?r\u003DRabbit52&amp;title=V2EX%20-%20有没有类似v2ex风格的php论坛？', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="tb">Weibo</a> &nbsp;<div id="topic_thank"><a href="#;" onclick="if (confirm('你确定要向本主题创建者发送谢意？')) { thankTopic(47442, 1341908520); }" class="tb">感谢</a></div>
+    </div>
+</div>
+<div class="sep20"></div>
+$if post.comments > 0:
+	<div class="box">
+	<div class="cell">
+	    <span class="gray">$post.comments 回复 &nbsp;<strong class="snow">|</strong> &nbsp;直到 $helper.cur_date()</span>
 	</div>
-	<div id="post_comment">
-		$for comment in comments:
-		<li>$comment.content</li>
+	$ comment_num = 0
+	$for comment_cur in comments:
+		$ comment_num += 1
+		$ comment = comment_cur['comment']
+		$ comment_user = comment_cur['user']
+		<div class="inner">
+		    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+		        <tbody><tr>
+		            <td width="48" valign="top" align="center"><img src="http://tb.v2ex.com/avatar/4496/bf24/1828_normal.png?m=1334941384" class="avatar" border="0" align="default" auto=""></td>
+		            <td width="10" valign="top"></td>
+		            <td width="auto" valign="top" align="left"><div class="fr"><div id="thank_area_422216" class="thank_area"><a href="#;" onclick="thankReply(422216, 1341908520);" class="thank">感谢回复者</a>
+		            </div> &nbsp; <a href="#;" onclick="replyOne('chouj');">
+		            	<img src="http://static.v2ex.com/static/img/reply.png" align="absmiddle" border="0" alt="Reply"></a> &nbsp;&nbsp; <span class="no">$comment_num</span></div>
+		                <div class="sep3"></div>
+		                <strong><a href="/member/chouj" class="dark">$comment_user.name</a></strong>&nbsp; &nbsp;<span class="fade small">$helper.stamp2during(comment.time)</span> 
+		                <div class="sep5"></div>
+		                <div class="reply_content">
+		                	$:comment.content
+		                </div>
+		            </td>
+		        </tr>
+		    </tbody></table>
+		</div>
 	</div>
-	<div id="add_comment">
-		<form action="/comment/$post.id" method="post">
-			$:form.render_css()
-		</form>
+$else:
+	<div class="box transparent">
+	    <div class="inner" style="text-align: center">
+	        <span style="color: rgba(0, 0, 0, 0.25);">目前尚无回复</span>
+	    </div>
 	</div>
+<div class="sep20"></div>
+<div class="box">
+    <div class="cell"><div class="fr"><a href="#"><strong>↑</strong> 回到顶部</a></div>
+        添加一条新回复
+    </div>
+    <div class="cell">
+    	<form action="/comment/$post.id" method="post">
+    	$:form.render()
+    	</form>
+    	<form method="post" action="/t/47442">
+        <textarea name="content" maxlength="10000" class="mll" id="reply_content"></textarea>
+        <div class="sep10"></div>
+        <div class="fr"><div class="sep5"></div><span class="gray">请尽量让自己的回复能够对别人有帮助</span></div>
+        <input type="hidden" value="77818" name="once">
+        <input type="submit" value="回复" class="super normal button"></form>
+    </div>
+    <div class="inner">
+        <div class="fr"><a href="/">← V2EX</a></div>
+        &nbsp;
+    </div>
+</div>
 </div>

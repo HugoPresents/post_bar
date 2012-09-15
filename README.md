@@ -31,3 +31,5 @@ web.py 的贴吧
 		AddType text/html .py
 	&lt;/VirtualHost&gt;
 </pre>
+
+4. 很蛋疼的是没有在 MAC 下跑成功，建议在 linux 和 win 下部署

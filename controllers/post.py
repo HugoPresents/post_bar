@@ -12,6 +12,9 @@ class view:
     
     crumb = Crumb()
     
+    def POST(self, id):
+        raise web.SeeOther('/post/' + str(id))
+    
     def GET(self, id):
         post_model().add_view(id)
         post = post_model().get_one({'id':id})
@@ -20,11 +23,17 @@ class view:
         else:
             condition = {'id':post.node_id}
             node = node_model().get_one(condition)
+            user = user_model().get_one({'id':post.user_id})
             self.crumb.append(node.display_name, '/node/'+node.name)
             condition = {'post_id' : post.id}
-            comments = comment_model().get_all(condition)
+            comments_result = comment_model().get_all(condition, order = 'time ASC')
+            comments = []
+            if comments_result is not None:
+                for comment_result in comments_result:
+                    user = user_model().get_one({'id':comment_result.user_id})
+                    comments.append({'comment':comment_result, 'user':user})
             form = comment_model().form
-            return render.post_view(post, comments, form, self.crumb.output())
+            return render.post_view(post, user, comments, form, self.crumb.output())
 
 class create:
     

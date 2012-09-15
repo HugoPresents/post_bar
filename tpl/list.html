@@ -17,7 +17,7 @@ $var title: $node.description
 			$:crumb
 		    <div class="sep10">
 		    </div>
-		    <span class="f12 gray">Facebook's mission is to give people the power to share and make the world more open and connected.</span>
+		    <span class="f12 gray">$node.description</span>
 		    <div class="sep10">
 		    </div>
 		    <input type="button" class="super normal button" value="创建新主题" onclick="location.href = '/create/$node.name';">
@@ -35,7 +35,7 @@ $for post_cur in posts:
 		            <td width="10"></td>
 		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
 		            <div class="sep5"></div>
-		            <span class="small fade"><strong><a href="/member/holsety">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2time(post.time)
+		            <span class="small fade"><strong><a href="/member/holsety">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2during(post.time)
 		            $if comment_user is not None:
 						 &nbsp;•&nbsp; 最后回复来自 <strong><a href="http://www.v2ex.com/member/hzlzh">$comment_user.name</a></strong>
 		            </span>
@@ -46,6 +46,6 @@ $for post_cur in posts:
 		    </tbody>
 	    </table>
 	</div>
-	    </div>
-	</div>
+</div>
+</div>
 </div>
