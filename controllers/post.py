@@ -37,6 +37,7 @@ class view:
 
 class create:
     
+    crumb = Crumb()
     form = post_model().form
     
     def GET(self, node_name):
@@ -44,10 +45,12 @@ class create:
             raise web.SeeOther('/login')
         conditions = {'name' : node_name}
         node = node_model().get_one(conditions)
+        self.crumb.append(node.display_name, '/node/'+node.name)
+        self.crumb.append('创建新主题')
         if node is None:
             return render.not_found('节点未找到', '节点未找到')
         title = '创建主题'
-        return render.create_post(self.form, title)
+        return render.create_post(self.form, title, self.crumb.output())
         
     def POST(self, node_name):
         if web.config._session.user_id is None:

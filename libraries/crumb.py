@@ -5,7 +5,7 @@ class Crumb:
     
     def __init__(self):
         self.separator = '<span class="chevron">&nbsp;›&nbsp;</span>'
-        self.content = [['首页', '/']]
+        self.content = [['Post_bar', '/']]
     
     def set_separator(self, separator):
         self.separator = separator

@@ -6,8 +6,15 @@ from config.config import *
 
 class comment_model(model):
     form = web.form.Form(
-       web.form.Textarea('content', notnull, rows=5, cols=80, description=''),
-       web.form.Button('评论')
+        web.form.Textarea('content',
+            notnull,
+            rows=5,
+            cols=80,
+            description='',
+            post='<div class="sep10"></div>',
+            class_='mll'
+        ),
+       web.form.Button('回复',class_='super normal button')
     )
      
     def __init__(self):

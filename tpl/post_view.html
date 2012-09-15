@@ -63,14 +63,8 @@ $else:
     </div>
     <div class="cell">
     	<form action="/comment/$post.id" method="post">
-    	$:form.render()
+    	$:form.render_css()
     	</form>
-    	<form method="post" action="/t/47442">
-        <textarea name="content" maxlength="10000" class="mll" id="reply_content"></textarea>
-        <div class="sep10"></div>
-        <div class="fr"><div class="sep5"></div><span class="gray">请尽量让自己的回复能够对别人有帮助</span></div>
-        <input type="hidden" value="77818" name="once">
-        <input type="submit" value="回复" class="super normal button"></form>
     </div>
     <div class="inner">
         <div class="fr"><a href="/">← V2EX</a></div>
