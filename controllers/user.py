@@ -5,14 +5,17 @@ import time
 from config.config import render
 from models.user_model import *
 from libraries.error import *
+from libraries.crumb import *
 
 class login:
     
     form = user_model().login_form
+    crumb = Crumb()
     
     def GET(self):
         title = '登录'
-        return render.login(self.form, title)
+        self.crumb.append('登录')
+        return render.login(self.form, title, self.crumb.output())
     
     def POST(self):
         if not self.form.validates():
@@ -30,10 +33,12 @@ class login:
 class signup:
     
     form = user_model().signup_form
+    crumb = Crumb()
     
     def GET(self):
         title = '注册'
-        return render.signup(self.form, title)
+        self.crumb.append('注册')
+        return render.signup(self.form, title, self.crumb.output())
     
     def POST(self):
         #return self.form.d.password + '|' + self.form.d.confirm_password

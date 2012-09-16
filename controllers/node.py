@@ -18,7 +18,7 @@ class index:
         else:
             self.crumb.append(node.display_name)
             post_conditions = {'node_id' : node.id}
-            posts_result = post_model().get_all(conditions = post_conditions)
+            posts_result = post_model().get_all(conditions = post_conditions, order = 'time DESC')
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}

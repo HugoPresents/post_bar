@@ -57,9 +57,11 @@ class create:
             raise web.SeeOther('/login')
         conditions = {'name' : node_name}
         node = node_model().get_one(conditions)
+        self.crumb.append(node.display_name, '/node/'+node.name)
+        self.crumb.append('创建新主题')
         if node is None:
             return render.not_found('节点未找到', '节点未找到')
         if not self.form.validates():
-            return render.create_post(self.form, '创建失败， 请重创:D')
+            return render.create_post(self.form, '创建失败， 请重创:D', self.crumb.output())
         post_id = post_model().insert(title = self.form.d.title, content = self.form.d.content, node_id = node.id, time = time.time(), user_id = web.config._session.user_id)
         raise web.seeother('/post/' + str(post_id))

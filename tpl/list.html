@@ -41,6 +41,8 @@ $for post_cur in posts:
 		            </span>
 		            </td>
 		            <td width="50" align="right" valign="middle">
+		            $if post.comments > 0:
+		            	<a href="/post/$post.id" class="count_livid">$post.comments</a>
 		            </td>
 		        </tr>
 		    </tbody>

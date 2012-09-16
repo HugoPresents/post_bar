@@ -1,7 +1,6 @@
 # -- coding: utf8 --
 # 辅助函数库
 
-
 # 将字典转换成sql where字符串
 def dict2where(dict):
     if dict is not None:
@@ -36,5 +35,5 @@ def stamp2during(stamp = 0):
 # 时间戳转为时间
 def cur_date(format = "%Y-%m-%d %H:%m:%S %p"):
     import time
-    from datetime import *
-    return datetime.now().strftime(format)
+    import datetime
+    return datetime.datetime.now().strftime(format)
