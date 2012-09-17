@@ -29,9 +29,12 @@ class login:
         web.config._session.user_id = user.id
         web.config._session.name = user.name
         data = web.input();
-        if data['next'] is not None:
-            raise web.SeeOther(data['next'])
-        else:
+        try:
+            if data['next'] is not None:
+                raise web.SeeOther(data['next'])
+            else:
+                raise web.SeeOther('/')
+        except KeyError:
             raise web.SeeOther('/')
 
 class signup:
@@ -77,9 +80,11 @@ class logout:
 class settings:
     
     form = user_model().setting_form
+    crumb = Crumb()
     
     def GET(self):
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/settings')
         else:
-            return render.settings('设置')
+            self.crumb.append('设置')
+            return render.settings('设置', self.crumb.output())
