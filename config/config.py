@@ -30,6 +30,8 @@ urls = (
 	'/login', pre_fix + 'user.login',
 	# 注销
 	'/logout', pre_fix + 'user.logout',
+	# 设置
+	'/settings', pre_fix + 'user.settings',
 	# 其他
 	'/.*', pre_fix + 'index.index'
 )

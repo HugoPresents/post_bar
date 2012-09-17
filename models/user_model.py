@@ -16,5 +16,9 @@ class user_model(model):
         web.form.Password('password', vpass, size=30, description="密码", class_='sl'),
         web.form.Button('注册', class_='super normal button')
     )
+    
+    setting_form = web.form.Form(
+                                 
+                                 )
     def __init__(self):
         super(user_model, self).__init__('user')

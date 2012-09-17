@@ -16,7 +16,9 @@ def dict2where(dict):
 # 时间戳转为到现在的时间差
 def stamp2during(stamp = 0):
     import time
-    cur_time = int(time.time())
+    from math import ceil
+    # 对当前时间向上取整，防止出现负数~
+    cur_time = int(ceil(time.time()))
     during = cur_time-stamp
     if during < 30:
         return str(during) + '秒前'

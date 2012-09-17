@@ -28,7 +28,11 @@ class login:
             return render.login(self.form, '登录失败，请重登')
         web.config._session.user_id = user.id
         web.config._session.name = user.name
-        raise web.seeother('/')
+        data = web.input();
+        if data['next'] is not None:
+            raise web.SeeOther(data['next'])
+        else:
+            raise web.SeeOther('/')
 
 class signup:
     
@@ -60,7 +64,7 @@ class signup:
             user_model().insert(name = name, email = email, password = password, regist_time = time.time())
         except ValueExistsError, x:
             return render.signup(self.form, x.message)
-        raise web.seeother('/')
+        raise web.seeOther('/')
 
 # 注销
 class logout:
@@ -68,3 +72,14 @@ class logout:
     def GET(self):
         web.config._session.kill()
         raise web.SeeOther('/')
+
+# 设置
+class settings:
+    
+    form = user_model().setting_form
+    
+    def GET(self):
+        if web.config._session.user_id is None:
+            raise web.SeeOther('/login?next=/settings')
+        else:
+            return render.settings('设置')
