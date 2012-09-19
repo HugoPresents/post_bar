@@ -79,7 +79,8 @@ class logout:
 # 设置
 class settings:
     
-    form = user_model().setting_form
+    settings_form = user_model().setting_form
+    pass_form = user_model().pass_form
     crumb = Crumb()
     
     def GET(self):
@@ -87,4 +88,7 @@ class settings:
             raise web.SeeOther('/login?next=/settings')
         else:
             self.crumb.append('设置')
-            return render.settings('设置', self.crumb.output())
+            user = user_model().get_one({'id':web.config._session.user_id})
+            self.settings_form.name.set_value(user.name)
+            self.settings_form.email.set_value(user.email)
+            return render.settings('设置', self.settings_form, self.pass_form, self.crumb.output())

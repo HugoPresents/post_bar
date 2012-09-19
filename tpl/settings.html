@@ -1,4 +1,4 @@
-$def with (title, crumb)
+$def with (title, settings_form, pass_form, crumb)
 $var title : $title
 <div id="Main">
 <div class="sep20"></div>          
@@ -9,129 +9,10 @@ $var title : $title
     
     <div class="inner">
         <form method="post" action="/settings">
-        <table cellpadding="5" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td width="120" align="right">用户名</td>
-                <td width="auto" align="left">Rabbit52</td>
-            </tr>
-            <tr>
-                <td width="120" align="right">电子邮件</td>
-                <td width="auto" align="left"><input type="email" class="sl" name="email" value="rabbitzhang52@yahoo.com"></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">个人网站</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="website" value="rabbit52.com"></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">所在地</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="location" value="成都"></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">签名</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="tagline" value="Python是新欢，PHP是旧爱"></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">BattleTag</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="battletag" value="" maxlength="32"></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">个人简介</td>
-                <td width="auto" align="left"><textarea class="ml" name="bio"></textarea></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">参与社区财富排行榜</td>
-                <td width="auto" align="left"><select name="list_rich">
-                    
-                    <option value="1">参与</option>
-                    <option value="0" selected="selected">不参与</option>
-                    
-                </select>&nbsp; &nbsp; <a href="/top/rich" target="_blank">查看当前排行榜 ›</a></td>
-            </tr>
-            <tr>
-                <td width="120" align="right"></td>
-                <td width="auto" align="left"><span class="gray">参与此排行榜将会公开你的个人资产状况。默认是不参与的。</span></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">显示余额</td>
-                <td width="auto" align="left"><select name="show_balance">
-                    
-                    <option value="1" selected="selected">显示</option>
-                    <option value="0">不显示</option>
-                    
-                </select>&nbsp; &nbsp; <a href="/balance" target="_blank">查看我的当前余额 ›</a></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">显示首页顶部</td>
-                <td width="auto" align="left"><select name="show_home_top">
-                    
-                    <option value="1" selected="selected">显示</option>
-                    <option value="0">不显示</option>
-                    
-                </select></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">显示首页节点导航</td>
-                <td width="auto" align="left"><select name="show_home_categories">
-                    
-                    <option value="1" selected="selected">显示</option>
-                    <option value="0">不显示</option>
-                    
-                </select></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">Twitter</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="twitter" value="Rabbit_52"></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">PSN ID</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="psn" value=""></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">BTC Address</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="btc" value=""></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">Dribbble Username</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="dribbble" value=""></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">GitHub Username</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="github" value="Rabbit52"></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">自定义首页跳转位置</td>
-                <td width="auto" align="left"><input type="text" class="sl" name="my_home" value=""></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">使用自定义 CSS</td>
-                <td width="auto" align="left"><select name="use_my_css">
-                    
-                    <option value="1">使用</option>
-                    <option value="0" selected="selected">不使用</option>
-                    
-                </select></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">自定义 CSS</td>
-                <td width="auto" align="left"><textarea class="ml" name="my_css">None</textarea></td>
-            </tr>
-            <tr>
-                <td width="120" align="right"></td>
-                <td width="auto" align="left"><input type="submit" class="super normal button" value="保存设置"></td>
-            </tr>
-        </tbody></table>
+        	$:settings_form.render()
         </form>
     </div>
 </div>
-<!--<div class="sep20"></div>
-<div class="box">
-    <div class="cell"><div class="fr"><span class="gray">增强版个人主页</span></div>My Profiles</div>
-    <div class="inner">
-        如果你是专业的软件开发者，那么非常推荐你使用 V2EX 的 Developer Profile 功能来更好地向整个互联网展示你的才华，从而获得更多关注和机会。
-        <div class="sep20"></div>
-        <input type="button" class="super normal button" value="填写我的 Developer Profile" onclick="location.href = '/profile/developer';" />
-    </div>
-</div>-->
 <div class="sep20"></div>
 <div class="box">
     <div class="cell">头像上传</div>
@@ -152,25 +33,8 @@ $var title : $title
 <div class="box">
     <div class="cell"><div class="fr"><span class="fade">如果你不打算更改密码，请留空以下区域</span></div>更改密码</div>
     <div class="inner">
-        <form method="post" action="/settings/password">
-        <table cellpadding="5" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td width="120" align="right">当前密码</td>
-                <td width="auto" align="left"><input type="password" class="sl" name="password_current" value=""></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">新密码</td>
-                <td width="auto" align="left"><input type="password" class="sl" name="password_new" value=""></td>
-            </tr>
-            <tr>
-                <td width="120" align="right">再次输入新密码</td>
-                <td width="auto" align="left"><input type="password" class="sl" name="password_again" value=""></td>
-            </tr>
-            <tr>
-                <td width="120" align="right"></td>
-                <td width="auto" align="left"><input type="submit" class="super normal button" value="更改密码"></td>
-            </tr>
-        </tbody></table>
+        <form method="post" action="/settings">
+        	$:pass_form.render()
         </form>
     </div>
 </div>
