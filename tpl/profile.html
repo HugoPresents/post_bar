@@ -1,4 +1,4 @@
-$def with (title)
+$def with (title, user)
 $var title: $title
 <div id="Main">
 <div class="sep20"></div>         
@@ -11,10 +11,10 @@ $var title: $title
                 <td width="auto" valign="top" align="left">
                     <div class="fr">
                     </div>
-                    <h1 style="margin-bottom: 5px;">Rabbit52</h1>
-                    <span class="bigger gray">Python是新欢，PHP是旧爱</span>
+                    <h1 style="margin-bottom: 5px;">$user.name</h1>
+                    <span class="bigger gray">$user.signature</span>
                     <div class="sep5"></div>
-                    <span class="fade">V2EX 第 23312 号会员，加入于 2012-07-10 16:22:00 PM</span>
+                    <span class="fade">$site_title 第 $user.id 号会员，加入于 $helper.stamp2during(user.regist_time)</span>
                     
                 </td>
             </tr>

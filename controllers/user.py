@@ -112,4 +112,4 @@ class profile:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
         else:
-            return render.profile(user.name)
+            return render.profile(user.name, user)
