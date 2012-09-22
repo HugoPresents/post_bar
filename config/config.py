@@ -32,6 +32,8 @@ urls = (
 	'/logout', pre_fix + 'user.logout',
 	# 设置
 	'/settings', pre_fix + 'user.settings',
+	#用户中心
+	'/profile/(\w+)', pre_fix + 'user.profile',
 	# 其他
 	'/.*', pre_fix + 'index.index'
 )

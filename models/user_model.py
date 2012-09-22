@@ -18,8 +18,8 @@ class user_model(model):
     )
     
     setting_form = web.form.Form(
-         web.form.Textbox('name', notnull, size=30, description="用户名", class_='sl', disabled='disabled'),
-         web.form.Textbox('email', notnull, size=30, description="邮箱", class_='sl'),
+         web.form.Textbox('name', size=30, description="用户名", class_='sl', disabled='disabled'),
+         web.form.Textbox('email', vemail, size=30, description="邮箱", class_='sl'),
          web.form.Button('保存设置', class_='super normal button')
      )
     

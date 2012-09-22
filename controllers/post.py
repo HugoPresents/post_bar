@@ -19,7 +19,8 @@ class view:
         post_model().add_view(id)
         post = post_model().get_one({'id':id})
         if post is None:
-            return render.post_nf('主题未找到')
+            self.crumb.append('主题未找到')
+            return render.post_nf('主题未找到', self.crumb.output())
         else:
             condition = {'id':post.node_id}
             node = node_model().get_one(condition)

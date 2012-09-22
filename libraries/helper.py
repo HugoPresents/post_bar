@@ -13,6 +13,16 @@ def dict2where(dict):
     else:
         return None
 
+# 将字典转换成sql update语句
+def dict2update(dict):
+    if dict is not None:
+        update_str = ''
+        for key,value in dict.items():
+            update_str += str(key) + '=\'' + str(value) + '\','
+        update_len = len(update_str)
+        update = update_str[0:update_len-1]
+        return update
+
 # 时间戳转为到现在的时间差
 def stamp2during(stamp = 0):
     import time

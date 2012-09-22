@@ -31,13 +31,13 @@ $for post_cur in posts:
 	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
 	        <tbody>
 	        	<tr>
-		            <td width="48" valign="top" align="center"><a href="/member/holsety"><img src="http://tb.v2ex.com/avatar/f8ab/ea41/8965_normal.png?m=1336538012" class="avatar" border="0" align="default" auto=""></a></td>
+		            <td width="48" valign="top" align="center"><a href="/profile/$user.name"><img src="http://tb.v2ex.com/avatar/f8ab/ea41/8965_normal.png?m=1336538012" class="avatar" border="0" align="default" auto=""></a></td>
 		            <td width="10"></td>
 		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
 		            <div class="sep5"></div>
-		            <span class="small fade"><strong><a href="/member/holsety">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2during(post.time)
+		            <span class="small fade"><strong><a href="/profile/$user.name">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2during(post.time)
 		            $if comment_user is not None:
-						 &nbsp;•&nbsp; 最后回复来自 <strong><a href="http://www.v2ex.com/member/hzlzh">$comment_user.name</a></strong>
+						 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$user.name">$comment_user.name</a></strong>
 		            </span>
 		            </td>
 		            <td width="50" align="right" valign="middle">

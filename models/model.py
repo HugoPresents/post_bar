@@ -22,13 +22,21 @@ class model:
     
     def insert(self, **values):
         def q(x): return "(" + x + ")"
-        
         if values:
             sql_query = 'INSERT INTO '+ self._tb + q(', '.join(values.keys())) + ' VALUES' + q(', '.join('\''+str(_value)+'\'' for _value in values.values()))
             db.query(sql_query)
             return self.last_insert_id()
         else:
            return None
+    
+    def update(self, condition, **values):
+        where = dict2where(condition)
+        update = dict2update(values)
+        if values is not None:
+            sql_query = 'UPDATE ' + self._tb + ' SET ' + update + ' WHERE ' + where + ' LIMIT 1'
+            db.query(sql_query)
+        return True
+    
     def query(self, sql):
         db.query(sql)
     

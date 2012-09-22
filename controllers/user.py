@@ -41,16 +41,16 @@ class signup:
     
     form = user_model().signup_form
     crumb = Crumb()
+    crumb.append('注册')
     
     def GET(self):
         title = '注册'
-        self.crumb.append('注册')
         return render.signup(self.form, title, self.crumb.output())
     
     def POST(self):
         #return self.form.d.password + '|' + self.form.d.confirm_password
         if not self.form.validates():
-            return render.signup(self.form, '注册失败，请重注')
+            return render.signup(self.form, '注册失败，请重注', self.crumb.output())
         try:
             condition = {'name':self.form.d.name}
             user = user_model().get_one(condition)
@@ -66,7 +66,7 @@ class signup:
                 raise ValueExistsError('邮箱已经存在')
             user_model().insert(name = name, email = email, password = password, regist_time = time.time())
         except ValueExistsError, x:
-            return render.signup(self.form, x.message)
+            return render.signup(self.form, x.message, self.crumb.output())
         raise web.seeOther('/')
 
 # 注销
@@ -82,13 +82,34 @@ class settings:
     settings_form = user_model().setting_form
     pass_form = user_model().pass_form
     crumb = Crumb()
+    crumb.append('设置')
     
     def GET(self):
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/settings')
         else:
-            self.crumb.append('设置')
             user = user_model().get_one({'id':web.config._session.user_id})
             self.settings_form.name.set_value(user.name)
             self.settings_form.email.set_value(user.email)
             return render.settings('设置', self.settings_form, self.pass_form, self.crumb.output())
+    def POST(self):
+        user = user_model().get_one({'id':web.config._session.user_id})
+        self.settings_form.name.set_value(user.name)
+        if not self.settings_form.validates():
+            self.settings_form.name.set_value(user.name)
+            self.settings_form.email.set_value(user.email)
+            return render.settings('设置', self.settings_form, self.pass_form, self.crumb.output())
+        else:
+            user_model().update({'id':user.id}, email=self.settings_form.d.email)
+            raise web.SeeOther('/settings')
+
+class profile:
+    
+    def GET(self, name):
+        user = user_model().get_one({'name':name})
+        if user is None:
+            crumb = Crumb()
+            crumb.append('会员未找到')
+            return render.user_nf('会员未找到', crumb.output())
+        else:
+            return render.profile(user.name)
