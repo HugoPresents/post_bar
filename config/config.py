@@ -32,8 +32,12 @@ urls = (
 	'/logout', pre_fix + 'user.logout',
 	# 设置
 	'/settings', pre_fix + 'user.settings',
-	#用户中心
+	# 用户中心
 	'/profile/(\w+)', pre_fix + 'user.profile',
+	# 收藏帖子
+	'/post/fav/(\d+)', pre_fix + 'post.fav',
+	# 取消收藏帖子
+	'/post/unfav/(\d+)', pre_fix + 'post.unfav',
 	# 其他
 	'/.*', pre_fix + 'index.index'
 )

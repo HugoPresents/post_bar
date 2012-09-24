@@ -15,7 +15,6 @@ $var title: $title
                     <span class="bigger gray">$user.signature</span>
                     <div class="sep5"></div>
                     <span class="fade">$site_title 第 $user.id 号会员，加入于 $helper.stamp2during(user.regist_time)</span>
-                    
                 </td>
             </tr>
         </tbody></table>
@@ -45,7 +44,7 @@ $if posts:
 		            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2during(post.time) &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong></span>
 		            </td>
 		            <td width="50" align="right" valign="middle">
-		                <a href="/t/47889#reply16" class="count_livid">$post.comments</a>
+		                <a href="/post/$post.id" class="count_livid">$post.comments</a>
 		            </td>
 		        </tr>
 		    </tbody></table>

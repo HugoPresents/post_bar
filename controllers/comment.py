@@ -20,7 +20,7 @@ class add:
             if not self.form.validates():
                 raise web.SeeOther('/post/' + post_id)
             else:
-                comment_model().insert(user_id = web.config._session.user_id, post_id = post_id, content = self.form.d.content, time = time.time())
+                comment_model().insert({'user_id' : web.config._session.user_id, 'post_id' : post_id, 'content' : self.form.d.content, 'time' : time.time()})
                 post_model().count_comment(post_id)
                 raise web.SeeOther('/post/' + post_id)
         else:

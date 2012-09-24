@@ -1,4 +1,4 @@
-$def with (post, user, comments, form, crumb)
+$def with (post, user, comments, form, post_fav, crumb)
 $var title: $post.title
 <div id="Main">
 <div class="sep20"></div>
@@ -14,11 +14,15 @@ $var title: $post.title
         $post.content
         </div>
     </div>
-    <div class="topic_buttons">
-    	<div class="fr gray f11" style="line-height: 12px; padding-top: 3px; text-shadow: 0px 1px 0px #fff;">$post.views 次点击 &nbsp;</div>
-	    <a href="/favorite/topic/47442?t=1341908520" class="tb">加入收藏</a> &nbsp;
+$if session.user_id:
+	<div class="topic_buttons">
+		<div class="fr gray f11" style="line-height: 12px; padding-top: 3px; text-shadow: 0px 1px 0px #fff;">$post.views 次点击 &nbsp;</div>
+	    $if post_fav:
+	    	<a href="/post/unfav/$post.id" class="tb">取消收藏</a>
+	    $else:
+	    	<a href="/post/fav/$post.id" class="tb">加入收藏</a>
 	    <a href="#;" onclick="window.open('https://twitter.com/share?url=http://www.v2ex.com/t/47442?r\u003DRabbit52&amp;related=v2ex&amp;hashtags=babel&amp;text=有没有类似v2ex风格的php论坛？', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tb">Tweet</a> &nbsp;<a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url=http://www.v2ex.com/t/47442?r\u003DRabbit52&amp;title=V2EX%20-%20有没有类似v2ex风格的php论坛？', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="tb">Weibo</a> &nbsp;<div id="topic_thank"><a href="#;" onclick="if (confirm('你确定要向本主题创建者发送谢意？')) { thankTopic(47442, 1341908520); }" class="tb">感谢</a></div>
-    </div>
+	</div>
 </div>
 <div class="sep20"></div>
 $if post.comments > 0:
@@ -57,18 +61,19 @@ $else:
 	    </div>
 	</div>
 <div class="sep20"></div>
-<div class="box">
-    <div class="cell"><div class="fr"><a href="#"><strong>↑</strong> 回到顶部</a></div>
-        添加一条新回复
-    </div>
-    <div class="cell">
-    	<form action="/comment/$post.id" method="post">
-    	$:form.render_css()
-    	</form>
-    </div>
-    <div class="inner">
-        <div class="fr"><a href="/">← Post_bar</a></div>
-        &nbsp;
-    </div>
-</div>
+$if session.user_id:
+	<div class="box">
+	    <div class="cell"><div class="fr"><a href="#"><strong>↑</strong> 回到顶部</a></div>
+	        添加一条新回复
+	    </div>
+	    <div class="cell">
+	    	<form action="/comment/$post.id" method="post">
+	    	$:form.render_css()
+	    	</form>
+	    </div>
+	    <div class="inner">
+	        <div class="fr"><a href="/">← Post_bar</a></div>
+	        &nbsp;
+	    </div>
+	</div>
 </div>

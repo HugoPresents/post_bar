@@ -31,6 +31,7 @@ class login:
             return render.login(self.form, '登录失败，请重登')
         web.config._session.user_id = user.id
         web.config._session.name = user.name
+        web.config._session.signature = user.signature
         data = web.input();
         try:
             if data['next'] is not None:
@@ -51,13 +52,11 @@ class signup:
         return render.signup(self.form, title, self.crumb.output())
     
     def POST(self):
-        #return self.form.d.password + '|' + self.form.d.confirm_password
         if not self.form.validates():
             return render.signup(self.form, '注册失败，请重注', self.crumb.output())
         try:
             condition = {'name':self.form.d.name}
             user = user_model().get_one(condition)
-            #user_model.insert(self.form.d.name, self.form.d.email, self.form.d.password)
             # 对密码进行 md5 加密
             password = hashlib.md5(self.form.d.password).hexdigest()
             user = get_user(condition)
@@ -67,7 +66,7 @@ class signup:
             user = user_model().get_one(condition)
             if user is not None:
                 raise ValueExistsError('邮箱已经存在')
-            user_model().insert(name = name, email = email, password = password, regist_time = time.time())
+            user_model().insert({'name' : name, 'email' : email, 'password' : password, 'regist_time' : time.time()})
         except ValueExistsError, x:
             return render.signup(self.form, x.message, self.crumb.output())
         raise web.seeOther('/')
@@ -120,8 +119,6 @@ class profile:
                 posts = []
                 for post_result in posts_result:
                     post = {'post':post_result}
-                    #user = user_model().get_one({'id':post_result.user_id})
-                    #post['user'] = user
                     node = node_model().get_one({'id':post_result.node_id})
                     post['node'] = node
                     comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
@@ -134,7 +131,6 @@ class profile:
             else:
                 posts = None
             comments_result = comment_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
-            #return len(comments_result)
             if len(comments_result) > 0:
                 comments = []
                 for comment_result in comments_result:
