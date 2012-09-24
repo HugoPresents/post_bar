@@ -4,6 +4,9 @@ import hashlib
 import time
 from config.config import render
 from models.user_model import *
+from models.post_model import *
+from models.node_model import *
+from models.comment_model import *
 from libraries.error import *
 from libraries.crumb import *
 
@@ -112,4 +115,22 @@ class profile:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
         else:
-            return render.profile(user.name, user)
+            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            if len(posts_result) > 0:
+                posts = []
+                for post_result in posts_result:
+                    post = {'post':post_result}
+                    #user = user_model().get_one({'id':post_result.user_id})
+                    #post['user'] = user
+                    node = node_model().get_one({'id':post_result.node_id})
+                    post['node'] = node
+                    comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                    if comment:
+                        comment_user = user_model().get_one({'id':comment.user_id})
+                        post['comment_user'] = comment_user
+                    else:
+                        post['comment_user'] = None
+                    posts.append(post)
+            else:
+                posts = None
+            return render.profile(user.name, user, posts)
