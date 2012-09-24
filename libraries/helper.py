@@ -31,15 +31,15 @@ def stamp2during(stamp = 0):
     cur_time = int(ceil(time.time()))
     during = cur_time-stamp
     if during < 30:
-        return str(during) + '秒前'
+        return str(during) + ' 秒前'
     if during < 60:
         return '半分钟前'
     if during < 3600:
-        return str(int(during/60)) + '分钟前'
+        return str(int(during/60)) + ' 分钟前'
     if during < 24*3600:
-        return str(int(during/3600)) + '小时前'
+        return str(int(during/3600)) + ' 小时前'
     if during < 365*24*3600:
-        return str(int(during/(24*3600))) + '天前'
+        return str(int(during/(24*3600))) + ' 天前'
     #return str(int(during/(24*3600))) + '天前'
     ltime=time.localtime(stamp)
     return time.strftime("%Y-%m-%d %H:%m:%S %p", ltime)

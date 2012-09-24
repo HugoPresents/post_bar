@@ -133,4 +133,15 @@ class profile:
                     posts.append(post)
             else:
                 posts = None
-            return render.profile(user.name, user, posts)
+            comments_result = comment_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            #return len(comments_result)
+            if len(comments_result) > 0:
+                comments = []
+                for comment_result in comments_result:
+                    post = post_model().get_one({'id':comment_result.post_id})
+                    post_user = user_model().get_one({'id':post.user_id})
+                    comment = {'post':post, 'comment':comment_result, 'post_user':post_user}
+                    comments.append(comment)
+            else:
+                comments = None
+            return render.profile(user.name, user, posts, comments)

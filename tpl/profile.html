@@ -1,4 +1,4 @@
-$def with (title, user, posts)
+$def with (title, user, posts, comments)
 $var title: $title
 <div id="Main">
 <div class="sep20"></div>         
@@ -42,7 +42,7 @@ $if posts:
 		        <tbody><tr>
 		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
 		            <div class="sep5"></div>
-		            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong> &nbsp;•&nbsp; 3 天前 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong></span>
+		            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2during(post.time) &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong></span>
 		            </td>
 		            <td width="50" align="right" valign="middle">
 		                <a href="/t/47889#reply16" class="count_livid">$post.comments</a>
@@ -56,146 +56,30 @@ $if posts:
 <div class="sep20"></div>
 <div class="box">
     <div class="cell"><span class="gray">$user.name 最近回复了</span></div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">1 天前</span></div><span class="gray">回复了 un 创建的主题 <span class="chevron">›</span> <a href="/t/48384#reply10">求php比较适合初学的教材</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">我看的是 LAMP兄弟连的 《细说PHP》</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">1 天前</span></div><span class="gray">回复了 uniy 创建的主题 <span class="chevron">›</span> <a href="/t/48385#reply16">mac&amp;iphone下，大家是怎么翻墙的?</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">goagent</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">3 天前</span></div><span class="gray">回复了 hippypopo 创建的主题 <span class="chevron">›</span> <a href="/t/48053#reply2">慢出99新 罗技Z506音响 5.1，75瓦</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">貌似很厉害的样子 帮顶下~</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">3 天前</span></div><span class="gray">回复了 flylee2011 创建的主题 <span class="chevron">›</span> <a href="/t/47957#reply42">求推荐免备案的VPS，香港的是不是对国内速度快点儿？</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">@<a href="/member/sophy">sophy</a> 能装，但是不能用~，你看上面的回复嘛</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">4 天前</span></div><span class="gray">回复了 tylr 创建的主题 <span class="chevron">›</span> <a href="/t/47979#reply10">成都本地出一台Galaxy Note/N7000</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">目测价格比较厚道，顶楼主</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">4 天前</span></div><span class="gray">回复了 flylee2011 创建的主题 <span class="chevron">›</span> <a href="/t/47957#reply42">求推荐免备案的VPS，香港的是不是对国内速度快点儿？</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">@<a href="/member/liuhang0077">liuhang0077</a> 你的VPS啥时候能装VPN嘛，好久了都，不鸟我 ==</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">4 天前</span></div><span class="gray">回复了 feiandxs 创建的主题 <span class="chevron">›</span> <a href="/t/47944#reply21">gitcafe/gitshell/gitcd这类国内的git托管服务，到底有什么理由让人去使用？</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">@<a href="/member/POPOEVER">POPOEVER</a> 赞成，主要是担心生存不了多久</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">4 天前</span></div><span class="gray">回复了 LU35 创建的主题 <span class="chevron">›</span> <a href="/t/47934#reply1">大西洋帝国第三季开播了。</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">哇哦，人人影视已经能下第一集了！</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">4 天前</span></div><span class="gray">回复了 binarymann 创建的主题 <span class="chevron">›</span> <a href="/t/35502#reply82">对于非工科背景的我来说，自学PHP和Java哪个更容易找到专职程序员的工作些？</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="inner">
-        <div class="reply_content">我觉得PHP应该是</div>
-    </div>
-    
-    <div class="dock_area">
-        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">5 天前</span></div><span class="gray">回复了 Rabbit52 创建的主题 <span class="chevron">›</span> <a href="/t/47889#reply16">GitCafe开放注册了</a></span></td> 
-            </tr>
-            <tr>
-                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-            </tr>
-        </tbody></table>
-    </div>
-    <div class="cell">
-        <div class="reply_content">@<a href="/member/xiaoshenge">xiaoshenge</a> system 的 id，么勒意思？</div>
-    </div>
-    <div class="inner"><span class="chevron">»</span> <a href="/member/Rabbit52/replies">Rabbit52 创建的更多回复</a></div>
+$if comments:
+	$ comment_len = len(comments)
+	$ comment_len_mark = 0
+	$ class_t = 'inner'
+	$for comment in comments:
+		$ comment_len_mark += 1
+		$if comment_len_mark == comment_len:
+			$ class_t = 'cell'
+		$ comment_cur = comment['comment']
+		$ post = comment['post']
+		$ post_user = comment['post_user'] 
+	    <div class="dock_area">
+	        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	            <tbody><tr>
+	                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">$helper.stamp2during(comment_cur.time)</span></div><span class="gray">回复了 $post_user.name 创建的主题 <span class="chevron">›</span> <a href="/post/$post.id">$post.title</a></span></td> 
+	            </tr>
+	            <tr>
+	                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
+	            </tr>
+	        </tbody></table>
+	    </div>
+	    <div class="$class_t">
+	        <div class="reply_content">$comment_cur.content</div>
+	    </div>
+<div class="inner"><span class="chevron">»</span> <a href="/member/Rabbit52/replies">$user.name 创建的更多回复</a></div>
 </div>
 </div>
