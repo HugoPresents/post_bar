@@ -28,6 +28,7 @@ class view:
             if web.config._session.user_id:
                 if user_meta_model().get_one({'user_id':web.config._session.user_id, 'meta_key':'post_fav', 'meta_value':post.id}):
                     post_fav = True
+            favs = user_meta_model().count_meta({'meta_key':'post_fav','meta_value':id})
             node = node_model().get_one({'id':post.node_id})
             user = user_model().get_one({'id':post.user_id})
             self.crumb.append(node.display_name, '/node/'+node.name)
@@ -39,7 +40,7 @@ class view:
                     user = user_model().get_one({'id':comment_result.user_id})
                     comments.append({'comment':comment_result, 'user':user})
             form = comment_model().form
-            return render.post_view(post, user, comments, form, post_fav, self.crumb.output())
+            return render.post_view(post, user, comments, form, post_fav, favs, self.crumb.output())
 
 # 创建帖子
 class create:
@@ -86,7 +87,7 @@ class fav:
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/post/fav/'+post_id)
         user_meta_model().unique_insert({'user_id':web.config._session.user_id, 'meta_key':'post_fav', 'meta_value':post_id})
-        user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta(web.config._session.user_id, 'post_fav')})
+        user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'post_fav'})})
         user_model().update_session(web.config._session.user_id)
         raise web.SeeOther('/post/'+post_id)
 
@@ -96,6 +97,6 @@ class unfav:
         if web.config._session.user_id is None:
                 raise web.SeeOther('/login?next=/post/unfav/'+post_id)
         user_meta_model().delete({'user_id':web.config._session.user_id, 'meta_key':'post_fav','meta_value':post_id})
-        user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta(web.config._session.user_id, 'post_fav')})
+        user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'post_fav'})})
         user_model().update_session(web.config._session.user_id)
         raise web.SeeOther('/post/'+post_id)

@@ -1,11 +1,17 @@
-$def with (post, user, comments, form, post_fav, crumb)
+$def with (post, user, comments, form, post_fav, favs, crumb)
 $var title: $post.title
 <div id="Main">
-<div class="sep20"></div>
+<div class="sep20">
+	
+</div>
 <div class="box" style="border-bottom: 0px;">
-    <div class="header"><div class="fr"><a href="/member/liyangdal"><img src="http://tb.v2ex.com/avatar/371b/ce7d/352_large.png?m=1331334161" class="avatar" border="0" align="default" auto=""></a></div>
+    <div class="header"><div class="fr"><a href="/member/liyangdal">
+    	<img src="$helper.avatar_url(user.avatar, 'big')" class="avatar">
+    	</a>
+    </div>
     $:crumb
-    <div class="sep10"></div>
+    <div class="sep10">
+    </div>
     <h1>$post.title</h1>
     <small class="gray">By <a href="/member/liyangdal">$user.name</a> at $helper.stamp2during(post.time), $post.views 次点击 &nbsp; </small>
     </div>
@@ -16,15 +22,20 @@ $var title: $post.title
     </div>
 $if session.user_id:
 	<div class="topic_buttons">
-		<div class="fr gray f11" style="line-height: 12px; padding-top: 3px; text-shadow: 0px 1px 0px #fff;">$post.views 次点击 &nbsp;</div>
+		<div class="fr gray f11" style="line-height: 12px; padding-top: 3px; text-shadow: 0px 1px 0px #fff;">$post.views 次点击 &nbsp;
+		$if favs>0:
+			∙ &nbsp; $favs 人收藏 
+		</div>
 	    $if post_fav:
 	    	<a href="/post/unfav/$post.id" class="tb">取消收藏</a>
 	    $else:
 	    	<a href="/post/fav/$post.id" class="tb">加入收藏</a>
-	    <a href="#;" onclick="window.open('https://twitter.com/share?url=http://www.v2ex.com/t/47442?r\u003DRabbit52&amp;related=v2ex&amp;hashtags=babel&amp;text=有没有类似v2ex风格的php论坛？', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tb">Tweet</a> &nbsp;<a href="#;" onclick="window.open('http://service.weibo.com/share/share.php?url=http://www.v2ex.com/t/47442?r\u003DRabbit52&amp;title=V2EX%20-%20有没有类似v2ex风格的php论坛？', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="tb">Weibo</a> &nbsp;<div id="topic_thank"><a href="#;" onclick="if (confirm('你确定要向本主题创建者发送谢意？')) { thankTopic(47442, 1341908520); }" class="tb">感谢</a></div>
+	    <a href="###" onclick="window.open('https://twitter.com/share?url=$site_url/post/$post.id&amp;related=v2ex&amp;hashtags=$site_title&amp;text=$post.title', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tb">Tweet</a> &nbsp;
+	    <a href="###" onclick="window.open('http://service.weibo.com/share/share.php?url=$site_url/post/$post.id&amp;title=$post.title#site_title#', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="tb">Weibo</a> &nbsp;
 	</div>
 </div>
-<div class="sep20"></div>
+<div class="sep20">
+</div>
 $if post.comments > 0:
 	<div class="box">
 	<div class="cell">
@@ -35,17 +46,20 @@ $if post.comments > 0:
 		$ comment_num += 1
 		$ comment = comment_cur['comment']
 		$ comment_user = comment_cur['user']
-		<div class="inner">
+		<div class="inner" id="reply-$comment.id">
 		    <table cellpadding="0" cellspacing="0" border="0" width="100%">
 		        <tbody><tr>
-		            <td width="48" valign="top" align="center"><img src="http://tb.v2ex.com/avatar/4496/bf24/1828_normal.png?m=1334941384" class="avatar" border="0" align="default" auto=""></td>
-		            <td width="10" valign="top"></td>
+		            <td width="48" valign="top" align="center"><img src="$helper.avatar_url(comment_user.avatar)" class="avatar" border="0"></td>
+		            <td width="10" valign="top">
+		            </td>
 		            <td width="auto" valign="top" align="left"><div class="fr"><div id="thank_area_422216" class="thank_area"><a href="#;" onclick="thankReply(422216, 1341908520);" class="thank">感谢回复者</a>
 		            </div> &nbsp; <a href="#;" onclick="replyOne('chouj');">
-		            	<img src="http://static.v2ex.com/static/img/reply.png" align="absmiddle" border="0" alt="Reply"></a> &nbsp;&nbsp; <span class="no">$comment_num</span></div>
-		                <div class="sep3"></div>
+		            	<img src="/static/img/reply.png" align="absmiddle" border="0" alt="Reply"></a> &nbsp;&nbsp; <span class="no">$comment_num</span></div>
+		                <div class="sep3">
+		                </div>
 		                <strong><a href="/member/chouj" class="dark">$comment_user.name</a></strong>&nbsp; &nbsp;<span class="fade small">$helper.stamp2during(comment.time)</span> 
-		                <div class="sep5"></div>
+		                <div class="sep5">
+		                </div>
 		                <div class="reply_content">
 		                	$:comment.content
 		                </div>
@@ -60,7 +74,8 @@ $else:
 	        <span style="color: rgba(0, 0, 0, 0.25);">目前尚无回复</span>
 	    </div>
 	</div>
-<div class="sep20"></div>
+<div class="sep20">
+</div>
 $if session.user_id:
 	<div class="box">
 	    <div class="cell"><div class="fr"><a href="#"><strong>↑</strong> 回到顶部</a></div>

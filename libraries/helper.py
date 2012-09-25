@@ -49,3 +49,12 @@ def cur_date(format = "%Y-%m-%d %H:%m:%S %p"):
     import time
     import datetime
     return datetime.datetime.now().strftime(format)
+
+def avatar_url(avatar, mode = 'normal'):
+    import os
+    avatar = str(avatar)
+    path = 'static/avatar/'+mode+'/'
+    if os.path.exists(path+avatar) and avatar is not None:
+        return '/'+path+avatar
+    else:
+        return '/'+path+'default.jpg'

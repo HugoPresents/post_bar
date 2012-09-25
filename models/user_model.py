@@ -36,6 +36,7 @@ class user_model(model):
         user = self.get_one({'id':user_id})
         web.config._session.user_id = user.id
         web.config._session.name = user.name
+        web.config._session.avatar = user.avatar
         web.config._session.signature = user.signature
         web.config._session.node_favs = user.node_favs
         web.config._session.posts = user.posts

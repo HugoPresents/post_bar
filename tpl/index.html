@@ -1,7 +1,8 @@
 $def with (cats, posts, title = None)
 $var title : $title
 <div id="Main">
-<div class="sep20"></div>
+<div class="sep20">
+</div>
 <div class="box">
 	<div class="cell" id="Tabs">
 		<a href="http://www.v2ex.com/?tab=all" class="tab_current">全部</a>
@@ -15,10 +16,15 @@ $for post_cur in posts:
 	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
 	        <tbody>
 		        <tr>
-		            <td width="48" valign="top" align="center"><a href="/profile/$user.name"><img src="./V2EX_files/6746_normal.png" class="avatar" border="0" align="default" auto=""></a></td>
-		            <td width="10"></td>
+		            <td width="48" valign="top" align="center"><a href="/profile/$user.name">
+			            	<img src="$helper.avatar_url(user.avatar)" class="avatar">
+			            </a>
+		            </td>
+		            <td width="10">
+		            </td>
 		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
-		            <div class="sep5"></div>
+		            <div class="sep5">
+		            </div>
 		            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.time)
 					$if comment_user is not None:
 						 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$user.name">$comment_user.name</a></strong>
@@ -33,7 +39,8 @@ $for post_cur in posts:
 	    </table>
 	</div>
 </div>
-<div class="sep20"></div>
+<div class="sep20">
+</div>
 <div class="box">
     <div class="cell"><div class="fr"><a>这儿就是全部节点=.=</a></div><span class="fade"><strong>Post_bar</strong> / 节点导航</span></div>
 $for cat_cur in cats:

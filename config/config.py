@@ -30,6 +30,8 @@ urls = (
 	'/logout', pre_fix + 'user.logout',
 	# 设置
 	'/settings', pre_fix + 'user.settings',
+	# 上传头像
+	'/settings/avatar', pre_fix + 'user.avatar',
 	# 用户中心
 	'/profile/(\w+)', pre_fix + 'user.profile',
 	# 收藏帖子

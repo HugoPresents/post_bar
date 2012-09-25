@@ -16,5 +16,6 @@ else:
 
 # 如果这里不 不将 session 赋值给模板全局变量， 模板中将不能得到此变量
 web.template.Template.globals['session'] = session
+web.template.Template.globals['site_url'] = 'http://127.0.0.1:8080'
 if __name__ == "__main__":
 	app.run()

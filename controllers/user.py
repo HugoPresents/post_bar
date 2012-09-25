@@ -15,6 +15,10 @@ class login:
     form = user_model().login_form
     crumb = Crumb()
     
+    def __init__(self):
+        if web.config._session.user_id:
+            raise web.SeeOther('/')
+    
     def GET(self):
         title = '登录'
         self.crumb.append('登录')
@@ -84,14 +88,15 @@ class settings:
     crumb = Crumb()
     crumb.append('设置')
     
-    def GET(self):
+    def __init__(self):
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/settings')
-        else:
-            user = user_model().get_one({'id':web.config._session.user_id})
-            self.settings_form.name.set_value(user.name)
-            self.settings_form.email.set_value(user.email)
-            return render.settings('设置', self.settings_form, self.pass_form, self.crumb.output())
+    
+    def GET(self):
+        user = user_model().get_one({'id':web.config._session.user_id})
+        self.settings_form.name.set_value(user.name)
+        self.settings_form.email.set_value(user.email)
+        return render.settings('设置', self.settings_form, self.pass_form, self.crumb.output())
     def POST(self):
         user = user_model().get_one({'id':web.config._session.user_id})
         self.settings_form.name.set_value(user.name)
@@ -139,3 +144,37 @@ class profile:
             else:
                 comments = None
             return render.profile(user.name, user, posts, comments)
+
+class avatar:
+    
+    crumb = Crumb()
+    
+    def __init__(self):
+        if web.config._session.user_id is None:
+            raise web.SeeOther('/login?next=/settings/avatar')
+    
+    def GET(self):
+        self.crumb.append('设置', '/settings/')
+        self.crumb.append('上传头像')
+        user = user_model().get_one({'id':web.config._session.user_id})
+        return render.avatar('上传头像', user, self.crumb.output())
+    def POST(self):
+        x = web.input(myfile={})
+        if 'myfile' in x:
+            filepath=x.myfile.filename.replace('\\','/')                                       #客户端为windows时注意
+            filename=filepath.split('/')[-1]                                                           #获取文件名
+            ext = filename.split('.', 1)[1]                                                              #获取后缀
+            if ext == 'jpg':                                                                                       #判断文件后缀名
+                homedir = os.getcwd()
+                filedir = '%s/static/upload' %homedir #要上传的路径
+                now=datetime.now()
+                t ="%d%d%d%d%d%d" %(now.year,now.month,now.day,now.hour,now.minute,now.second) #以时间作为文件名
+                filename = t+'.'+ext
+                fout = open(filedir +'/'+ filename,'w')
+                fout.write(x.myfile.file.read())
+                fout.close()
+                message = u'OK！'
+                error = False
+            else:
+                message = '请上传jpg格式的文件！'
+                error = True
