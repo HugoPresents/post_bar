@@ -76,14 +76,18 @@ class create:
 # 收藏帖子
 class fav:
     
+    crumb = Crumb()
+    
     def GET(self, post_id):
         post = post_model().get_one({'id':post_id})
         if post is None:
-            raise web.SeeOther('/')
+            self.crumb.append('主题未找到')
+            return render.post_nf('主题未找到', self.crumb.output())
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/post/fav/'+post_id)
         user_meta_model().unique_insert({'user_id':web.config._session.user_id, 'meta_key':'post_fav', 'meta_value':post_id})
         user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta(web.config._session.user_id, 'post_fav')})
+        user_model().update_session(web.config._session.user_id)
         raise web.SeeOther('/post/'+post_id)
 
 class unfav:
@@ -93,4 +97,5 @@ class unfav:
                 raise web.SeeOther('/login?next=/post/unfav/'+post_id)
         user_meta_model().delete({'user_id':web.config._session.user_id, 'meta_key':'post_fav','meta_value':post_id})
         user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta(web.config._session.user_id, 'post_fav')})
+        user_model().update_session(web.config._session.user_id)
         raise web.SeeOther('/post/'+post_id)

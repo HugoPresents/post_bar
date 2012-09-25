@@ -31,3 +31,13 @@ class user_model(model):
     )
     def __init__(self):
         super(user_model, self).__init__('user')
+    
+    def update_session(self, user_id):
+        user = self.get_one({'id':user_id})
+        web.config._session.user_id = user.id
+        web.config._session.name = user.name
+        web.config._session.signature = user.signature
+        web.config._session.node_favs = user.node_favs
+        web.config._session.posts = user.posts
+        web.config._session.post_favs = user.post_favs
+        web.config._session.user_favs = user.user_favs

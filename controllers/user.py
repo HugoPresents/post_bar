@@ -29,9 +29,7 @@ class login:
         user = user_model().get_one(condition)
         if user is None:
             return render.login(self.form, '登录失败，请重登')
-        web.config._session.user_id = user.id
-        web.config._session.name = user.name
-        web.config._session.signature = user.signature
+        user_model().update_session(user.id)
         data = web.input();
         try:
             if data['next'] is not None:

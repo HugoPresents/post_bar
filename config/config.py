@@ -9,8 +9,6 @@ db = web.database(dbn='mysql', db='post_bar', user='root', pw='rabbit')
 
 web.config.debug = True
 
-site_title = 'Post Bar'
-
 pre_fix = 'controllers.'
 
 urls = (
@@ -38,6 +36,10 @@ urls = (
 	'/post/fav/(\d+)', pre_fix + 'post.fav',
 	# 取消收藏帖子
 	'/post/unfav/(\d+)', pre_fix + 'post.unfav',
+	# 收藏节点
+	'/node/fav/(\w+)', pre_fix + 'node.fav',
+	# 取消收藏节点
+	'/node/unfav/(\w+)', pre_fix + 'node.unfav',
 	# 其他
 	'/.*', pre_fix + 'index.index'
 )

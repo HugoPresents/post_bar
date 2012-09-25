@@ -1,4 +1,4 @@
-$def with (posts, node, crumb)
+$def with (posts, node, node_fav, crumb)
 $var title: $node.description
 <div id="Main">
 	<div class="sep20">
@@ -11,8 +11,11 @@ $var title: $node.description
 			<div class="fr f12">
 				<span class="snow">主题总数</span> 
 				<strong class="gray">15</strong> 
-				<span class="snow">&nbsp;•&nbsp;</span> 
-				<a href="/favorite/node/291?t=1341908520">收藏这个节点</a>
+				<span class="snow">&nbsp;•&nbsp;</span>
+				$if node_fav:
+					<a href="/node/unfav/$node.name">取消收藏这个节点</a>
+				$else:
+					<a href="/node/fav/$node.name">收藏这个节点</a>
 			</div>
 			$:crumb
 		    <div class="sep10">
