@@ -54,7 +54,7 @@ def avatar_url(avatar, mode = 'normal'):
     import os
     avatar = str(avatar)
     path = 'static/avatar/'+mode+'/'
-    if os.path.exists(path+avatar) and avatar is not None:
+    if os.path.exists(path+avatar) and avatar != '':
         return '/'+path+avatar
     else:
         return '/'+path+'default.jpg'

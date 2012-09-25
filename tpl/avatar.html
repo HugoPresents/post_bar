@@ -1,4 +1,4 @@
-$def with (title, user, crumb)
+$def with (title, user, crumb, message='')
 $var title: title
 <div id="Main">
 <div class="sep20">
@@ -24,12 +24,12 @@ $var title: title
             <tr>
                 <td width="120" align="right">
                 </td>
-                <td width="auto" align="left"><span class="gray">支持 2MB 以内的 PNG / JPG / GIF 文件</span></td>
+                <td width="auto" align="left"><span class="gray">支持 2MB 以内的 PNG / JPG / GIF 文件</span><font style="color: red">$message</font></td>
             </tr>
             <tr>
                 <td width="120" align="right">
                 </td>
-                <td width="auto" align="left"><input type="submit" class="super normal button" name="avatar" value="开始上传"></td>
+                <td width="auto" align="left"><input type="submit" class="super normal button" value="开始上传"></td>
             </tr>
         </tbody></table></form>
     </div>

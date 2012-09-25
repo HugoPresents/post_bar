@@ -1,4 +1,4 @@
-$def with (title, settings_form, pass_form, crumb)
+$def with (title, user, settings_form, pass_form, crumb)
 $var title : $title
 <div id="Main">
 <div class="sep20"></div>          
@@ -20,7 +20,11 @@ $var title : $title
         <table cellpadding="5" cellspacing="0" border="0" width="100%">
             <tbody><tr>
                 <td width="120" align="right">当前头像</td>
-                <td width="auto" align="left"><img src="http://tb.v2ex.com/avatar/f43b/4217/23312_large.png?m=1341908734" class="avatar" border="0" align="default" auto=""> &nbsp; <img src="http://tb.v2ex.com/avatar/f43b/4217/23312_normal.png?m=1341908734" class="avatar" border="0" align="default" auto=""> &nbsp; <img src="http://tb.v2ex.com/avatar/f43b/4217/23312_mini.png?m=1341908734" class="avatar" border="0" align="default" auto=""></td>
+                <td width="auto" align="left">
+                	<img src="$helper.avatar_url(user.avatar, 'big')" class="avatar" border="0"> &nbsp; 
+                	<img src="$helper.avatar_url(user.avatar, 'normal')" class="avatar" border="0"> &nbsp; 
+                	<img src="$helper.avatar_url(user.avatar, 'tiny')" class="avatar" border="0">
+                </td>
             </tr>
             <tr>
                 <td width="120" align="right"></td>

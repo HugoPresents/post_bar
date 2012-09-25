@@ -96,14 +96,14 @@ class settings:
         user = user_model().get_one({'id':web.config._session.user_id})
         self.settings_form.name.set_value(user.name)
         self.settings_form.email.set_value(user.email)
-        return render.settings('设置', self.settings_form, self.pass_form, self.crumb.output())
+        return render.settings('设置', user, self.settings_form, self.pass_form, self.crumb.output())
     def POST(self):
         user = user_model().get_one({'id':web.config._session.user_id})
         self.settings_form.name.set_value(user.name)
         if not self.settings_form.validates():
             self.settings_form.name.set_value(user.name)
             self.settings_form.email.set_value(user.email)
-            return render.settings('设置', self.settings_form, self.pass_form, self.crumb.output())
+            return render.settings('设置', user, self.settings_form, self.pass_form, self.crumb.output())
         else:
             user_model().update({'id':user.id}, email=self.settings_form.d.email)
             raise web.SeeOther('/settings')
@@ -152,29 +152,41 @@ class avatar:
     def __init__(self):
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/settings/avatar')
+        self.user = user_model().get_one({'id':web.config._session.user_id})
     
     def GET(self):
         self.crumb.append('设置', '/settings/')
         self.crumb.append('上传头像')
-        user = user_model().get_one({'id':web.config._session.user_id})
-        return render.avatar('上传头像', user, self.crumb.output())
+        return render.avatar('上传头像', self.user, self.crumb.output())
     def POST(self):
-        x = web.input(myfile={})
-        if 'myfile' in x:
-            filepath=x.myfile.filename.replace('\\','/')                                       #客户端为windows时注意
-            filename=filepath.split('/')[-1]                                                           #获取文件名
-            ext = filename.split('.', 1)[1]                                                              #获取后缀
-            if ext == 'jpg':                                                                                       #判断文件后缀名
-                homedir = os.getcwd()
-                filedir = '%s/static/upload' %homedir #要上传的路径
-                now=datetime.now()
-                t ="%d%d%d%d%d%d" %(now.year,now.month,now.day,now.hour,now.minute,now.second) #以时间作为文件名
-                filename = t+'.'+ext
-                fout = open(filedir +'/'+ filename,'w')
-                fout.write(x.myfile.file.read())
+        import cgi
+        cgi.maxlen = 2 * 1024 * 1024 # 2MB
+        try:
+            x = web.input(avatar={})
+        except ValueError:
+            return render.avatar('上传头像', self.user, self.crumb.output(), ' <<超过大小限制')
+        if 'avatar' in x:
+            #客户端为windows时注意
+            filepath=x.avatar.filename.replace('\\','/')
+            #获取文件名
+            filename=filepath.split('/')[-1]
+            #获取后缀
+            ext = filename.split('.', 1)[1]
+            ext_allow = ('jpg', 'png', 'gif', 'jpeg')
+            #判断文件后缀名 
+            if ext in ext_allow:
+                #要上传的路径
+                filedir = 'static/avatar/tmp/'
+                filename = str(web.config._session.user_id) +'.'+ext
+                fout = open(filedir + filename,'wb')
+                fout.write(x.avatar.file.read())
                 fout.close()
-                message = u'OK！'
+                user_model().set_avatar(filename, self.user.id)
                 error = False
             else:
-                message = '请上传jpg格式的文件！'
+                message = ' <<请上传指定格式文件'
                 error = True
+        if error:
+            return render.avatar('上传头像', self.user, self.crumb.output(), message)
+        else:
+            raise web.SeeOther('/settings/avatar')

@@ -42,3 +42,35 @@ class user_model(model):
         web.config._session.posts = user.posts
         web.config._session.post_favs = user.post_favs
         web.config._session.user_favs = user.user_favs
+    
+    def set_avatar(self, filename, user_id):
+        import Image
+        import os
+        path = 'static/avatar/'
+        im = Image.open(path+'tmp/'+filename)
+        size = im.size
+        if size[0] > size[1]:
+            left = (size[0]-size[1])/2
+            right = size[1] + left
+            upper = 0
+            lower = size[1]
+        else:
+            left = 0
+            right = size[0]
+            upper = (size[1]-size[0])/2
+            lower = size[0] + upper
+        box = (left, upper, right, lower)
+        region = im.crop(box)
+        region.save(path+'tmp/'+filename)
+        im = Image.open(path+'tmp/'+filename)
+        im.thumbnail((73, 73))
+        im.save(path+'big/'+filename)
+        im.thumbnail((48, 48))
+        im.save(path+'normal/'+filename)
+        im.thumbnail((24, 24))
+        im.save(path+'tiny/'+filename)
+        del im, region
+        os.remove(path+'tmp/'+filename)
+        self.update({'id':user_id}, {'avatar':filename})
+        self.update_session(user_id)
+        
