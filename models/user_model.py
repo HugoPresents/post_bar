@@ -65,24 +65,12 @@ class user_model(model):
         region = im.crop(box)
         region.save(path+'tmp/'+filename)
         im = Image.open(path+'tmp/'+filename)
-        im.thumbnail((73, 73))
-        if crop_size > 73:
-            quality = int(73/crop_size * 100)
-        else:
-            quality = 100
-        im.save(path+'big/'+filename, quality = quality)
-        im.thumbnail((48, 48))
-        if crop_size > 48:
-            quality = int(48/crop_size * 100)
-        else:
-            quality = 100
-        im.save(path+'normal/'+filename, quality = quality)
-        im.thumbnail((24, 24))
-        if crop_size > 24:
-            quality = int(24/crop_size * 100)
-        else:
-            quality = 100
-        im.save(path+'tiny/'+filename, quality = quality)
+        im.thumbnail((73, 73), Image.ANTIALIAS)
+        im.save(path+'big/'+filename)
+        im.thumbnail((48, 48), Image.ANTIALIAS)
+        im.save(path+'normal/'+filename)
+        im.thumbnail((24, 24), Image.ANTIALIAS)
+        im.save(path+'tiny/'+filename)
         del im, region
         os.remove(path+'tmp/'+filename)
         self.update({'id':user_id}, {'avatar':filename})

@@ -160,6 +160,7 @@ class avatar:
         return render.avatar('上传头像', self.user, self.crumb.output())
     def POST(self):
         import cgi
+        import os
         cgi.maxlen = 2 * 1024 * 1024 # 2MB
         try:
             x = web.input(avatar={})
@@ -178,7 +179,9 @@ class avatar:
                 #要上传的路径
                 filedir = 'static/avatar/tmp/'
                 filename = str(web.config._session.user_id) +'.'+ext
-                fout = open(filedir + filename,'wb')
+                if os.path.exists(filedir+filename):
+                    os.remove(filedir+filename)
+                fout = open(filedir + filename, 'wb')
                 fout.write(x.avatar.file.read())
                 fout.close()
                 user_model().set_avatar(filename, self.user.id)
