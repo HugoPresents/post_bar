@@ -155,7 +155,7 @@ class avatar:
         self.user = user_model().get_one({'id':web.config._session.user_id})
     
     def GET(self):
-        self.crumb.append('设置', '/settings/')
+        self.crumb.append('设置', '/settings')
         self.crumb.append('上传头像')
         return render.avatar('上传头像', self.user, self.crumb.output())
     def POST(self):

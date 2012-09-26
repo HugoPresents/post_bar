@@ -50,11 +50,13 @@ class user_model(model):
         im = Image.open(path+'tmp/'+filename)
         size = im.size
         if size[0] > size[1]:
+            crop_size = size[1]
             left = (size[0]-size[1])/2
             right = size[1] + left
             upper = 0
             lower = size[1]
         else:
+            crop_size = size[0]
             left = 0
             right = size[0]
             upper = (size[1]-size[0])/2
@@ -64,11 +66,23 @@ class user_model(model):
         region.save(path+'tmp/'+filename)
         im = Image.open(path+'tmp/'+filename)
         im.thumbnail((73, 73))
-        im.save(path+'big/'+filename)
+        if crop_size > 73:
+            quality = int(73/crop_size * 100)
+        else:
+            quality = 100
+        im.save(path+'big/'+filename, quality = quality)
         im.thumbnail((48, 48))
-        im.save(path+'normal/'+filename)
+        if crop_size > 48:
+            quality = int(48/crop_size * 100)
+        else:
+            quality = 100
+        im.save(path+'normal/'+filename, quality = quality)
         im.thumbnail((24, 24))
-        im.save(path+'tiny/'+filename)
+        if crop_size > 24:
+            quality = int(24/crop_size * 100)
+        else:
+            quality = 100
+        im.save(path+'tiny/'+filename, quality = quality)
         del im, region
         os.remove(path+'tmp/'+filename)
         self.update({'id':user_id}, {'avatar':filename})
