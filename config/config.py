@@ -38,6 +38,8 @@ urls = (
 	'/post/fav/(\d+)', pre_fix + 'post.fav',
 	# 取消收藏帖子
 	'/post/unfav/(\d+)', pre_fix + 'post.unfav',
+	# 收藏的主题
+	'/user/posts', pre_fix + 'user.posts',
 	# 收藏节点
 	'/node/fav/(\w+)', pre_fix + 'node.fav',
 	# 取消收藏节点

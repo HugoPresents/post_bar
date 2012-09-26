@@ -4,6 +4,7 @@ import hashlib
 import time
 from config.config import render
 from models.user_model import *
+from models.user_meta_model import *
 from models.post_model import *
 from models.node_model import *
 from models.comment_model import *
@@ -193,3 +194,36 @@ class avatar:
             return render.avatar('上传头像', self.user, self.crumb.output(), message)
         else:
             raise web.SeeOther('/settings/avatar')
+
+# 收藏的主题
+class posts():
+    crumb = Crumb()
+    
+    def __init__(self):
+        if web.config._session.user_id is None:
+            raise web.SeeOther('/login?next=/user/posts')
+    
+    def GET(self):
+        self.crumb.append('我收藏的主题')
+        user = user_model().get_one({'id':web.config._session.user_id})
+        if user.post_favs > 0:
+            post_favs = user_meta_model().get_all({'user_id':user.id, 'meta_key':'post_fav'}, limit = 10, order = 'id DESC')
+            #posts_result = post_model().get_all({''}, limit = 10, order = 'time DESC')
+            posts = []
+            for post_fav in post_favs:
+                post_result = post_model().get_one({'id':post_fav.meta_value})
+                post = {'post':post_result}
+                user = user_model().get_one({'id':post_result.user_id})
+                post['user'] = user
+                node = node_model().get_one({'id':post_result.node_id})
+                post['node'] = node
+                comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                if comment:
+                    comment_user = user_model().get_one({'id':comment.user_id})
+                    post['comment_user'] = comment_user
+                else:
+                    post['comment_user'] = None
+                posts.append(post)
+        else:
+            posts = None
+        return render.post_favs('我收藏的主题', user, posts, self.crumb.output())
