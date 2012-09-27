@@ -64,13 +64,20 @@ class user_model(model):
         box = (left, upper, right, lower)
         region = im.crop(box)
         region.save(path+'tmp/'+filename)
+        user = self.get_one({'id':user_id})
+        try:
+            os.remove(path+'big/'+user.avatar)
+            os.remove(path+'normal/'+user.avatar)
+            os.remove(path+'tiny/'+user.avatar)
+        except:
+            pass
         im = Image.open(path+'tmp/'+filename)
         im.thumbnail((73, 73), Image.ANTIALIAS)
-        im.save(path+'big/'+filename)
+        im.save(path+'big/'+filename, quality = 100)
         im.thumbnail((48, 48), Image.ANTIALIAS)
-        im.save(path+'normal/'+filename)
+        im.save(path+'normal/'+filename, quality = 100)
         im.thumbnail((24, 24), Image.ANTIALIAS)
-        im.save(path+'tiny/'+filename)
+        im.save(path+'tiny/'+filename, quality = 100)
         del im, region
         os.remove(path+'tmp/'+filename)
         self.update({'id':user_id}, {'avatar':filename})

@@ -173,7 +173,7 @@ class avatar:
             #获取文件名
             filename=filepath.split('/')[-1]
             #获取后缀
-            ext = filename.split('.', 1)[1]
+            ext = filename.split('.', 1)[1].lower()
             ext_allow = ('jpg', 'png', 'gif', 'jpeg')
             #判断文件后缀名 
             if ext in ext_allow:
