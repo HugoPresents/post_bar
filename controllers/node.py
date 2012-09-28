@@ -23,15 +23,15 @@ class index:
             if web.config._session.user_id:
                 if user_meta_model().get_one({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id}):
                     node_fav = True
-            post_conditions = {'node_id' : node.id}
-            posts_result = post_model().get_all(conditions = post_conditions, order = 'time DESC')
+            total_rows = post_model().count_table({'node_id':node.id})
+            posts_result = post_model().get_all({'node_id' : node.id}, order = 'time DESC')
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}
                 user = user_model().get_one({'id':post_result.user_id})
                 post['user'] = user
-                node = node_model().get_one({'id':post_result.node_id})
-                post['node'] = node
+                #node = node_model().get_one({'id':post_result.node_id})
+                #post['node'] = node
                 comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
                 if comment:
                     comment_user = user_model().get_one({'id':comment.user_id})
@@ -39,7 +39,7 @@ class index:
                 else:
                     post['comment_user'] = None
                 posts.append(post)
-            return render.list(posts, node, node_fav, self.crumb.output())
+            return render.list(posts, node, total_rows, node_fav, self.crumb.output())
 
 class fav:
     
@@ -53,7 +53,7 @@ class fav:
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/node/'+node_name)
         user_meta_model().unique_insert({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id})
-        user_model().update({'id':web.config._session.user_id}, {'node_favs':user_meta_model().count_meta(web.config._session.user_id, 'node_fav')})
+        user_model().update({'id':web.config._session.user_id}, {'node_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'node_fav'})})
         user_model().update_session(web.config._session.user_id)
         raise web.SeeOther('/node/'+node_name)
 
@@ -69,6 +69,6 @@ class unfav:
         if web.config._session.user_id is None:
             raise web.SeeOther('/login?next=/node/'+node_name)
         user_meta_model().delete({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id})
-        user_model().update({'id':web.config._session.user_id}, {'node_favs':user_meta_model().count_meta(web.config._session.user_id, 'node_fav')})
+        user_model().update({'id':web.config._session.user_id}, {'node_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'node_fav'})})
         user_model().update_session(web.config._session.user_id)
         raise web.SeeOther('/node/'+node_name)

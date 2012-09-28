@@ -227,3 +227,42 @@ class posts():
         else:
             posts = None
         return render.post_favs('我收藏的主题', user, posts, self.crumb.output())
+
+# 收藏的节点
+class nodes:
+    
+    crumb = Crumb()
+    
+    def __init__(self):
+        if web.config._session.user_id is None:
+            raise web.SeeOther('/login?next=/user/nodes')
+    
+    def GET(self):
+        self.crumb.append('来自我收藏的节点的最新主题')
+        # 取出收藏的节点id
+        node_favs = user_meta_model().get_all({'user_id':web.config._session.user_id, 'meta_key':'node_fav'})
+        if len(node_favs) > 0 :
+            nodes = []
+            for node_fav in node_favs:
+                nodes.append(node_fav.meta_value)
+            total_rows = post_model().count_table({'node_id':nodes})
+            posts_result = post_model().get_all(conditions = {'node_id': nodes}, order = 'time DESC', limit = 10)
+            posts = []
+            for post_result in posts_result:
+                post = {'post':post_result}
+                user = user_model().get_one({'id':post_result.user_id})
+                post['user'] = user
+                node = node_model().get_one({'id':post_result.node_id})
+                post['node'] = node
+                comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                if comment:
+                    comment_user = user_model().get_one({'id':comment.user_id})
+                    post['comment_user'] = comment_user
+                else:
+                    post['comment_user'] = None
+                posts.append(post)
+        else:
+            posts = None
+            total_rows = 0
+        return render.node_favs('来自我收藏的节点的最新主题', posts, total_rows, self.crumb.output())
+        

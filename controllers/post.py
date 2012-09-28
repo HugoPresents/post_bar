@@ -31,14 +31,15 @@ class view:
             favs = user_meta_model().count_meta({'meta_key':'post_fav','meta_value':id})
             node = node_model().get_one({'id':post.node_id})
             user = user_model().get_one({'id':post.user_id})
+            #return user.name
             self.crumb.append(node.display_name, '/node/'+node.name)
             condition = {'post_id' : post.id}
             comments_result = comment_model().get_all(condition, order = 'time ASC')
             comments = []
             if comments_result is not None:
                 for comment_result in comments_result:
-                    user = user_model().get_one({'id':comment_result.user_id})
-                    comments.append({'comment':comment_result, 'user':user})
+                    comment_user = user_model().get_one({'id':comment_result.user_id})
+                    comments.append({'comment':comment_result, 'user':comment_user})
             form = comment_model().form
             return render.post_view(post, user, comments, form, post_fav, favs, self.crumb.output())
 

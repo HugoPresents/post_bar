@@ -6,7 +6,10 @@ def dict2where(dict):
     if dict is not None:
         where_str = ''
         for key, value in dict.items():
-            where_str += str(key) + '=\'' + str(value) + '\' AND '
+            if isinstance(value, list):
+                where_str += str(key) + ' in (' + ', '.join('\''+str(_value)+'\'' for _value in value) + ') AND'
+            else:
+                where_str += str(key) + '=\'' + str(value) + '\' AND '
         where_len = len(where_str)
         where = where_str[0 : where_len-4]
         return where

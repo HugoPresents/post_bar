@@ -1,4 +1,4 @@
-$def with (posts, node, node_fav, crumb)
+$def with (posts, node, total_rows, node_fav, crumb)
 $var title: $node.description
 <div id="Main">
 	<div class="sep20">
@@ -10,7 +10,7 @@ $var title: $node.description
 			</div>
 			<div class="fr f12">
 				<span class="snow">主题总数</span> 
-				<strong class="gray">15</strong> 
+				<strong class="gray">$total_rows</strong> 
 				<span class="snow">&nbsp;•&nbsp;</span>
 				$if node_fav:
 					<a href="/node/unfav/$node.name">取消收藏这个节点</a>
@@ -34,7 +34,8 @@ $for post_cur in posts:
 	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
 	        <tbody>
 	        	<tr>
-		            <td width="48" valign="top" align="center"><a href="/profile/$user.name"><img src="http://tb.v2ex.com/avatar/f8ab/ea41/8965_normal.png?m=1336538012" class="avatar" border="0" align="default" auto=""></a></td>
+		            <td width="48" valign="top" align="center"><a href="/profile/$user.name">
+		            	<img src="$helper.avatar_url(user.avatar)" class="avatar" border="0" align="default" auto=""></a></td>
 		            <td width="10"></td>
 		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
 		            <div class="sep5"></div>

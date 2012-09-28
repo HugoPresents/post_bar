@@ -42,6 +42,8 @@ urls = (
 	'/user/posts', pre_fix + 'user.posts',
 	# 收藏节点
 	'/node/fav/(\w+)', pre_fix + 'node.fav',
+	# 收藏节点的主题
+	'/user/nodes', pre_fix + 'user.nodes',
 	# 取消收藏节点
 	'/node/unfav/(\w+)', pre_fix + 'node.unfav',
 	# 其他

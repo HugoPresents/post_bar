@@ -61,7 +61,9 @@ class model:
         return self._tb
     
     def count_table(self, conditions):
-        if where is not None:
-            return len(self.get_all(conditions))
-        else:
-            return 0
+        sql = 'SELECT count(*) as rows FROM ' + self._tb
+        where = ''
+        if conditions is not None:
+            where = dict2where(conditions)
+            sql += ' WHERE ' + where
+        return db.query(sql)[0].rows
