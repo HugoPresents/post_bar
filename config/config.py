@@ -39,11 +39,13 @@ urls = (
 	# 取消收藏帖子
 	'/post/unfav/(\d+)', pre_fix + 'post.unfav',
 	# 收藏的主题
-	'/user/posts', pre_fix + 'user.posts',
+	'/my/posts', pre_fix + 'user.post_favs',
+	# 用户创建的主题
+	'/profile/(\w+)/posts', pre_fix + 'user.posts',
 	# 收藏节点
 	'/node/fav/(\w+)', pre_fix + 'node.fav',
 	# 收藏节点的主题
-	'/user/nodes', pre_fix + 'user.nodes',
+	'/my/nodes', pre_fix + 'user.node_favs',
 	# 取消收藏节点
 	'/node/unfav/(\w+)', pre_fix + 'node.unfav',
 	# 其他

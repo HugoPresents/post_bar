@@ -66,6 +66,9 @@ class user_model(model):
         region.save(path+'tmp/'+filename)
         user = self.get_one({'id':user_id})
         try:
+            os.makedirs(path+'big')
+            os.makedirs(path+'normal')
+            os.makedirs(path+'tiny')
             os.remove(path+'big/'+user.avatar)
             os.remove(path+'normal/'+user.avatar)
             os.remove(path+'tiny/'+user.avatar)

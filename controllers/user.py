@@ -179,6 +179,10 @@ class avatar:
             if ext in ext_allow:
                 #要上传的路径
                 filedir = 'static/avatar/tmp/'
+                try:
+                    os.makedirs('static/avatar/tmp')
+                except:
+                    pass
                 filename = str(web.config._session.user_id) +'.'+ext
                 if os.path.exists(filedir+filename):
                     os.remove(filedir+filename)
@@ -196,7 +200,7 @@ class avatar:
             raise web.SeeOther('/settings/avatar')
 
 # 收藏的主题
-class posts():
+class post_favs():
     crumb = Crumb()
     
     def __init__(self):
@@ -228,8 +232,8 @@ class posts():
             posts = None
         return render.post_favs('我收藏的主题', user, posts, self.crumb.output())
 
-# 收藏的节点
-class nodes:
+# 来自收藏节点的主题
+class node_favs:
     
     crumb = Crumb()
     
@@ -265,4 +269,29 @@ class nodes:
             posts = None
             total_rows = 0
         return render.node_favs('来自我收藏的节点的最新主题', posts, total_rows, self.crumb.output())
+
+# 某用户创建的主题
+class posts:
+    
+    def GET(self, name):
+        user = user_model().get_one({'name':name})
+        if user:
+            crumb = Crumb()
+            crumb.append(name, '/profile/'+name)
+            crumb.append('全部主题')
+            total_rows = post_model().count_table({'user_id':user.id})
+            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            posts = []
+            for post_result in posts_result:
+                post = {'post':post_result}
+                node = node_model().get_one({'id':post_result.node_id})
+                post['node'] = node
+                comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                if comment:
+                    comment_user = user_model().get_one({'id':comment.user_id})
+                    post['comment_user'] = comment_user
+                else:
+                    post['comment_user'] = None
+                posts.append(post)
+            return render.user_posts('全部主题', user,  posts, total_rows, crumb.output())
         

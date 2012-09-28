@@ -8,8 +8,6 @@ $var title: $title
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <tbody><tr>
                 <td width="73" valign="top" align="center"><img src="$helper.avatar_url(user.avatar, 'big')" class="avatar" border="0">
-                	<div class="sep10">
-                	</div><strong class="online">ONLINE</strong></td>
                 <td width="10">
                 </td>
                 <td width="auto" valign="top" align="left">
@@ -66,7 +64,7 @@ $if posts:
 		        </tr>
 		    </tbody></table>
 		</div>
-<div class="inner"><span class="chevron">»</span> <a href="/topics">$user.name 创建的更多主题</a></div>
+<div class="inner"><span class="chevron">»</span> <a href="/profile/$user.name/posts">$user.name 创建的更多主题</a></div>
     
 </div>
 <div class="sep20">
@@ -97,6 +95,6 @@ $if comments:
 	    <div class="$class_t">
 	        <div class="reply_content">$comment_cur.content</div>
 	    </div>
-<div class="inner"><span class="chevron">»</span> <a href="/member/Rabbit52/replies">$user.name 创建的更多回复</a></div>
+<div class="inner"><span class="chevron">»</span> <a href="/profile/$user.name/comments">$user.name 创建的更多回复</a></div>
 </div>
 </div>
