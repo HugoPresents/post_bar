@@ -10,6 +10,7 @@ from models.node_model import *
 from models.comment_model import *
 from libraries.error import *
 from libraries.crumb import *
+from libraries.pagination import *
 
 class login:
     
@@ -309,7 +310,9 @@ class comments:
             crumb.append(name, '/profile/'+name)
             crumb.append('全部回复')
             total = comment_model().count_table({'user_id':user.id})
-            comments_result = comment_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            pagination = Pagination('/profile/'+name+'/comments', total)
+            page = pagination.true_page(web.input(p=1)['p'])
+            comments_result = comment_model().get_all({'user_id':user.id}, limit = 10, offset = (page-1)*10, order = 'time DESC')
             if len(comments_result) > 0:
                 comments = []
                 for comment_result in comments_result:
@@ -319,7 +322,7 @@ class comments:
                     comments.append(comment)
             else:
                 comments = None
-            return render.user_comments('全部回复', comments, total, crumb.output())
+            return render.user_comments('全部回复', comments, total, crumb.output(), pagination.output(page))
         else:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
