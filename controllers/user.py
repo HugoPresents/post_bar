@@ -270,17 +270,18 @@ class node_favs:
             total_rows = 0
         return render.node_favs('来自我收藏的节点的最新主题', posts, total_rows, self.crumb.output())
 
-# 某用户创建的主题
+# 用户创建的主题
 class posts:
     
     def GET(self, name):
         user = user_model().get_one({'name':name})
+        crumb = Crumb()
         if user:
-            crumb = Crumb()
             crumb.append(name, '/profile/'+name)
             crumb.append('全部主题')
             total_rows = post_model().count_table({'user_id':user.id})
-            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            data = web.input(p = 1)
+            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, offset = (int(data['p'])-1) * 10, order = 'time DESC')
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}
@@ -294,4 +295,32 @@ class posts:
                     post['comment_user'] = None
                 posts.append(post)
             return render.user_posts('全部主题', user,  posts, total_rows, crumb.output())
+        else:
+            crumb.append('会员未找到')
+            return render.user_nf('会员未找到', crumb.output())
+
+# 用户创建的回复
+class comments:
+    
+    def GET(self, name):
+        user = user_model().get_one({'name':name})
+        crumb = Crumb()
+        if user:
+            crumb.append(name, '/profile/'+name)
+            crumb.append('全部回复')
+            total = comment_model().count_table({'user_id':user.id})
+            comments_result = comment_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            if len(comments_result) > 0:
+                comments = []
+                for comment_result in comments_result:
+                    post = post_model().get_one({'id':comment_result.post_id})
+                    post_user = user_model().get_one({'id':post.user_id})
+                    comment = {'post':post, 'comment':comment_result, 'post_user':post_user}
+                    comments.append(comment)
+            else:
+                comments = None
+            return render.user_comments('全部回复', comments, total, crumb.output())
+        else:
+            crumb.append('会员未找到')
+            return render.user_nf('会员未找到', crumb.output())
         

@@ -16,9 +16,9 @@ class model:
         except IndexError:
             return None
     
-    def get_all(self, conditions = None, order = None, limit = None):
+    def get_all(self, conditions = None, order = None, limit = None, offset = None):
         where = dict2where(conditions)
-        return db.select(self._tb, where = where, order = order, limit = limit)
+        return db.select(self._tb, where = where, order = order, limit = limit, offset = offset)
     
     def insert(self, values = None):
         def q(x): return "(" + x + ")"

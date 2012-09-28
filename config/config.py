@@ -42,6 +42,8 @@ urls = (
 	'/my/posts', pre_fix + 'user.post_favs',
 	# 用户创建的主题
 	'/profile/(\w+)/posts', pre_fix + 'user.posts',
+	# 用户创建的回复
+	'/profile/(\w+)/comments', pre_fix + 'user.comments',
 	# 收藏节点
 	'/node/fav/(\w+)', pre_fix + 'node.fav',
 	# 收藏节点的主题
