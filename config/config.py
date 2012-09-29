@@ -34,6 +34,12 @@ urls = (
 	'/settings/avatar', pre_fix + 'user.avatar',
 	# 用户中心
 	'/profile/(\w+)', pre_fix + 'user.profile',
+	# 关注用户
+	'/follow/(\w+)', pre_fix + 'user.follow',
+	# 取消关注
+	'/unfollow/(\w+)', pre_fix + 'user.unfollow',
+	# 来自关注人的帖子
+	'/my/following', pre_fix +'user.following',
 	# 收藏帖子
 	'/post/fav/(\d+)', pre_fix + 'post.fav',
 	# 取消收藏帖子

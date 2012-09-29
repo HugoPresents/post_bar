@@ -145,7 +145,11 @@ class profile:
                     comments.append(comment)
             else:
                 comments = None
-            return render.profile(user.name, user, posts, comments)
+            following = False
+            if web.config._session.user_id:
+                if user_meta_model().get_one({'user_id':web.config._session.user_id, 'meta_key':'follow', 'meta_value':user.id}):
+                    following = True
+            return render.profile(user.name, user, posts, comments, following)
 
 class avatar:
     
@@ -206,7 +210,7 @@ class post_favs():
     
     def __init__(self):
         if web.config._session.user_id is None:
-            raise web.SeeOther('/login?next=/user/posts')
+            raise web.SeeOther('/login?next=/my/posts')
     
     def GET(self):
         self.crumb.append('我收藏的主题')
@@ -241,7 +245,7 @@ class node_favs:
     
     def __init__(self):
         if web.config._session.user_id is None:
-            raise web.SeeOther('/login?next=/user/nodes')
+            raise web.SeeOther('/login?next=/my/nodes')
     
     def GET(self):
         self.crumb.append('来自我收藏的节点的最新主题')
@@ -332,4 +336,80 @@ class comments:
         else:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
-        
+
+# 关注用户
+class follow:
+    
+    def GET(self, name):
+        user = user_model().get_one({'name':name})
+        if user is None:
+            crumb = Crumb()
+            crumb.append('会员未找到')
+            return render.user_nf('会员未找到', crumb.output())
+        else:
+            if web.config._session.user_id is None:
+                raise web.SeeOther('/login?next=/profile/'+name)
+            user_meta_model().unique_insert({'user_id':web.config._session.user_id, 'meta_key':'follow', 'meta_value':user.id})
+            user_model().update({'id':web.config._session.user_id}, {'user_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'follow'})})
+            user_model().update_session(web.config._session.user_id)
+            raise web.SeeOther('/profile/'+name)
+
+# 取消关注用户
+class unfollow:
+    
+    def GET(self, name):
+        user = user_model().get_one({'name':name})
+        if user is None:
+            crumb = Crumb()
+            crumb.append('会员未找到')
+            return render.user_nf('会员未找到', crumb.output())
+        else:
+            if web.config._session.user_id is None:
+                raise web.SeeOther('/login?next=/profile/'+name)
+            user_meta_model().delete({'user_id':web.config._session.user_id, 'meta_key':'follow', 'meta_value':user.id})
+            user_model().update({'id':web.config._session.user_id}, {'user_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'follow'})})
+            user_model().update_session(web.config._session.user_id)
+            raise web.SeeOther('/profile/'+name)
+
+# 来自关注用户的帖子
+class following:
+    
+    crumb = Crumb()
+    
+    def __init__(self):
+        if web.config._session.user_id is None:
+            raise web.SeeOther('/login?next=/user/nodes')
+    
+    def GET(self):
+        self.crumb.append('我关注的人的最新主题')
+        # 取出收藏的节点id
+        followings = user_meta_model().get_all({'user_id':web.config._session.user_id, 'meta_key':'follow'})
+        if len(followings) > 0 :
+           user_favs = []
+           for following in followings:
+               user_favs.append(following.meta_value)
+           total_rows = post_model().count_table({'user_id':user_favs})
+           pagination = Pagination('/my/following', total_rows)
+           page = pagination.true_page(web.input(p=1)['p'])
+           posts_result = post_model().get_all(conditions = {'user_id': user_favs}, order = 'time DESC', limit = 10, offset = (page-1)*10)
+           posts = []
+           for post_result in posts_result:
+               post = {'post':post_result}
+               user = user_model().get_one({'id':post_result.user_id})
+               post['user'] = user
+               node = node_model().get_one({'id':post_result.node_id})
+               post['node'] = node
+               comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+               if comment:
+                   comment_user = user_model().get_one({'id':comment.user_id})
+                   post['comment_user'] = comment_user
+               else:
+                   post['comment_user'] = None
+               posts.append(post)
+        else:
+           posts = None
+           total_rows = 0
+           pagination = Pagination('/my/nodes', total_rows)
+           page = pagination.true_page(web.input(p=1)['p'])
+        return render.following_posts('来自我收藏的节点的最新主题', posts, total_rows, self.crumb.output(), pagination.output())
+            

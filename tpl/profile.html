@@ -1,4 +1,4 @@
-$def with (title, user, posts, comments)
+$def with (title, user, posts, comments, following)
 $var title: $title
 <div id="Main">
 <div class="sep20">
@@ -12,6 +12,11 @@ $var title: $title
                 </td>
                 <td width="auto" valign="top" align="left">
                     <div class="fr">
+                    	$if user.id != session.user_id:
+                    		$if following:
+	                        	<input type="button" value="取消特别关注" onclick="location.href = '/unfollow/$user.name';" class="super inverse button">
+	                        $else:
+	                        	<input type="button" value="加入特别关注" onclick="location.href = '/follow/$user.name';" class="super special button">
                     </div>
                     <h1 style="margin-bottom: 5px;">$user.name</h1>
                     <span class="bigger gray">$user.signature</span>
