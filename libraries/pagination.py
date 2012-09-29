@@ -10,17 +10,16 @@ class Pagination:
         if total % limit > 0:
             self.total += 1
         self.limit = limit
+        self.cur_page = 1
     
-    def output(self, cur_page = 1):
-        cur_page = int(cur_page)
+    def output(self):
         prev = ''
         next = ''
-        page = ''
-        page += '<strong class="fade">' + str(cur_page) + '/' + str(self.total) + '</strong>'
-        if cur_page > 1:
-            prev = '<input type="button" onclick="location.href=\'' + self.base_url + '?p=' + str(cur_page-1) + '\';" value="‹ 上一页" class="super normal button">'
-        if cur_page < self.total:
-            next = '<input type="button" onclick="location.href=\'' + self.base_url + '?p=' + str(cur_page+1)  + '\';" value="下一页 ›" class="super normal button">'
+        page = '<strong class="fade">' + str(self.cur_page) + '/' + str(self.total) + '</strong>'
+        if self.cur_page > 1:
+            prev = '<input type="button" onclick="location.href=\'' + self.base_url + '?p=' + str(self.cur_page-1) + '\';" value="‹ 上一页" class="super normal button">'
+        if self.cur_page < self.total:
+            next = '<input type="button" onclick="location.href=\'' + self.base_url + '?p=' + str(self.cur_page+1)  + '\';" value="下一页 ›" class="super normal button">'
         string = '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr>'
         string += '<td width="120" align="left">' + prev + '</td>'
         string += '<td width="auto" align="center">' + page + '</td>'
@@ -31,7 +30,9 @@ class Pagination:
     def true_page(self, page):
         page = int(page)
         if page < 1:
-            return 1
-        if page > self.total:
-            return self.total
-        return page
+            self.cur_page = 1
+        elif page > self.total:
+            self.cur_page = self.total
+        else:
+            self.cur_page = page
+        return self.cur_page

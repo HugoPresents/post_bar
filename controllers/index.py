@@ -10,7 +10,7 @@ from models.cat_model import *
 class index:
     def GET(self):
     	title = '首页'
-        posts_result = post_model().get_all(limit = 10, order = 'time DESC')
+        posts_result = post_model().get_all(limit = 20, order = 'time DESC')
         posts = []
         for post_result in posts_result:
             post = {'post':post_result}

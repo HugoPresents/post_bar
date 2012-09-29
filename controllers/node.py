@@ -6,6 +6,7 @@ from models.user_model import *
 from models.user_meta_model import *
 from models.comment_model import *
 from libraries.crumb import Crumb
+from libraries.pagination import Pagination
 
 # 显示某节点的文章
 class index:
@@ -24,14 +25,14 @@ class index:
                 if user_meta_model().get_one({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id}):
                     node_fav = True
             total_rows = post_model().count_table({'node_id':node.id})
-            posts_result = post_model().get_all({'node_id' : node.id}, order = 'time DESC')
+            pagination = Pagination('/node'+node_name, total_rows)
+            page = pagination.true_page(web.input(p=1)['p'])
+            posts_result = post_model().get_all({'node_id' : node.id}, limit = 10, offset = (page-1)*10 , order = 'time DESC')
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}
                 user = user_model().get_one({'id':post_result.user_id})
                 post['user'] = user
-                #node = node_model().get_one({'id':post_result.node_id})
-                #post['node'] = node
                 comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
                 if comment:
                     comment_user = user_model().get_one({'id':comment.user_id})
@@ -39,7 +40,7 @@ class index:
                 else:
                     post['comment_user'] = None
                 posts.append(post)
-            return render.list(posts, node, total_rows, node_fav, self.crumb.output())
+            return render.node_posts(posts, node, total_rows, node_fav, self.crumb.output(), pagination.output())
 
 class fav:
     

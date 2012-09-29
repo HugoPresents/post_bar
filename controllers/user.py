@@ -211,9 +211,10 @@ class post_favs():
     def GET(self):
         self.crumb.append('我收藏的主题')
         user = user_model().get_one({'id':web.config._session.user_id})
+        pagination = Pagination('/my/posts', user.post_favs)
         if user.post_favs > 0:
-            post_favs = user_meta_model().get_all({'user_id':user.id, 'meta_key':'post_fav'}, limit = 10, order = 'id DESC')
-            #posts_result = post_model().get_all({''}, limit = 10, order = 'time DESC')
+            page = pagination.true_page(web.input(p=1)['p'])
+            post_favs = user_meta_model().get_all({'user_id':user.id, 'meta_key':'post_fav'}, limit = 10, offset = (page-1)*10, order = 'id DESC')
             posts = []
             for post_fav in post_favs:
                 post_result = post_model().get_one({'id':post_fav.meta_value})
@@ -231,7 +232,7 @@ class post_favs():
                 posts.append(post)
         else:
             posts = None
-        return render.post_favs('我收藏的主题', user, posts, self.crumb.output())
+        return render.post_favs('我收藏的主题', user, posts, self.crumb.output(), pagination.output())
 
 # 来自收藏节点的主题
 class node_favs:
@@ -251,7 +252,9 @@ class node_favs:
             for node_fav in node_favs:
                 nodes.append(node_fav.meta_value)
             total_rows = post_model().count_table({'node_id':nodes})
-            posts_result = post_model().get_all(conditions = {'node_id': nodes}, order = 'time DESC', limit = 10)
+            pagination = Pagination('/my/nodes', total_rows)
+            page = pagination.true_page(web.input(p=1)['p'])
+            posts_result = post_model().get_all(conditions = {'node_id': nodes}, order = 'time DESC', limit = 10, offset = (page-1)*10)
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}
@@ -269,7 +272,9 @@ class node_favs:
         else:
             posts = None
             total_rows = 0
-        return render.node_favs('来自我收藏的节点的最新主题', posts, total_rows, self.crumb.output())
+            pagination = Pagination('/my/nodes', total_rows)
+            page = pagination.true_page(web.input(p=1)['p'])
+        return render.node_favs('来自我收藏的节点的最新主题', posts, total_rows, self.crumb.output(), pagination.output())
 
 # 用户创建的主题
 class posts:
@@ -281,8 +286,9 @@ class posts:
             crumb.append(name, '/profile/'+name)
             crumb.append('全部主题')
             total_rows = post_model().count_table({'user_id':user.id})
-            data = web.input(p = 1)
-            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, offset = (int(data['p'])-1) * 10, order = 'time DESC')
+            pagination = Pagination('/profile/'+name+'/posts', total_rows)
+            page = pagination.true_page(web.input(p=1)['p'])
+            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, offset = (page-1) * 10, order = 'time DESC')
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}
@@ -295,7 +301,7 @@ class posts:
                 else:
                     post['comment_user'] = None
                 posts.append(post)
-            return render.user_posts('全部主题', user,  posts, total_rows, crumb.output())
+            return render.user_posts('全部主题', user,  posts, total_rows, crumb.output(), pagination.output())
         else:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
@@ -322,7 +328,7 @@ class comments:
                     comments.append(comment)
             else:
                 comments = None
-            return render.user_comments('全部回复', comments, total, crumb.output(), pagination.output(page))
+            return render.user_comments('全部回复', comments, total, crumb.output(), pagination.output())
         else:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
