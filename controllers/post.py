@@ -75,15 +75,15 @@ class create:
         if not self.form.validates():
             return render.create_post(self.form, '创建失败， 请重创:D', self.crumb.output())
         user_model().update_session(web.config._session.user_id)
-        cost = money_model().cal_post(self.form.d.content)
+        length, cost = money_model().cal_post(self.form.d.content)
         if web.config._session.money < cost:
             self.crumb.append('财富不够')
             return render.no_money('财富不够', '你的财富值不够，不能创建改主题 :(', self.crumb.output())
-        title = html_to_db(self.form.d.title)
-        content = html_to_db(self.form.d.content)
+        title = html2db(self.form.d.title)
+        content = html2db(self.form.d.content)
         post_id = post_model().insert({'title' : title, 'content' : content, 'node_id' : node.id, 'time' : time.time(), 'user_id' : web.config._session.user_id})
         money_type_id = money_type_model().get_one({'name':'post'})['id']
-        money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':post_id})
+        money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':cost, 'length':length, 'foreign_id':post_id})
         user_model().update_money(web.config._session.user_id, -cost)
         user_model().update_session(web.config._session.user_id)
         raise web.seeother('/post/' + str(post_id))
@@ -103,7 +103,7 @@ class fav:
         user_meta_model().unique_insert({'user_id':web.config._session.user_id, 'meta_key':'post_fav', 'meta_value':post_id})
         user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'post_fav'})})
         user_model().update_session(web.config._session.user_id)
-        raise web.SeeOther('/post/'+post_id)
+        raise web.SeeOther('/post/' + post_id)
 
 class unfav:
     

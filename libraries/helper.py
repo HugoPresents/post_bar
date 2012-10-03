@@ -103,6 +103,7 @@ def str2entity(str):
         to += i
     return to
 
-def html_to_db(str):
-    str = str.replace("'", "\\'")
+def html2db(str):
+    #str = str.encode()
+    str = str.replace("'", "\\'").replace('"', '\\"').replace('$', '\\$')
     return str 

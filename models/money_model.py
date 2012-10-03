@@ -14,17 +14,21 @@ class money_model(model):
             self.ruler[option.key] = float(option.value)
     
     def cal_post(self, content):
-        length = float(len(unicode(content)))
+        if not isinstance(content, unicode):
+            content = unicode(content)
+        length = len_ = float(len(content))
         cost = self.ruler['post_cost']
-        length -= self.ruler['post_length']
-        if length > 0:
-            cost += self.ruler['post_cost_add'] * (length / 100)
-        return cost
+        len_ -= self.ruler['post_length']
+        if len_ > 0:
+            cost += self.ruler['post_cost_add'] * (len_ / 100)
+        return length, cost
     
     def cal_comment(self, content):
-        length = foloat(length(unicode(content)))
+        if not isinstance(content, unicode):
+            content = unicode(content)
+        length = len_ = float(len(content))
         cost = self.ruler['comment_cost']
-        length -= self.ruler['comment_length']
-        if length > 0:
-            cost += self.ruler['post_cost_add'] * (length / 100)
-        return cost
+        len_ -= self.ruler['comment_length']
+        if len_ > 0:
+            cost += self.ruler['post_cost_add'] * (len_ / 100)
+        return length, cost

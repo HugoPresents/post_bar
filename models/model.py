@@ -53,6 +53,7 @@ class model:
             
     def query(self, sql):
         db.query(sql)
+        return True
     
     def last_insert_id(self):
         return db.query('select last_insert_id() as id')[0].id

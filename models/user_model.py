@@ -89,4 +89,5 @@ class user_model(model):
     
     # cost 要带上符号
     def update_money(self, user_id, cost):
-        super(user_model, self).query('UPDATE ' + self._tb + ' SET money = money + ' + str(cost) +' WHERE id=' + str(user_id))
+        sql = 'UPDATE ' + self._tb + ' SET money = money + ' + str(cost) +' WHERE id=' + str(user_id)
+        return super(user_model, self).query(sql)
