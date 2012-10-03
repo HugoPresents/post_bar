@@ -7,7 +7,10 @@ from models.node_model import *
 from models.user_model import *
 from models.user_meta_model import *
 from models.comment_model import *
+from models.money_model import *
+from models.money_type_model import *
 from libraries.crumb import Crumb
+from libraries.helper import *
 
 # 查看单个帖子
 class view:
@@ -57,22 +60,32 @@ class create:
         self.crumb.append(node.display_name, '/node/'+node.name)
         self.crumb.append('创建新主题')
         if node is None:
+            self.crumb.claer()
             return render.not_found('节点未找到', '节点未找到')
         title = '创建主题'
         return render.create_post(self.form, title, self.crumb.output())
         
     def POST(self, node_name):
         if web.config._session.user_id is None:
-            raise web.SeeOther('/login')
+            raise web.SeeOther('/login?next=/post/create' + node_name)
         conditions = {'name' : node_name}
         node = node_model().get_one(conditions)
-        self.crumb.append(node.display_name, '/node/'+node.name)
-        self.crumb.append('创建新主题')
         if node is None:
             return render.not_found('节点未找到', '节点未找到')
         if not self.form.validates():
             return render.create_post(self.form, '创建失败， 请重创:D', self.crumb.output())
-        post_id = post_model().insert({'title' : self.form.d.title, 'content' : self.form.d.content, 'node_id' : node.id, 'time' : time.time(), 'user_id' : web.config._session.user_id})
+        user_model().update_session(web.config._session.user_id)
+        cost = money_model().cal_post(self.form.d.content)
+        if web.config._session.money < cost:
+            self.crumb.append('财富不够')
+            return render.no_money('财富不够', '你的财富值不够，不能创建改主题 :(', self.crumb.output())
+        title = html_to_db(self.form.d.title)
+        content = html_to_db(self.form.d.content)
+        post_id = post_model().insert({'title' : title, 'content' : content, 'node_id' : node.id, 'time' : time.time(), 'user_id' : web.config._session.user_id})
+        money_type_id = money_type_model().get_one({'name':'post'})['id']
+        money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':post_id})
+        user_model().update_money(web.config._session.user_id, -cost)
+        user_model().update_session(web.config._session.user_id)
         raise web.seeother('/post/' + str(post_id))
 
 # 收藏帖子

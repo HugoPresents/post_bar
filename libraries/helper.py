@@ -61,6 +61,7 @@ def avatar_url(avatar, mode = 'normal'):
         return '/'+path+avatar
     else:
         return '/'+path+'default.jpg'
+
 def display_money(money):
     money = int(money)
     string = ''
@@ -80,9 +81,28 @@ def display_money(money):
         string += str(silver) + ' '
         string += '<img src="/static/img/silver.png" alt="S" align="absmiddle" border="0" style="padding-bottom: 2px;">'
     bronze = money
-    if gold:
+    if silver:
         string += ' '
-    if not gold and not silver:
+    if bronze <= 0 and (gold or silver):
+        pass
+    else:
         string += str(bronze) + ' '
         string += '<img src="/static/img/bronze.png" alt="B" align="absmiddle" border="0">'
     return string
+
+#转成html实体
+def str2entity(str):
+    import htmlentitydefs
+    str = unicode(str)
+    to = u''
+    for i in str:
+        if ord(i) in htmlentitydefs.codepoint2name:
+            name = htmlentitydefs.codepoint2name.get(ord(i))
+            to += "&" + name + ";"
+    else:
+        to += i
+    return to
+
+def html_to_db(str):
+    str = str.replace("'", "\\'")
+    return str 

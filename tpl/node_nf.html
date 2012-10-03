@@ -1,23 +1,25 @@
 $def with (title, crumb)
 $var title:title
 <div id="Main">
-                <div class="sep20"></div>
-                <div class="box">
+<div class="sep20">
+</div>
+<div class="box">
     <div class="header">$:crumb</div>
     <div class="cell">
         你试图查看的节点不存在，有几种可能：
-        <div class="sep10"></div>
+        <div class="sep10">
+        </div>
         <ul>
             <li>你输入了一个确实不存在的节点 ID</li>
             <li>该节点目前位于一个 invisible 位面</li>
         </ul>
     </div>
     <div class="inner"><span class="gray">
-        <span class="chevron">‹</span> &nbsp;返回 <a href="/">主页</a>
+        <span class="chevron">‹</span>&nbsp; 返回 <a href="/">主页</a>
         
         <br>
         $if session.user_id:
-       		<span class="chevron">‹</span> &nbsp;返回 <a href="/profile/$session.name">我的个人主页</a>
+       		<span class="chevron">‹</span>&nbsp; 返回 <a href="/profile/$session.name">我的个人主页</a>
         </span>
     </div>
 </div>

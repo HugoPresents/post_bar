@@ -1,4 +1,4 @@
-#  coding: utf8 
+#  coding: utf8
 __metaclass__ = type
 import web
 from models.model import *

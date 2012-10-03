@@ -2,7 +2,7 @@
 __metaclass__ = type
 from models.model import *
 
-class money_type_model(model):
+class money_option_model(model):
     
     def __init__(self):
-        super(money_type_model, self).__init__('money_type')
+        super(money_option_model, self).__init__('money_option')

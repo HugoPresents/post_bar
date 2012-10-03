@@ -24,8 +24,8 @@ class Crumb:
                 str += '<a href="' + item[1] + '">' + item[0] + '</a>'
             if i < len(self.content):
                 str += self.separator
-        self.reset()
+        self.clear()
         return str
     
-    def reset(self):
+    def clear(self):
         self.__init__()

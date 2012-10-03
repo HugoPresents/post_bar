@@ -9,7 +9,7 @@ class model:
     def __init__(self, tb = None):
         self._tb = tb
     
-    def get_one(self, conditions = None, order = None):
+    def get_one(self, conditions = None, what = '*', order = None):
         where = dict2where(conditions)
         try:
             return db.select(self._tb, where = where, order = order, limit = 1)[0]

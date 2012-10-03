@@ -1,4 +1,5 @@
 # -- coding: utf8 --
+# 放弃使用该类
 from config.config import db
 from libraries.helper import *
 

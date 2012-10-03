@@ -9,7 +9,7 @@ from config.config import *
 app = web.application(urls, globals())
 
 if web.config.get('_session') is None:
-	session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'user_id': None, 'money':0})
+	session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'user_id': None})
 	web.config._session = session
 else:
 	session = web.config._session

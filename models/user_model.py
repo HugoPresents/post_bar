@@ -86,4 +86,7 @@ class user_model(model):
         os.remove(path+'tmp/'+filename)
         self.update({'id':user_id}, {'avatar':filename})
         self.update_session(user_id)
-        
+    
+    # cost 要带上符号
+    def update_money(self, user_id, cost):
+        super(user_model, self).query('UPDATE ' + self._tb + ' SET money = money + ' + str(cost) +' WHERE id=' + str(user_id))
