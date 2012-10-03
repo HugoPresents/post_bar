@@ -61,3 +61,28 @@ def avatar_url(avatar, mode = 'normal'):
         return '/'+path+avatar
     else:
         return '/'+path+'default.jpg'
+def display_money(money):
+    money = int(money)
+    string = ''
+    gold = 0
+    silver = 0
+    bronze = 0
+    if money >= 10000:
+        gold = money // 10000
+        money = money % 10000
+        string += str(gold) + ' '
+        string += '<img src="/static/img/gold.png" alt="G" align="absmiddle" border="0" style="padding-bottom: 2px;">'
+    if money >= 100:
+        silver = money // 100
+        money = money % 100
+        if gold:
+            string += ' '
+        string += str(silver) + ' '
+        string += '<img src="/static/img/silver.png" alt="S" align="absmiddle" border="0" style="padding-bottom: 2px;">'
+    bronze = money
+    if gold:
+        string += ' '
+    if not gold and not silver:
+        string += str(bronze) + ' '
+        string += '<img src="/static/img/bronze.png" alt="B" align="absmiddle" border="0">'
+    return string

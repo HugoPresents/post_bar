@@ -23,6 +23,11 @@ $var title: $title
                     <div class="sep5">
                     </div>
                     <span class="fade">$site_title 第 $user.id 号会员，加入于 $helper.stamp2during(user.regist_time)</span>
+                    <div class="sep10">
+                    </div>
+                    <div class="balance_area" style="">
+                    	$:helper.display_money(user.money)
+                    </div>
                 </td>
             </tr>
         </tbody></table>

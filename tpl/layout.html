@@ -34,7 +34,13 @@ $else:
 	                                }
 	                            }
 	                        </script>
-	                        <div id="Search"><form onsubmit="return dispatch()"><div style="width: 276px; height: 28px; background-image: url('/static/img/qbar.png'); background-repeat: no-repeat; display: inline-block;"><input type="text" maxlength="40" name="q" id="q" value=""></div></form></div>
+	                        <div id="Search">
+	                        	<form onsubmit="return dispatch()">
+	                        		<div style="width: 276px; height: 28px; background-image: url('/static/img/qbar.png'); background-repeat: no-repeat; display: inline-block;">
+	                        			<input type="text" maxlength="40" name="q" id="q" value="">
+	                        		</div>
+	                        	</form>
+	                        </div>
 	                    </td>
 	                    <td width="500" align="right" style="padding-top: 2px;">
 $if session.user_id:
@@ -111,14 +117,13 @@ $if session.user_id:
 	</div>
 	<div class="inner">
 		<div class="fr" id="money">
-			<a href="http://www.v2ex.com/balance" class="balance_area" style="">23 
-				<img src="/static/img/silver.png" alt="S" align="absmiddle" border="0" style="padding-bottom: 2px;"> 72 
-				<img src="/static/img/bronze.png" alt="B" align="absmiddle" border="0">
+			<a href="/balance" class="balance_area">
+				$:helper.display_money(session.money)
 			</a>
 		</div>
-		<a href="http://www.v2ex.com/notifications" class="fade">0 条未读提醒</a>
+		<a href="/notifications" class="fade">0 条未读提醒</a>
 	</div>
-	 </div>
+	</div>
 $else:
 	<div class="box">
         <div class="cell">
@@ -152,9 +157,26 @@ $:content
                 <div class="sep10">
                 </div>
                     <div class="fr">
-                        <a href="http://www.linode.com/?r=af313ea8a6bb6f99aff800c67349cabbfee2682f" target="_blank"><img src="/static/img/linode.png" border="0" alt="Linode" width="120"></a><!-- &nbsp; &nbsp; &nbsp; <a href="https://www.upyun.com/?utm_source=upyun-v2ex&utm_medium=ad&utm_campaign=upyun&md=upyun-v2ex" target="_blank"><img src="/static/img/upyun.jpg" border="0" alt="UpYun" width="120" /></a>-->
+                        <a href="http://www.linode.com/?r=af313ea8a6bb6f99aff800c67349cabbfee2682f" target="_blank">
+                        	<img src="/static/img/linode.png" border="0" alt="Linode" width="120"></a>
                     </div>
-                    <strong><a href="/about" class="dark">关于</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/faq" class="dark">FAQ</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/mission" class="dark">我们的愿景</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/advertise" class="dark">广告投放</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="http://workspace.v2ex.com/" target="_blank" class="dark">工作空间</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/gadgetlab" class="dark">Gadget Lab</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="http://livid.v2ex.com/" target="_blank" class="dark">博客</a> &nbsp; <span class="snow">·</span> &nbsp; <a href="/start" class="dark">上网首页</a> &nbsp; <span class="snow">·</span> &nbsp; 285 人在线</strong> &nbsp; <span class="fade">最高记录 362</span>
+                    <strong><a href="/about" class="dark">关于</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/faq" class="dark">FAQ</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/mission" class="dark">我们的愿景</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/advertise" class="dark">广告投放</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="http://workspace.v2ex.com/" target="_blank" class="dark">工作空间</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/gadgetlab" class="dark">Gadget Lab</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="http://livid.v2ex.com/" target="_blank" class="dark">博客</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/start" class="dark">上网首页</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 285 人在线</strong> &nbsp; 
+                    	<span class="fade">最高记录 362</span>
                     <div class="sep20">
                     </div>
                     创意工作者们的社区

@@ -39,6 +39,7 @@ class user_model(model):
         web.config._session.avatar = user.avatar
         web.config._session.signature = user.signature
         web.config._session.node_favs = user.node_favs
+        web.config._session.money = user.money
         web.config._session.posts = user.posts
         web.config._session.post_favs = user.post_favs
         web.config._session.user_favs = user.user_favs

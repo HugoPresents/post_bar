@@ -6,9 +6,7 @@ class Pagination:
     
     def __init__(self, base_url, total, limit = 10):
         self.base_url = base_url
-        self.total = int(total/limit)
-        if total % limit > 0:
-            self.total += 1
+        self.total = int(math.ceil(total/limit))
         self.limit = limit
         self.cur_page = 1
     
@@ -29,7 +27,8 @@ class Pagination:
     
     def true_page(self, page):
         page = int(page)
-        if page < 1:
+        # 加上等于避免 total=0 时出错
+        if page <= 1:
             self.cur_page = 1
         elif page > self.total:
             self.cur_page = self.total
