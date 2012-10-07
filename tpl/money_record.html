@@ -1,0 +1,74 @@
+$def with (title, records, crumb, pagination)
+$var title: $title
+<div id="Main">
+<div class="sep20">
+</div>
+<div class="box">
+    <div class="header">
+    	<div class="fr f12"><a href="/top/rich">社区财富排行榜</a></div>
+    	$:crumb
+    </div>
+    <div class="cell">
+        <table cellpadding="10" cellspacing="0" border="0" width="100%">
+            <tbody><tr>
+                <td width="200">
+                <span class="gray">当前账户余额</span>
+                <div class="sep10">
+                </div>
+                <div class="sep5">
+                </div>
+                <div class="balance_area" style="font-size: 24px; line-height: 24px;">
+                	$:helper.display_money(session.money)
+                </div></td>
+            </tr>
+        </tbody></table>
+    </div>
+    <div>
+$if records:
+	<table cellpadding="5" cellspacing="0" border="0" width="100%" class="data">
+	    <tbody>
+	    <tr>
+	        <td width="110" class="h">时间</td>
+	        <td width="80" class="h">类型</td>
+	        <td width="60" class="h">数额</td>
+	        <td width="60" class="h">余额</td>
+	        <td width="auto" class="h" style="border-right: none;">描述</td>
+	    </tr>
+	    $for record_cur in records:
+	    	$ record = record_cur['record']
+	    	$ post = record_cur['post']
+	    	$ comment = record_cur['comment']
+	    	$ comment_user = record_cur['comment_user']
+	    	$if record_cur['type'] == 'comment':
+				$if record.amount > 0:
+					<tr>
+					<td class="d"><small class="gray">$helper.stamp2time(comment.time)</small></td>
+					<td class="d">主题回复收益</td>
+					<td class="d" style="text-align: right;"><span class="positive"><strong>$record.amount</strong></span></td>
+					<td class="d" style="text-align: right;">$record.balance</td>
+					<td class="d" style="border-right: none;"><span class="gray">收到 <a href="/profile/$comment_user.name">$comment_user.name</a> 的回复 › <a href="/post/$post.id#$comment.id">$post.title</a></span></td>
+					</tr>
+				$else:
+					<tr>
+					<td class="d"><small class="gray">$helper.stamp2time(comment.time)</small></td>
+					<td class="d">创建回复</td>
+					<td class="d" style="text-align: right;"><span class="negative"><strong>$record.amount</strong></span></td>
+					<td class="d" style="text-align: right;">$record.balance</td>
+					<td class="d" style="border-right: none;"><span class="gray">创建了长度为 $record.length 个字符的回复 › <a href="/post/$post.id#$comment.id">$post.title</a></span></td>
+					</tr>
+	    	$if record_cur['type'] == 'post':
+	    		<tr>
+		        <td class="d"><small class="gray">$helper.stamp2time(post.time)</small></td>
+		        <td class="d">创建主题</td>
+		        <td class="d" style="text-align: right;"><span class="negative"><strong>$record.amount</strong></span></td>
+		        <td class="d" style="text-align: right;">$record.balance</td>
+		        <td class="d" style="border-right: none;"><span class="gray">创建了长度为 $record.length 个字符的主题 › <a href="/post/$post.id">$post.title</a></span></td>
+			    </tr>
+		</tbody>
+	</table>
+</div>
+<div class="inner">
+    $:pagination
+</div>
+</div>
+</div>

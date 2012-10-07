@@ -47,6 +47,12 @@ def stamp2during(stamp = 0):
     ltime=time.localtime(stamp)
     return time.strftime("%Y-%m-%d %H:%m:%S %p", ltime)
 
+# 将时间戳转为合适格式时间
+def stamp2time(stamp = 0):
+    import time
+    ltime=time.localtime(stamp)
+    return time.strftime("%Y-%m-%d %H:%m:%S %p", ltime)
+
 # 时间戳转为时间
 def cur_date(format = "%Y-%m-%d %H:%m:%S %p"):
     import time

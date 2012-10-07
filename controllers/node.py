@@ -14,6 +14,7 @@ class index:
     crumb = Crumb()
     
     def GET(self, node_name):
+        limit = 10
         node = node_model().get_one({'name': node_name})
         if node is None:
             self.crumb.append('节点未找到')
@@ -25,9 +26,9 @@ class index:
                 if user_meta_model().get_one({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id}):
                     node_fav = True
             total_rows = post_model().count_table({'node_id':node.id})
-            pagination = Pagination('/node'+node_name, total_rows)
+            pagination = Pagination('/node/'+node_name, total_rows, limit = limit)
             page = pagination.true_page(web.input(p=1)['p'])
-            posts_result = post_model().get_all({'node_id' : node.id}, limit = 10, offset = (page-1)*10 , order = 'time DESC')
+            posts_result = post_model().get_all({'node_id' : node.id}, limit = limit, offset = (page-1)*limit , order = 'time DESC')
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}

@@ -32,11 +32,9 @@ class add:
                 content = html2db(self.form.d.content)
                 comment_id = comment_model().insert({'user_id' : web.config._session.user_id, 'post_id' : post_id, 'content' : content, 'time' : int(time.time())})
                 money_type_id = money_type_model().get_one({'name':'comment'})['id']
-                money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'length':length,  'foreign_id':post_id})
-                user_model().update_money(web.config._session.user_id, -cost)
+                money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'length':length, 'balance':user_model().update_money(web.config._session.user_id, -cost), 'foreign_id':comment_id})
                 if web.config._session.user_id != post.user_id:
-                    money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'length':length, 'foreign_id':post_id})
-                    user_model().update_money(post.user_id, cost)
+                    money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'length':length, 'foreign_id':comment_id, 'balance':user_model().update_money(post.user_id, cost)})
                 user_model().update_session(web.config._session.user_id)
                 post_model().count_comment(post_id)
                 raise web.SeeOther('/post/' + post_id)

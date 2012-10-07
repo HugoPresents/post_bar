@@ -8,6 +8,8 @@ from models.user_meta_model import *
 from models.post_model import *
 from models.node_model import *
 from models.comment_model import *
+from models.money_model import *
+from models.money_type_model import *
 from libraries.error import *
 from libraries.crumb import *
 from libraries.pagination import *
@@ -113,13 +115,14 @@ class settings:
 class profile:
     
     def GET(self, name):
+        limit = 10
         user = user_model().get_one({'name':name})
         if user is None:
             crumb = Crumb()
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
         else:
-            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            posts_result = post_model().get_all({'user_id':user.id}, limit = limit, order = 'time DESC')
             if len(posts_result) > 0:
                 posts = []
                 for post_result in posts_result:
@@ -135,7 +138,7 @@ class profile:
                     posts.append(post)
             else:
                 posts = None
-            comments_result = comment_model().get_all({'user_id':user.id}, limit = 10, order = 'time DESC')
+            comments_result = comment_model().get_all({'user_id':user.id}, limit = limit, order = 'time DESC')
             if len(comments_result) > 0:
                 comments = []
                 for comment_result in comments_result:
@@ -213,12 +216,13 @@ class post_favs():
             raise web.SeeOther('/login?next=/my/posts')
     
     def GET(self):
+        limit = 10
         self.crumb.append('我收藏的主题')
         user = user_model().get_one({'id':web.config._session.user_id})
-        pagination = Pagination('/my/posts', user.post_favs)
+        pagination = Pagination('/my/posts', user.post_favs, limit = limit)
         if user.post_favs > 0:
             page = pagination.true_page(web.input(p=1)['p'])
-            post_favs = user_meta_model().get_all({'user_id':user.id, 'meta_key':'post_fav'}, limit = 10, offset = (page-1)*10, order = 'id DESC')
+            post_favs = user_meta_model().get_all({'user_id':user.id, 'meta_key':'post_fav'}, limit = limit, offset = (page-1)*limit, order = 'id DESC')
             posts = []
             for post_fav in post_favs:
                 post_result = post_model().get_one({'id':post_fav.meta_value})
@@ -248,6 +252,7 @@ class node_favs:
             raise web.SeeOther('/login?next=/my/nodes')
     
     def GET(self):
+        limit = 10
         self.crumb.append('来自我收藏的节点的最新主题')
         # 取出收藏的节点id
         node_favs = user_meta_model().get_all({'user_id':web.config._session.user_id, 'meta_key':'node_fav'})
@@ -256,9 +261,9 @@ class node_favs:
             for node_fav in node_favs:
                 nodes.append(node_fav.meta_value)
             total_rows = post_model().count_table({'node_id':nodes})
-            pagination = Pagination('/my/nodes', total_rows)
+            pagination = Pagination('/my/nodes', total_rows, limit = limit)
             page = pagination.true_page(web.input(p=1)['p'])
-            posts_result = post_model().get_all(conditions = {'node_id': nodes}, order = 'time DESC', limit = 10, offset = (page-1)*10)
+            posts_result = post_model().get_all(conditions = {'node_id': nodes}, order = 'time DESC', limit = limit, offset = (page-1)*limit)
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}
@@ -284,15 +289,16 @@ class node_favs:
 class posts:
     
     def GET(self, name):
+        limit = 10
         user = user_model().get_one({'name':name})
         crumb = Crumb()
         if user:
             crumb.append(name, '/profile/'+name)
             crumb.append('全部主题')
             total_rows = post_model().count_table({'user_id':user.id})
-            pagination = Pagination('/profile/'+name+'/posts', total_rows)
+            pagination = Pagination('/profile/'+name+'/posts', total_rows, limit = limit)
             page = pagination.true_page(web.input(p=1)['p'])
-            posts_result = post_model().get_all({'user_id':user.id}, limit = 10, offset = (page-1) * 10, order = 'time DESC')
+            posts_result = post_model().get_all({'user_id':user.id}, limit = limit, offset = (page-1) * limit, order = 'time DESC')
             posts = []
             for post_result in posts_result:
                 post = {'post':post_result}
@@ -314,15 +320,16 @@ class posts:
 class comments:
     
     def GET(self, name):
+        limit = 10
         user = user_model().get_one({'name':name})
         crumb = Crumb()
         if user:
             crumb.append(name, '/profile/'+name)
             crumb.append('全部回复')
             total = comment_model().count_table({'user_id':user.id})
-            pagination = Pagination('/profile/'+name+'/comments', total)
+            pagination = Pagination('/profile/'+name+'/comments', total, limit = limit)
             page = pagination.true_page(web.input(p=1)['p'])
-            comments_result = comment_model().get_all({'user_id':user.id}, limit = 10, offset = (page-1)*10, order = 'time DESC')
+            comments_result = comment_model().get_all({'user_id':user.id}, limit = limit, offset = (page-1)*limit, order = 'time DESC')
             if len(comments_result) > 0:
                 comments = []
                 for comment_result in comments_result:
@@ -381,6 +388,7 @@ class following:
             raise web.SeeOther('/login?next=/user/nodes')
     
     def GET(self):
+        limit = 10
         self.crumb.append('我关注的人的最新主题')
         # 取出收藏的节点id
         followings = user_meta_model().get_all({'user_id':web.config._session.user_id, 'meta_key':'follow'})
@@ -389,9 +397,9 @@ class following:
            for following in followings:
                user_favs.append(following.meta_value)
            total_rows = post_model().count_table({'user_id':user_favs})
-           pagination = Pagination('/my/following', total_rows)
+           pagination = Pagination('/my/following', total_rows, limit = limit)
            page = pagination.true_page(web.input(p=1)['p'])
-           posts_result = post_model().get_all(conditions = {'user_id': user_favs}, order = 'time DESC', limit = 10, offset = (page-1)*10)
+           posts_result = post_model().get_all(conditions = {'user_id': user_favs}, order = 'time DESC', limit = limit, offset = (page-1)*limit)
            posts = []
            for post_result in posts_result:
                post = {'post':post_result}
@@ -412,4 +420,41 @@ class following:
            pagination = Pagination('/my/nodes', total_rows)
            page = pagination.true_page(web.input(p=1)['p'])
         return render.following_posts('来自我收藏的节点的最新主题', posts, total_rows, self.crumb.output(), pagination.output())
-            
+
+class balance:
+    
+    crumb = Crumb()
+    
+    def __init__(self):
+        if web.config._session.user_id is None:
+            raise web.SeeOther('/login?next=/balance')
+        
+    def GET(self):
+        limit = 20
+        total = money_model().count_table({'user_id':web.config._session.user_id})
+        pagination = Pagination('/balance', total, limit = limit)
+        page = pagination.true_page(web.input(p=1)['p'])
+        records_result = money_model().get_all({'user_id':web.config._session.user_id}, limit = limit, offset = (page-1)*limit, order = 'id DESC')
+        money_types_result = money_type_model().get_all()
+        money_type = {}
+        for money_type_result in money_types_result:
+            money_type[money_type_result.id] = money_type_result.name
+        records = []
+        for record_result in records_result:
+            # 发布的帖子或者是评论的帖子
+            post = None
+            # 发布或者收到的评论
+            comment = None
+            # 评论的用户
+            comment_user = None
+            type = money_type[record_result.money_type_id]
+            if type == 'post':
+                post = post_model().get_one({'id':record_result.foreign_id})
+            if type == 'comment':
+                comment = comment_model().get_one({'id':record_result.foreign_id})
+                comment_user = user_model().get_one({'id':comment.user_id})
+                post = post_model().get_one({'id':comment.post_id})
+            record = {'record':record_result, 'type':type, 'comment':comment, 'post':post, 'comment_user':comment_user}
+            records.append(record)
+        self.crumb.append('账户余额')
+        return render.money_record('账户余额', records, self.crumb.output(), pagination.output())

@@ -34,6 +34,8 @@ urls = (
 	'/settings/avatar', pre_fix + 'user.avatar',
 	# 用户中心
 	'/profile/(\w+)', pre_fix + 'user.profile',
+	# 财富中心
+	'/balance', pre_fix + 'user.balance',
 	# 关注用户
 	'/follow/(\w+)', pre_fix + 'user.follow',
 	# 取消关注
