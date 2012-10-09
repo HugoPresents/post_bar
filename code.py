@@ -8,8 +8,6 @@ from config.config import *
 from config.urls import *
 from libraries import helper
 
-render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/tpl/', base='layout')
-
 web.template.Template.globals['render'] = render
 web.template.Template.globals['site_title'] = site_title
 web.template.Template.globals['helper'] = helper

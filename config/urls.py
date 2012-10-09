@@ -1,3 +1,5 @@
+# -- coding: utf8 --
+pre_fix = 'controllers.'
 urls = (
     # 首页
     '/index', pre_fix + 'index.index',
