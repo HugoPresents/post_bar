@@ -3,10 +3,12 @@ import web
 import time
 from config.config import render
 from models.post_model import *
+from models.post_thanks_model import *
 from models.node_model import *
 from models.user_model import *
 from models.user_meta_model import *
 from models.comment_model import *
+from models.comment_thanks_model import *
 from models.money_model import *
 from models.money_type_model import *
 from libraries.crumb import Crumb
@@ -21,6 +23,7 @@ class view:
         raise web.SeeOther('/post/' + str(id))
     
     def GET(self, id):
+        limit = 10
         post_model().add_view(id)
         post = post_model().get_one({'id':id})
         if post is None:
@@ -36,15 +39,23 @@ class view:
             user = user_model().get_one({'id':post.user_id})
             #return user.name
             self.crumb.append(node.display_name, '/node/'+node.name)
+            thanks = False
+            if web.config._session.user_id is not None:
+                if post_thanks_model().get_one({'user_id':web.config._session.user_id, 'post_id':post.id}):
+                    thanks = True
             condition = {'post_id' : post.id}
             comments_result = comment_model().get_all(condition, order = 'time ASC')
             comments = []
             if comments_result is not None:
                 for comment_result in comments_result:
                     comment_user = user_model().get_one({'id':comment_result.user_id})
-                    comments.append({'comment':comment_result, 'user':comment_user})
+                    comment_thanks = False
+                    if web.config._session.user_id is not None:
+                        if comment_thanks_model().get_one({'user_id':web.config._session.user_id, 'comment_id':comment_result.id}):
+                            comment_thanks = True
+                    comments.append({'comment':comment_result, 'user':comment_user, 'thanks':comment_thanks})
             form = comment_model().form
-            return render.post_view(post, user, comments, form, post_fav, favs, self.crumb.output())
+            return render.post_view(post, user, comments, form, post_fav, favs, thanks, self.crumb.output())
 
 # 创建帖子
 class create:
@@ -114,3 +125,30 @@ class unfav:
         user_model().update({'id':web.config._session.user_id}, {'post_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'post_fav'})})
         user_model().update_session(web.config._session.user_id)
         raise web.SeeOther('/post/'+post_id)
+
+class thanks:
+    def POST(self):
+        import json
+        json_dict = {'success':0, 'msg':'', 'script':''}
+        post_id = web.input(post_id=None)['post_id']
+        post = post_model().get_one({'id':post_id})
+        if post_id and post:
+            if web.config._session.user_id is None:
+                json_dict['msg'] = '你要先登录的亲'
+                json_dict['script'] = 'location.href=\'/login?next=/post/'+post.id+'\''
+            elif post.user_id != web.config._session.user_id:
+                if post_thanks_model().unique_insert({'user_id':web.config._session.user_id, 'post_id':post_id}):
+                    cost = money_model().cal_thanks()
+                    money_type_id = money_type_model().get_one({'name':'post_thanks'})['id']
+                    money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(web.config._session.user_id, -cost), 'foreign_id':post_id})
+                    money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':post_id, 'balance':user_model().update_money(post.user_id, cost)})
+                    post_model().count_thanks(post_id)
+                    user_model().update_session(web.config._session.user_id)
+                    json_dict['success'] = 1
+                else:
+                    json_dict['msg'] = '你已经感谢过了不是吗？'
+            else:
+                json_dict['msg'] = '你不能感谢你自己不是吗？'
+        else:
+            json_dict['message'] = '评论不存在'
+        return json.dumps(json_dict)

@@ -448,9 +448,9 @@ class balance:
             # 评论的用户
             comment_user = None
             type = money_type[record_result.money_type_id]
-            if type == 'post':
+            if type == 'post' or type == 'post_thanks':
                 post = post_model().get_one({'id':record_result.foreign_id})
-            if type == 'comment':
+            if type == 'comment' or type == 'comment_thanks':
                 comment = comment_model().get_one({'id':record_result.foreign_id})
                 comment_user = user_model().get_one({'id':comment.user_id})
                 post = post_model().get_one({'id':comment.post_id})

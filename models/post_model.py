@@ -3,6 +3,7 @@ __metaclass__ = type
 import web
 from models.model import *
 from models.comment_model import *
+from models.post_thanks_model import *
 from config.config import *
 
 class post_model(model):

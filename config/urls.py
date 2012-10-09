@@ -7,6 +7,8 @@ urls = (
     '/post/(\d+)', pre_fix + 'post.view',
     # 创建主题
     '/create/(\w+)', pre_fix + 'post.create',
+    # 感谢主题
+    '/post/thanks', pre_fix + 'post.thanks',
     # 节点主题列表
     '/node/(\w+)', pre_fix + 'node.index',
     # 评论主题

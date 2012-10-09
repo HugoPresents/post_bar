@@ -50,7 +50,9 @@ class thanks:
         comment = comment_model().get_one({'id':comment_id})
         if comment_id and comment:
             if web.config._session.user_id is None:
-                json_dict['script'] = 'location.href=\'/login\''
+                post = post_model().get_one({'id':comment.post_id})
+                json_dict['msg'] = '你要先登录的亲'
+                json_dict['script'] = 'location.href=\'/login?next=/post/'+str(post.id)+'#reply-'+str(comment_id)+'\''
             elif comment.user_id != web.config._session.user_id:
                 if comment_thanks_model().unique_insert({'user_id':web.config._session.user_id, 'comment_id':comment_id}):
                     cost = money_model().cal_thanks()

@@ -64,6 +64,15 @@ $if records:
 		        <td class="d" style="text-align: right;">$record.balance</td>
 		        <td class="d" style="border-right: none;"><span class="gray">创建了长度为 $record.length 个字符的主题 › <a href="/post/$post.id">$post.title</a></span></td>
 			    </tr>
+			$if record_cur['type'] == 'post_thanks':
+				$if record.amount > 0:
+					<tr>
+					<td class="d"><small class="gray">$helper.stamp2time(post.time)</small></td>
+					<td class="d">收到谢意</td>
+					<td class="d" style="text-align: right;"><span class="positive"><strong>$record.amount</strong></span></td>
+					<td class="d" style="text-align: right;">$record.balance</td>
+					<td class="d" style="border-right: none;"><span class="gray">收到 <a href="/profile/$comment_user.name">$comment_user.name</a> 的回复 › <a href="/post/$post.id#$comment.id">$post.title</a></span></td>
+					</tr>
 		</tbody>
 	</table>
 </div>
