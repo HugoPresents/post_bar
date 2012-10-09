@@ -6,7 +6,7 @@ function thankReply(comment_id) {
 			if(data.success == 1) {
 				alert('success')
 			} else {
-				
+				alert(data.msg)
 			}
 		}, 'json'
 	)

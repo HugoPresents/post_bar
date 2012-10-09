@@ -32,3 +32,6 @@ class money_model(model):
         if len_ > 0:
             cost += self.ruler['post_cost_add'] * (len_ / 100)
         return length, cost
+    
+    def cal_thanks(self):
+        return self.ruler['thanks_cost']

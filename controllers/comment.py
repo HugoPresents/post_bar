@@ -3,6 +3,7 @@ import web
 import time
 from config.config import render
 from models.comment_model import *
+from models.comment_thanks_model import *
 from models.post_model import *
 from models.money_model import *
 from models.money_type_model import *
@@ -46,11 +47,23 @@ class thanks:
         import json
         json_dict = {'success':0, 'msg':'', 'script':''}
         comment_id = web.input(comment_id=None)['comment_id']
-        if comment_id and comment_model().get_one({'id':comment_id}):
+        comment = comment_model().get_one({'id':comment_id})
+        if comment_id and comment:
             if web.config._session.user_id is None:
                 json_dict['script'] = 'location.href=\'/login\''
-                return json.dumps(json_dict)
+            elif comment.user_id != web.config._session.user_id:
+                if comment_thanks_model().unique_insert({'user_id':web.config._session.user_id, 'comment_id':comment_id}):
+                    cost = money_model().cal_thanks()
+                    money_type_id = money_type_model().get_one({'name':'comment_thanks'})['id']
+                    money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(web.config._session.user_id, -cost), 'foreign_id':comment_id})
+                    money_model().insert({'user_id':comment.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':comment_id, 'balance':user_model().update_money(comment.user_id, cost)})
+                    comment_model().count_thanks(comment_id)
+                    user_model().update_session(web.config._session.user_id)
+                    json_dict['success'] = 1
+                else:
+                    json_dict['msg'] = '你已经感谢过了不是吗？'
+            else:
+                json_dict['msg'] = '你不能感谢你自己不是吗？'
         else:
             json_dict['message'] = '评论不存在'
-            return json.dumps(json_dict)
         return json.dumps(json_dict)
