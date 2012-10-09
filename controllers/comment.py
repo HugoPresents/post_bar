@@ -40,3 +40,17 @@ class add:
                 raise web.SeeOther('/post/' + post_id)
         else:
              raise web.SeeOther('/post/' + post_id)
+
+class thanks:
+    def POST(self):
+        import json
+        json_dict = {'success':0, 'msg':'', 'script':''}
+        comment_id = web.input(comment_id=None)['comment_id']
+        if comment_id and comment_model().get_one({'id':comment_id}):
+            if web.config._session.user_id is None:
+                json_dict['script'] = 'location.href=\'/login\''
+                return json.dumps(json_dict)
+        else:
+            json_dict['message'] = '评论不存在'
+            return json.dumps(json_dict)
+        return json.dumps(json_dict)

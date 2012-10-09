@@ -11,6 +11,8 @@ urls = (
     '/node/(\w+)', pre_fix + 'node.index',
     # 评论主题
     '/comment/(\d+)', pre_fix + 'comment.add',
+    # 感谢评论
+    '/comment/thanks', pre_fix + 'comment.thanks',
     # 注册
     '/signup', pre_fix + 'user.signup',
     # 登录
