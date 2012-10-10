@@ -6,6 +6,8 @@ from config.config import render
 from models.user_model import *
 from models.user_meta_model import *
 from models.post_model import *
+from models.post_thanks_model import *
+from models.comment_thanks_model import *
 from models.node_model import *
 from models.comment_model import *
 from models.money_model import *
@@ -444,17 +446,37 @@ class balance:
             # 发布的帖子或者是评论的帖子
             post = None
             # 发布或者收到的评论
+            post_user = None
+            post_thanks = None
+            comment_thanks = None
+            sender = None
             comment = None
             # 评论的用户
             comment_user = None
-            type = money_type[record_result.money_type_id]
-            if type == 'post' or type == 'post_thanks':
-                post = post_model().get_one({'id':record_result.foreign_id})
-            if type == 'comment' or type == 'comment_thanks':
-                comment = comment_model().get_one({'id':record_result.foreign_id})
-                comment_user = user_model().get_one({'id':comment.user_id})
-                post = post_model().get_one({'id':comment.post_id})
-            record = {'record':record_result, 'type':type, 'comment':comment, 'post':post, 'comment_user':comment_user}
-            records.append(record)
+            try:
+                type = money_type[record_result.money_type_id]
+                if type == 'post':
+                    post = post_model().get_one({'id':record_result.foreign_id})
+                if type == 'comment':
+                    comment = comment_model().get_one({'id':record_result.foreign_id})
+                    comment_user = user_model().get_one({'id':comment.user_id})
+                    post = post_model().get_one({'id':comment.post_id})
+                if type == 'post_thanks':
+                    post_thanks = post_thanks_model().get_one({'id':record_result.foreign_id})
+                    post = post_model().get_one({'id':post_thanks.post_id})
+                    sender = user_model().get_one({'id':post_thanks.user_id})
+                    post_user = user_model().get_one({'id':post.user_id})
+                if type == 'comment_thanks':
+                    comment_thanks = comment_thanks_model().get_one({'id':record_result.foreign_id})
+                    comment = comment_model().get_one({'id':comment_thanks.comment_id})
+                    post = post_model().get_one({'id':comment.post_id})
+                    comment_user = user_model().get_one({'id':comment.user_id})
+                    sender = user_model().get_one({'id':comment_thanks.user_id})
+            # 如果数据错误将不把这条记录输出到视图
+            except AttributeError:
+                continue
+            else:
+                record = {'record':record_result, 'type':type, 'comment':comment, 'post':post, 'post_user':post_user, 'sender':sender, 'comment_user':comment_user, 'post_thanks':post_thanks, 'comment_thanks':comment_thanks}
+                records.append(record)
         self.crumb.append('账户余额')
         return render.money_record('账户余额', records, self.crumb.output(), pagination.output())

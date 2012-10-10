@@ -137,11 +137,13 @@ class thanks:
                 json_dict['msg'] = '你要先登录的亲'
                 json_dict['script'] = 'location.href=\'/login?next=/post/'+post.id+'\''
             elif post.user_id != web.config._session.user_id:
-                if post_thanks_model().unique_insert({'user_id':web.config._session.user_id, 'post_id':post_id}):
+                post_thanks_id = post_thanks_model().unique_insert({'user_id':web.config._session.user_id, 'post_id':post_id})
+                if post_thanks_id:
+                    post_thanks_model().update({'id':post_thanks_id}, {'time':int(time.time())})
                     cost = money_model().cal_thanks()
                     money_type_id = money_type_model().get_one({'name':'post_thanks'})['id']
-                    money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(web.config._session.user_id, -cost), 'foreign_id':post_id})
-                    money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':post_id, 'balance':user_model().update_money(post.user_id, cost)})
+                    money_model().insert({'user_id':web.config._session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(web.config._session.user_id, -cost), 'foreign_id':post_thanks_id})
+                    money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':post_thanks_id, 'balance':user_model().update_money(post.user_id, cost)})
                     post_model().count_thanks(post_id)
                     user_model().update_session(web.config._session.user_id)
                     json_dict['success'] = 1

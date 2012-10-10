@@ -39,6 +39,44 @@ $if records:
 	    	$ post = record_cur['post']
 	    	$ comment = record_cur['comment']
 	    	$ comment_user = record_cur['comment_user']
+	    	$ post_user = record_cur['post_user']
+	    	$ sender = record_cur['sender']
+	    	$ post_thanks = record_cur['post_thanks']
+	    	$ comment_thanks = record_cur['comment_thanks']
+			$if record_cur['type'] == 'comment_thanks':
+				$if record.amount > 0:
+					<tr>
+					<td class="d"><small class="gray">$helper.stamp2time(comment_thanks.time)</small></td>
+					<td class="d">收到谢意</td>
+					<td class="d" style="text-align: right;"><span class="positive"><strong>$record.amount</strong></span></td>
+					<td class="d" style="text-align: right;">$record.balance</td>
+					<td class="d" style="border-right: none;"><span class="gray"><a href="/profile/$sender.name">$sender.name</a> 感谢你发布的评论 › <a href="/post/$post.id#reply-$comment.id">$post.title</a></span></td>
+					</tr>
+				$else:
+					<tr>
+					<td class="d"><small class="gray">$helper.stamp2time(comment_thanks.time)</small></td>
+					<td class="d">发送谢意</td>
+					<td class="d" style="text-align: right;"><span class="negative"><strong>$record.amount</strong></span></td>
+					<td class="d" style="text-align: right;">$record.balance</td>
+					<td class="d" style="border-right: none;"><span class="gray">感谢 <a href="/profile/$comment_user.name">$comment_user.name</a> 的回复 › <a href="/post/$post.id#reply-$comment.id">$post.title</a></span></td>
+					</tr>
+	    	$if record_cur['type'] == 'post_thanks':
+				$if record.amount > 0:
+					<tr>
+					<td class="d"><small class="gray">$helper.stamp2time(post_thanks.time)</small></td>
+					<td class="d">收到谢意</td>
+					<td class="d" style="text-align: right;"><span class="positive"><strong>$record.amount</strong></span></td>
+					<td class="d" style="text-align: right;">$record.balance</td>
+					<td class="d" style="border-right: none;"><span class="gray"><a href="/profile/$sender.name">$sender.name</a> 感谢你发布的主题 › <a href="/post/$post.id">$post.title</a></span></td>
+					</tr>
+				$else:
+					<tr>
+					<td class="d"><small class="gray">$helper.stamp2time(post_thanks.time)</small></td>
+					<td class="d">发送谢意</td>
+					<td class="d" style="text-align: right;"><span class="negative"><strong>$record.amount</strong></span></td>
+					<td class="d" style="text-align: right;">$record.balance</td>
+					<td class="d" style="border-right: none;"><span class="gray">感谢 <a href="/profile/$post_user.name">$post_user.name</a> 的主题 › <a href="/post/$post.id">$post.title</a></span></td>
+					</tr>
 	    	$if record_cur['type'] == 'comment':
 				$if record.amount > 0:
 					<tr>
@@ -46,7 +84,7 @@ $if records:
 					<td class="d">主题回复收益</td>
 					<td class="d" style="text-align: right;"><span class="positive"><strong>$record.amount</strong></span></td>
 					<td class="d" style="text-align: right;">$record.balance</td>
-					<td class="d" style="border-right: none;"><span class="gray">收到 <a href="/profile/$comment_user.name">$comment_user.name</a> 的回复 › <a href="/post/$post.id#$comment.id">$post.title</a></span></td>
+					<td class="d" style="border-right: none;"><span class="gray">收到 <a href="/profile/$comment_user.name">$comment_user.name</a> 的回复 › <a href="/post/$post.id#reply-$comment.id">$post.title</a></span></td>
 					</tr>
 				$else:
 					<tr>
@@ -54,25 +92,16 @@ $if records:
 					<td class="d">创建回复</td>
 					<td class="d" style="text-align: right;"><span class="negative"><strong>$record.amount</strong></span></td>
 					<td class="d" style="text-align: right;">$record.balance</td>
-					<td class="d" style="border-right: none;"><span class="gray">创建了长度为 $record.length 个字符的回复 › <a href="/post/$post.id#$comment.id">$post.title</a></span></td>
+					<td class="d" style="border-right: none;"><span class="gray">创建了长度为 $record.length 个字符的回复 › <a href="/post/$post.id#reply-$comment.id">$post.title</a></span></td>
 					</tr>
-	    	$if record_cur['type'] == 'post':
-	    		<tr>
-		        <td class="d"><small class="gray">$helper.stamp2time(post.time)</small></td>
-		        <td class="d">创建主题</td>
-		        <td class="d" style="text-align: right;"><span class="negative"><strong>$record.amount</strong></span></td>
-		        <td class="d" style="text-align: right;">$record.balance</td>
-		        <td class="d" style="border-right: none;"><span class="gray">创建了长度为 $record.length 个字符的主题 › <a href="/post/$post.id">$post.title</a></span></td>
+			$if record_cur['type'] == 'post':
+				<tr>
+			    <td class="d"><small class="gray">$helper.stamp2time(post.time)</small></td>
+			    <td class="d">创建主题</td>
+			    <td class="d" style="text-align: right;"><span class="negative"><strong>$record.amount</strong></span></td>
+			    <td class="d" style="text-align: right;">$record.balance</td>
+			    <td class="d" style="border-right: none;"><span class="gray">创建了长度为 $record.length 个字符的主题 › <a href="/post/$post.id">$post.title</a></span></td>
 			    </tr>
-			$if record_cur['type'] == 'post_thanks':
-				$if record.amount > 0:
-					<tr>
-					<td class="d"><small class="gray">$helper.stamp2time(post.time)</small></td>
-					<td class="d">收到谢意</td>
-					<td class="d" style="text-align: right;"><span class="positive"><strong>$record.amount</strong></span></td>
-					<td class="d" style="text-align: right;">$record.balance</td>
-					<td class="d" style="border-right: none;"><span class="gray">收到 <a href="/profile/$comment_user.name">$comment_user.name</a> 的回复 › <a href="/post/$post.id#$comment.id">$post.title</a></span></td>
-					</tr>
 		</tbody>
 	</table>
 </div>
