@@ -4,7 +4,7 @@ function thankReply(comment_id) {
 			comment_id:comment_id
 		}, function(data) {
 			if(data.success == 1) {
-				alert('success')
+				$("#thank_area_"+comment_id).addClass('thanked').html('感谢已发送')
 			} else {
 				alert(data.msg)
 			}
@@ -19,7 +19,7 @@ function thankTopic(post_id) {
 			post_id:post_id
 		}, function(data) {
 			if(data.success == 1) {
-				alert('success')
+				$("#topic_thank").html('<span class="f11 gray" style="text-shadow: 0px 1px 0px #fff;">感谢已发送</span>')
 			} else {
 				alert(data.msg)
 			}
