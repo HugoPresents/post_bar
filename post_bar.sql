@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 10 月 09 日 13:49
+-- 生成日期: 2012 年 10 月 10 日 13:58
 -- 服务器版本: 5.1.59-community
 -- PHP 版本: 5.3.2
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `comment_user` (`user_id`),
   KEY `comment_post` (`post_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='帖子评论' AUTO_INCREMENT=80 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='帖子评论' AUTO_INCREMENT=81 ;
 
 --
 -- 转存表中的数据 `comment`
@@ -82,7 +82,7 @@ INSERT INTO `comment` (`id`, `user_id`, `post_id`, `content`, `time`, `thanks`) 
 (18, 1, 13, 'ethgth', 1349273887, 0),
 (19, 1, 12, '$', 1349281274, 0),
 (20, 1, 12, '$', 1349281278, 0),
-(21, 1, 12, '$r', 1349281285, 0),
+(21, 1, 12, '$r', 1349281285, 1),
 (22, 1, 12, '$rR', 1349281289, 0),
 (23, 1, 12, '', 1349281293, 0),
 (24, 1, 12, '$TTT', 1349281365, 0),
@@ -126,10 +126,10 @@ INSERT INTO `comment` (`id`, `user_id`, `post_id`, `content`, `time`, `thanks`) 
 (62, 1, 17, '然后勒', 1349623279, 0),
 (63, 1, 17, '为什么有这种情况~', 1349623397, 0),
 (64, 1, 17, '为什么有这种情况~', 1349623409, 0),
-(65, 1, 17, '为什么有这种情况~', 1349623411, 0),
+(65, 1, 17, '为什么有这种情况~', 1349623411, 2),
 (66, 1, 17, '为什么有这种情况~', 1349623412, 0),
-(67, 1, 17, '为什么有这种情况~', 1349623414, 1),
-(68, 1, 17, '为什么有这种情况~', 1349623418, 0),
+(67, 1, 17, '为什么有这种情况~', 1349623414, 2),
+(68, 1, 17, '为什么有这种情况~', 1349623418, 1),
 (69, 1, 17, '为什么有这种情况~', 1349623420, 1),
 (70, 1, 17, '为什么有这种情况~', 1349623421, 1),
 (71, 1, 17, '为什么有这种情况~', 1349623423, 0),
@@ -140,7 +140,8 @@ INSERT INTO `comment` (`id`, `user_id`, `post_id`, `content`, `time`, `thanks`) 
 (76, 1, 17, '为什么有这种情况~', 1349623514, 0),
 (77, 1, 17, '为什么有这种情况~', 1349623564, 0),
 (78, 1, 17, '为什么有这种情况~', 1349623570, 0),
-(79, 1, 17, '为什么有这种情况~', 1349623572, 0);
+(79, 1, 17, '为什么有这种情况~', 1349623572, 0),
+(80, 1, 19, 'zheniasgag', 1349772679, 1);
 
 -- --------------------------------------------------------
 
@@ -152,20 +153,26 @@ CREATE TABLE IF NOT EXISTS `comment_thanks` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) NOT NULL DEFAULT '0',
   `comment_id` int(10) NOT NULL DEFAULT '0',
+  `time` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `comment_thanks_user` (`user_id`),
   KEY `comment_thanks_comment` (`comment_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- 转存表中的数据 `comment_thanks`
 --
 
-INSERT INTO `comment_thanks` (`id`, `user_id`, `comment_id`) VALUES
-(8, 1, 65),
-(9, 1, 69),
-(10, 1, 67),
-(11, 1, 70);
+INSERT INTO `comment_thanks` (`id`, `user_id`, `comment_id`, `time`) VALUES
+(8, 1, 65, 0),
+(9, 1, 69, 0),
+(10, 1, 67, 0),
+(11, 1, 70, 0),
+(13, 2, 80, 1349841151),
+(14, 2, 21, 1349841538),
+(15, 2, 65, 1349841743),
+(16, 2, 67, 1349847290),
+(17, 2, 68, 1349847544);
 
 -- --------------------------------------------------------
 
@@ -180,11 +187,11 @@ CREATE TABLE IF NOT EXISTS `money` (
   `length` int(10) NOT NULL DEFAULT '0' COMMENT '长度',
   `amount` float NOT NULL DEFAULT '0' COMMENT '金额',
   `balance` float NOT NULL DEFAULT '0' COMMENT '余额',
-  `foreign_id` int(11) DEFAULT '0' COMMENT '帖子/评论/用户 id',
+  `foreign_id` int(11) DEFAULT '0' COMMENT '感谢/帖子/评论/用户 id',
   PRIMARY KEY (`id`),
   KEY `money_money_type` (`money_type_id`),
   KEY `money_user` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='财富收支表' AUTO_INCREMENT=81 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='财富收支表' AUTO_INCREMENT=102 ;
 
 --
 -- 转存表中的数据 `money`
@@ -229,7 +236,28 @@ INSERT INTO `money` (`id`, `user_id`, `money_type_id`, `length`, `amount`, `bala
 (77, 1, 5, 0, -10, 157.06, 67),
 (78, 1, 5, 0, 10, 167.06, 67),
 (79, 1, 5, 0, -10, 157.06, 70),
-(80, 1, 5, 0, 10, 167.06, 70);
+(80, 1, 5, 0, 10, 167.06, 70),
+(81, 1, 3, 10, -5, 162.06, 80),
+(82, 1, 4, 0, -10, 152.06, 3),
+(83, 2, 4, 0, 10, 4005.1, 3),
+(84, 1, 4, 0, -10, 142.06, 3),
+(85, 2, 4, 0, 10, 4015.1, 3),
+(86, 2, 4, 0, -10, 4005.1, 19),
+(87, 1, 4, 0, 10, 152.06, 19),
+(88, 2, 4, 0, -10, 3995.1, 4),
+(89, 1, 4, 0, 10, 162.06, 4),
+(90, 2, 5, 0, -10, 3985.1, 13),
+(91, 1, 5, 0, 10, 172.06, 13),
+(92, 2, 5, 0, -10, 3975.1, 14),
+(93, 1, 5, 0, 10, 182.06, 14),
+(94, 2, 4, 0, -10, 3965.1, 5),
+(95, 1, 4, 0, 10, 192.06, 5),
+(96, 2, 5, 0, -10, 3955.1, 15),
+(97, 1, 5, 0, 10, 202.06, 15),
+(98, 2, 5, 0, -10, 3945.1, 16),
+(99, 1, 5, 0, 10, 212.06, 16),
+(100, 2, 5, 0, -10, 3935.1, 17),
+(101, 1, 5, 0, 10, 222.06, 17);
 
 -- --------------------------------------------------------
 
@@ -336,15 +364,15 @@ CREATE TABLE IF NOT EXISTS `post` (
 INSERT INTO `post` (`id`, `user_id`, `node_id`, `title`, `content`, `time`, `views`, `comments`, `thanks`) VALUES
 (1, 1, 1, '测试标题', '测试内容哦！', 0, 119, 6, 0),
 (2, 1, 1, '测试主题', '测试节点测测试主题', 1346336356, 32, 6, 0),
-(3, 2, 1, '用户创建主题', '这是用户创建的主题', 1346424167, 110, 3, 0),
-(12, 1, 1, '求助，webpy 的东西在ML下跑不起了~', '报错如下\r\n\r\n搜了好久也无果\r\n我成功装上了 web.py 和 python-mysqldb 的, 如果一个 "hello world" 能运行成功，但是这个实在不知道怎么回事了。\r\n它在 win 和 linux 下都能正常运行哒\r\n谁帮帮我嘛~ 先谢谢了\r\n如果有人能帮我看看代码的问题就太感谢了 T_T', 1349271488, 38, 33, 0),
-(13, 1, 1, 'test', 'test ''''""#', 1349273760, 9, 6, 0),
+(3, 2, 1, '用户创建主题', '这是用户创建的主题', 1346424167, 114, 3, 1),
+(12, 1, 1, '求助，webpy 的东西在ML下跑不起了~', '报错如下\r\n\r\n搜了好久也无果\r\n我成功装上了 web.py 和 python-mysqldb 的, 如果一个 "hello world" 能运行成功，但是这个实在不知道怎么回事了。\r\n它在 win 和 linux 下都能正常运行哒\r\n谁帮帮我嘛~ 先谢谢了\r\n如果有人能帮我看看代码的问题就太感谢了 T_T', 1349271488, 39, 33, 0),
+(13, 1, 1, 'test', 'test ''''""#', 1349273760, 10, 6, 0),
 (14, 1, 1, 'gwragwrag', 'arebaeb', 1349286641, 8, 6, 0),
 (15, 1, 1, '这是测试主题', '这是你没', 1349621198, 1, 0, 0),
 (16, 1, 1, '这是测试主题', '这是你没', 1349621383, 1, 0, 0),
-(17, 1, 1, '求助，if else 判断不正确~', '这尼玛，坑爹呀', 1349622259, 49, 19, 0),
-(18, 1, 1, '阿宾额头和维特哈如果不', '人工犬瘟热和企鹅天河区退还给', 1349623884, 1, 0, 0),
-(19, 1, 1, '阿宾额头和维特哈如果不', '人工犬瘟热和企鹅天河区退还给', 1349623893, 2, 0, 0);
+(17, 1, 1, '求助，if else 判断不正确~', '这尼玛，坑爹呀', 1349622259, 59, 19, 1),
+(18, 1, 1, '阿宾额头和维特哈如果不', '人工犬瘟热和企鹅天河区退还给', 1349623884, 6, 0, 1),
+(19, 1, 1, '阿宾额头和维特哈如果不', '人工犬瘟热和企鹅天河区退还给', 1349623893, 22, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -356,10 +384,21 @@ CREATE TABLE IF NOT EXISTS `post_thanks` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) NOT NULL DEFAULT '0',
   `post_id` int(10) NOT NULL DEFAULT '0',
+  `time` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `post_thanks_user` (`user_id`),
   KEY `post_thanks_post` (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- 转存表中的数据 `post_thanks`
+--
+
+INSERT INTO `post_thanks` (`id`, `user_id`, `post_id`, `time`) VALUES
+(2, 1, 3, 0),
+(3, 2, 19, 0),
+(4, 2, 18, 1349840227),
+(5, 2, 17, 1349841721);
 
 -- --------------------------------------------------------
 
@@ -393,8 +432,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `gender`, `regist_time`, `signature`, `avatar`, `outsite_link`, `posts`, `money`, `node_favs`, `post_favs`, `user_favs`, `last_session_id`) VALUES
-(1, 'Rabbit_52', 'rabbitzhang52@gmail.com', 'a51e47f646375ab6bf5dd2c42d3e6181', 1, 1346419212, '兔子不舒服斯基', '1.png', NULL, 0, 167.06, 0, 0, 1, NULL),
-(2, 'Tuzki_zhang', 'rabbitzhang52@yahoo.com', 'a51e47f646375ab6bf5dd2c42d3e6181', 1, 1346419212, '兔子不舒服斯基', '2.png', NULL, 0, 3995.1, 1, 2, 1, NULL);
+(1, 'Rabbit_52', 'rabbitzhang52@gmail.com', 'a51e47f646375ab6bf5dd2c42d3e6181', 1, 1346419212, '兔子不舒服斯基', '1.png', NULL, 0, 222.06, 0, 1, 1, NULL),
+(2, 'Tuzki_zhang', 'rabbitzhang52@yahoo.com', 'a51e47f646375ab6bf5dd2c42d3e6181', 1, 1346419212, '兔子不舒服斯基', '2.png', NULL, 0, 3935.1, 1, 3, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -409,7 +448,7 @@ CREATE TABLE IF NOT EXISTS `user_meta` (
   `meta_value` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_meta_user` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户扩展表' AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户扩展表' AUTO_INCREMENT=11 ;
 
 --
 -- 转存表中的数据 `user_meta`
@@ -420,7 +459,9 @@ INSERT INTO `user_meta` (`id`, `user_id`, `meta_key`, `meta_value`) VALUES
 (4, 2, 'node_fav', '1'),
 (5, 2, 'post_fav', '2'),
 (7, 2, 'follow', '1'),
-(8, 1, 'follow', '2');
+(8, 1, 'follow', '2'),
+(9, 1, 'post_fav', '19'),
+(10, 2, 'post_fav', '17');
 
 --
 -- 限制导出的表
@@ -437,8 +478,8 @@ ALTER TABLE `comment`
 -- 限制表 `comment_thanks`
 --
 ALTER TABLE `comment_thanks`
-  ADD CONSTRAINT `comment_thanks_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `comment_thanks_comment` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`);
+  ADD CONSTRAINT `comment_thanks_comment` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`),
+  ADD CONSTRAINT `comment_thanks_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- 限制表 `money`
@@ -464,8 +505,8 @@ ALTER TABLE `post`
 -- 限制表 `post_thanks`
 --
 ALTER TABLE `post_thanks`
-  ADD CONSTRAINT `post_thanks_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `post_thanks_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
+  ADD CONSTRAINT `post_thanks_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
+  ADD CONSTRAINT `post_thanks_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- 限制表 `user_meta`
