@@ -4,6 +4,7 @@ import web
 
 db = web.database(dbn='mysql', db='post_bar', user='root', pw='rabbit')
 render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/../tpl/', base='layout')
+admin_render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/../tpl/admin', base='layout')
 
 web.config.debug = True
 

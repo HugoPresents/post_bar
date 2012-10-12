@@ -8,7 +8,8 @@ from config.config import *
 from config.urls import *
 from libraries import helper
 
-web.template.Template.globals['render'] = render
+#web.template.Template.globals['render'] = render
+#web.template.Template.globals['admin_render'] = admin_render
 web.template.Template.globals['site_title'] = site_title
 web.template.Template.globals['helper'] = helper
 

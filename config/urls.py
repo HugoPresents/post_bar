@@ -51,6 +51,8 @@ urls = (
     '/my/nodes', pre_fix + 'user.node_favs',
     # 取消收藏节点
     '/node/unfav/(\w+)', pre_fix + 'node.unfav',
+    # 后台管理
+    '/admin', pre_fix + 'admin.index',
     # 其他
     '/.*', pre_fix + 'index.index'
 )
