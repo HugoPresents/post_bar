@@ -1,4 +1,5 @@
 # -- coding: utf8 --
+__metaclass__ = type
 import web
 from config.config import *
 from models.node_model import *
