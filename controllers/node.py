@@ -1,4 +1,6 @@
 # -- coding: utf8 --
+import web
+session = web.config._session
 from config.config import render
 from models.post_model import *
 from models.node_model import *
@@ -22,8 +24,8 @@ class index:
         else:
             self.crumb.append(node.display_name)
             node_fav = False
-            if web.config._session.user_id:
-                if user_meta_model().get_one({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id}):
+            if session.user_id:
+                if user_meta_model().get_one({'user_id':session.user_id, 'meta_key':'node_fav', 'meta_value':node.id}):
                     node_fav = True
             total_rows = post_model().count_table({'node_id':node.id})
             pagination = Pagination('/node/'+node_name, total_rows, limit = limit)
@@ -52,11 +54,11 @@ class fav:
         if node is None:
             self.crumb.append('节点未找到')
             return render.node_nf('节点未找到', self.crumb.output())
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/node/'+node_name)
-        user_meta_model().unique_insert({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id})
-        user_model().update({'id':web.config._session.user_id}, {'node_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'node_fav'})})
-        user_model().update_session(web.config._session.user_id)
+        user_meta_model().unique_insert({'user_id':session.user_id, 'meta_key':'node_fav', 'meta_value':node.id})
+        user_model().update({'id':session.user_id}, {'node_favs':user_meta_model().count_meta({'user_id':session.user_id, 'meta_key':'node_fav'})})
+        user_model().update_session(session.user_id)
         raise web.SeeOther('/node/'+node_name)
 
 class unfav:
@@ -68,9 +70,9 @@ class unfav:
         if node is None:
             self.crumb.append('节点未找到')
             return render.node_nf('节点未找到', self.crumb.output())
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/node/'+node_name)
-        user_meta_model().delete({'user_id':web.config._session.user_id, 'meta_key':'node_fav', 'meta_value':node.id})
-        user_model().update({'id':web.config._session.user_id}, {'node_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'node_fav'})})
-        user_model().update_session(web.config._session.user_id)
+        user_meta_model().delete({'user_id':session.user_id, 'meta_key':'node_fav', 'meta_value':node.id})
+        user_model().update({'id':session.user_id}, {'node_favs':user_meta_model().count_meta({'user_id':session.user_id, 'meta_key':'node_fav'})})
+        user_model().update_session(session.user_id)
         raise web.SeeOther('/node/'+node_name)

@@ -3,12 +3,15 @@ $if content.title is not None:
 	$ title = content.title + ' | ' + site_title
 $else:
 	$ title = site_title
-<html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN">
 	<head> 
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<link rel="icon" type="image/png" href="/static/img/favicon.ico">
 		<link rel="stylesheet" href="/static/css/shared.css" />
 		<link rel="stylesheet" href="/static/css/main.css" />
+		<link rel="stylesheet" href="/static/css/desktop.css" />
 		<script type="text/javascript" src="/static/js/jquery.js"></script>
 		<script type="text/javascript" src="/static/js/main.js"></script>
 		<title>$title</title>
@@ -47,6 +50,8 @@ $else:
 $if session.user_id:
 	<a href="/profile/$session.name" class="top">$session.name</a>&nbsp;&nbsp;&nbsp;
 	<a href="/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;
+	$if session.user_id == 1:
+		<a href="/admin" class="top">后台</a>&nbsp;&nbsp;&nbsp;
 	<a href="/logout" class="top">登出</a>
 $else:
 	<a href="/" class="top">首页</a>&nbsp;&nbsp;&nbsp;
@@ -54,15 +59,15 @@ $else:
 	<a href="/login" class="top">登录</a>&nbsp;&nbsp;&nbsp;
 </td>	                </tr>
 	            </tbody></table>
-	            </div>
-	        </div>
-	    </div>
-		<div id="wrapper">
-			<div class="content">
-				<div id="Leftbar">
-				</div>
-<div id="Rightbar">
-            <div class="box">
+        </div>
+    </div>
+</div>
+<div id="Wrapper">
+	<div class="content">
+		<div id="Rightbar">
+			<div class="sep20">
+			</div>
+<div class="box">
     <div class="cell">
         <span class="fade">社区运行状态</span>
     </div>
@@ -70,11 +75,11 @@ $else:
         <table cellpadding="3" cellspacing="0" border="0" width="100%">
             <tbody><tr>
                 <td align="right" width="40%"><span class="fade">注册会员总数</span></td>
-                <td align="left"><strong>1</strong></td>
+                <td align="left"><strong>2</strong></td>
             </tr>
             <tr>
                 <td align="right" width="40%"><span class="fade">主题总数</span></td>
-                <td align="left"><strong>0</strong></td>
+                <td align="left"><strong>1</strong></td>
             </tr>
             <tr>
                 <td align="right" width="40%"><span class="fade">回复总数</span></td>
@@ -85,19 +90,6 @@ $else:
     <div class="inner">
         <img src="/static/img/rss.png?r=1" align="absmiddle"> &nbsp;<a href="/index.xml" target="_blank" class="dark">RSS 订阅社区最新更新</a>
     </div>
-</div>
-            <div class="sep20"></div>
-            <div class="box">
-    <div class="cell">
-        <span class="fade">最新加入会员</span>
-    </div>
-    <div class="grid" style="font-size: 12px">
-        <table cellpadding="10" cellspacing="0" border="0" width="100%">
-            <tbody><tr><td width="48" align="center" style="border-bottom: 1px solid #e2e2e2;"><img src="/static/img/avatar_normal.png" border="0"></td><td align="left" width="auto" style="border-bottom: 1px solid #e2e2e2; border-left: 1px solid #e2e2e2; background-color: #f9f9f9;"><a href="/backstage/member/Rabbit_52"><strong>Rabbit_52</strong></a><div class="sep5"></div><span class="fade">rabbitzhang52@yahoo.com</span></td></tr>
-            
-        </tbody></table>
-    </div>
-    <div class="inner"><a href="/backstage/members">浏览所有会员</a></div>
 </div>
 </div>
 $:content

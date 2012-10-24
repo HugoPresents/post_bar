@@ -1,5 +1,6 @@
 # -- coding: utf8 --
 import web
+session = web.config._session 
 from config.config import render
 from models.post_model import *
 from models.node_model import *

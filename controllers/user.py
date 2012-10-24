@@ -1,5 +1,6 @@
 # -- coding: utf8 --
 import web
+session = web.config._session
 import hashlib
 import time
 from config.config import render
@@ -22,7 +23,7 @@ class login:
     crumb = Crumb()
     
     def __init__(self):
-        if web.config._session.user_id:
+        if session.user_id:
             raise web.SeeOther('/')
     
     def GET(self):
@@ -83,7 +84,7 @@ class signup:
 class logout:
     
     def GET(self):
-        web.config._session.kill()
+        session.kill()
         raise web.SeeOther('/')
 
 # 设置
@@ -95,16 +96,16 @@ class settings:
     crumb.append('设置')
     
     def __init__(self):
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/settings')
     
     def GET(self):
-        user = user_model().get_one({'id':web.config._session.user_id})
+        user = user_model().get_one({'id':session.user_id})
         self.settings_form.name.set_value(user.name)
         self.settings_form.email.set_value(user.email)
         return render.settings('设置', user, self.settings_form, self.pass_form, self.crumb.output())
     def POST(self):
-        user = user_model().get_one({'id':web.config._session.user_id})
+        user = user_model().get_one({'id':session.user_id})
         self.settings_form.name.set_value(user.name)
         if not self.settings_form.validates():
             self.settings_form.name.set_value(user.name)
@@ -151,8 +152,8 @@ class profile:
             else:
                 comments = None
             following = False
-            if web.config._session.user_id:
-                if user_meta_model().get_one({'user_id':web.config._session.user_id, 'meta_key':'follow', 'meta_value':user.id}):
+            if session.user_id:
+                if user_meta_model().get_one({'user_id':session.user_id, 'meta_key':'follow', 'meta_value':user.id}):
                     following = True
             return render.profile(user.name, user, posts, comments, following)
 
@@ -161,9 +162,9 @@ class avatar:
     crumb = Crumb()
     
     def __init__(self):
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/settings/avatar')
-        self.user = user_model().get_one({'id':web.config._session.user_id})
+        self.user = user_model().get_one({'id':session.user_id})
     
     def GET(self):
         self.crumb.append('设置', '/settings')
@@ -193,7 +194,7 @@ class avatar:
                     os.makedirs('static/avatar/tmp')
                 except:
                     pass
-                filename = str(web.config._session.user_id) +'.'+ext
+                filename = str(session.user_id) +'.'+ext
                 if os.path.exists(filedir+filename):
                     os.remove(filedir+filename)
                 fout = open(filedir + filename, 'wb')
@@ -214,13 +215,13 @@ class post_favs():
     crumb = Crumb()
     
     def __init__(self):
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/my/posts')
     
     def GET(self):
         limit = 10
         self.crumb.append('我收藏的主题')
-        user = user_model().get_one({'id':web.config._session.user_id})
+        user = user_model().get_one({'id':session.user_id})
         pagination = Pagination('/my/posts', user.post_favs, limit = limit)
         if user.post_favs > 0:
             page = pagination.true_page(web.input(p=1)['p'])
@@ -250,14 +251,14 @@ class node_favs:
     crumb = Crumb()
     
     def __init__(self):
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/my/nodes')
     
     def GET(self):
         limit = 10
         self.crumb.append('来自我收藏的节点的最新主题')
         # 取出收藏的节点id
-        node_favs = user_meta_model().get_all({'user_id':web.config._session.user_id, 'meta_key':'node_fav'})
+        node_favs = user_meta_model().get_all({'user_id':session.user_id, 'meta_key':'node_fav'})
         if len(node_favs) > 0 :
             nodes = []
             for node_fav in node_favs:
@@ -356,11 +357,11 @@ class follow:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
         else:
-            if web.config._session.user_id is None:
+            if session.user_id is None:
                 raise web.SeeOther('/login?next=/profile/'+name)
-            user_meta_model().unique_insert({'user_id':web.config._session.user_id, 'meta_key':'follow', 'meta_value':user.id})
-            user_model().update({'id':web.config._session.user_id}, {'user_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'follow'})})
-            user_model().update_session(web.config._session.user_id)
+            user_meta_model().unique_insert({'user_id':session.user_id, 'meta_key':'follow', 'meta_value':user.id})
+            user_model().update({'id':session.user_id}, {'user_favs':user_meta_model().count_meta({'user_id':session.user_id, 'meta_key':'follow'})})
+            user_model().update_session(session.user_id)
             raise web.SeeOther('/profile/'+name)
 
 # 取消关注用户
@@ -373,11 +374,11 @@ class unfollow:
             crumb.append('会员未找到')
             return render.user_nf('会员未找到', crumb.output())
         else:
-            if web.config._session.user_id is None:
+            if session.user_id is None:
                 raise web.SeeOther('/login?next=/profile/'+name)
-            user_meta_model().delete({'user_id':web.config._session.user_id, 'meta_key':'follow', 'meta_value':user.id})
-            user_model().update({'id':web.config._session.user_id}, {'user_favs':user_meta_model().count_meta({'user_id':web.config._session.user_id, 'meta_key':'follow'})})
-            user_model().update_session(web.config._session.user_id)
+            user_meta_model().delete({'user_id':session.user_id, 'meta_key':'follow', 'meta_value':user.id})
+            user_model().update({'id':session.user_id}, {'user_favs':user_meta_model().count_meta({'user_id':session.user_id, 'meta_key':'follow'})})
+            user_model().update_session(session.user_id)
             raise web.SeeOther('/profile/'+name)
 
 # 来自关注用户的帖子
@@ -386,14 +387,14 @@ class following:
     crumb = Crumb()
     
     def __init__(self):
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/user/nodes')
     
     def GET(self):
         limit = 10
         self.crumb.append('我关注的人的最新主题')
         # 取出收藏的节点id
-        followings = user_meta_model().get_all({'user_id':web.config._session.user_id, 'meta_key':'follow'})
+        followings = user_meta_model().get_all({'user_id':session.user_id, 'meta_key':'follow'})
         if len(followings) > 0 :
            user_favs = []
            for following in followings:
@@ -428,15 +429,15 @@ class balance:
     crumb = Crumb()
     
     def __init__(self):
-        if web.config._session.user_id is None:
+        if session.user_id is None:
             raise web.SeeOther('/login?next=/balance')
         
     def GET(self):
         limit = 20
-        total = money_model().count_table({'user_id':web.config._session.user_id})
+        total = money_model().count_table({'user_id':session.user_id})
         pagination = Pagination('/balance', total, limit = limit)
         page = pagination.true_page(web.input(p=1)['p'])
-        records_result = money_model().get_all({'user_id':web.config._session.user_id}, limit = limit, offset = (page-1)*limit, order = 'id DESC')
+        records_result = money_model().get_all({'user_id':session.user_id}, limit = limit, offset = (page-1)*limit, order = 'id DESC')
         money_types_result = money_type_model().get_all()
         money_type = {}
         for money_type_result in money_types_result:
