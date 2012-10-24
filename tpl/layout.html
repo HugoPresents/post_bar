@@ -47,6 +47,8 @@ $else:
 $if session.user_id:
 	<a href="/profile/$session.name" class="top">$session.name</a>&nbsp;&nbsp;&nbsp;
 	<a href="/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;
+	$if session.user_id == 1:
+		<a href="/admin" class="top">后台</a>&nbsp;&nbsp;&nbsp;
 	<a href="/logout" class="top">登出</a>
 $else:
 	<a href="/" class="top">首页</a>&nbsp;&nbsp;&nbsp;
@@ -59,8 +61,6 @@ $else:
 	    </div>
 		<div id="wrapper">
 			<div class="content">
-				<div id="Leftbar">
-				</div>
 				<div id="Rightbar">
 					<div class="sep20">
 					</div>

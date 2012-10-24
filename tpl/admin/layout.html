@@ -1,63 +1,151 @@
-$def with (content, title = 'admin')
+$def with (content, title = 'Post_bar')
 $if content.title is not None:
 	$ title = content.title + ' | ' + site_title
 $else:
 	$ title = site_title
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>$title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Le styles -->
-    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <style>
-      body { padding-top: 60px; /* 60px to make the container go all the way
-      to the bottom of the topbar */ }
-    </style>
-    <link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/static/css/admin.css" rel="stylesheet" />
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
-      </script>
-    <![endif]-->
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="/static/img/favicon.ico">
-  </head>
-  
-  <body>
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/">Post_Bar</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="">
-                <a href="/admin/node">节点</a>
-              </li>
-              <li class="">
-                <a href="/amdin/post">帖子</a>
-              </li>
-              <li class="active">
-                <a href="/admin/user">用户</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<html>
+	<head> 
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="icon" type="image/png" href="/static/img/favicon.ico">
+		<link rel="stylesheet" href="/static/css/shared.css" />
+		<link rel="stylesheet" href="/static/css/main.css" />
+		<script type="text/javascript" src="/static/js/jquery.js"></script>
+		<script type="text/javascript" src="/static/js/main.js"></script>
+		<title>$title</title>
+	</head>
+	<body>
+		<div id="Top">
+	        <div class="content">
+	            <div style="padding-top: 6px;">
+	            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+	                <tbody><tr>
+	                    <td width="120" align="left"><a href="/" name="top">
+		                    	<img src="/static/img/logo@2x.png" alt="V2EX" width="94" height="30">
+		                    </a>
+	                    </td>
+	                    <td width="auto" align="left">
+	                        <script type="text/javascript">
+	                            var dispatch = function() {
+	                                q = document.getElementById("q");
+	                                if (q.value != "") {
+	                                    window.open('http://www.google.com/search?q=site:v2ex.com/t%20' + q.value, "_blank");
+	                                    return false;
+	                                } else {
+	                                    return false;
+	                                }
+	                            }
+	                        </script>
+	                        <div id="Search">
+	                        	<form onsubmit="return dispatch()">
+	                        		<div style="width: 276px; height: 28px; background-image: url('/static/img/qbar.png'); background-repeat: no-repeat; display: inline-block;">
+	                        			<input type="text" maxlength="40" name="q" id="q" value="">
+	                        		</div>
+	                        	</form>
+	                        </div>
+	                    </td>
+	                    <td width="500" align="right" style="padding-top: 2px;">
+$if session.user_id:
+	<a href="/profile/$session.name" class="top">$session.name</a>&nbsp;&nbsp;&nbsp;
+	<a href="/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;
+	<a href="/logout" class="top">登出</a>
+$else:
+	<a href="/" class="top">首页</a>&nbsp;&nbsp;&nbsp;
+	<a href="/signup" class="top">注册</a>&nbsp;&nbsp;&nbsp;
+	<a href="/login" class="top">登录</a>&nbsp;&nbsp;&nbsp;
+</td>	                </tr>
+	            </tbody></table>
+	            </div>
+	        </div>
+	    </div>
+		<div id="wrapper">
+			<div class="content">
+				<div id="Leftbar">
+				</div>
+<div id="Rightbar">
+            <div class="box">
+    <div class="cell">
+        <span class="fade">社区运行状态</span>
     </div>
-    $:content
-    <script src="/static/js/jquery.js">
-    </script>
-    <script src="/static/bootstrap/js/bootstrap.min.js">
-    </script>
-  </body>
+    <div class="cell">
+        <table cellpadding="3" cellspacing="0" border="0" width="100%">
+            <tbody><tr>
+                <td align="right" width="40%"><span class="fade">注册会员总数</span></td>
+                <td align="left"><strong>1</strong></td>
+            </tr>
+            <tr>
+                <td align="right" width="40%"><span class="fade">主题总数</span></td>
+                <td align="left"><strong>0</strong></td>
+            </tr>
+            <tr>
+                <td align="right" width="40%"><span class="fade">回复总数</span></td>
+                <td align="left"><strong>0</strong></td>
+            </tr>
+        </tbody></table>
+    </div>
+    <div class="inner">
+        <img src="/static/img/rss.png?r=1" align="absmiddle"> &nbsp;<a href="/index.xml" target="_blank" class="dark">RSS 订阅社区最新更新</a>
+    </div>
+</div>
+            <div class="sep20"></div>
+            <div class="box">
+    <div class="cell">
+        <span class="fade">最新加入会员</span>
+    </div>
+    <div class="grid" style="font-size: 12px">
+        <table cellpadding="10" cellspacing="0" border="0" width="100%">
+            <tbody><tr><td width="48" align="center" style="border-bottom: 1px solid #e2e2e2;"><img src="/static/img/avatar_normal.png" border="0"></td><td align="left" width="auto" style="border-bottom: 1px solid #e2e2e2; border-left: 1px solid #e2e2e2; background-color: #f9f9f9;"><a href="/backstage/member/Rabbit_52"><strong>Rabbit_52</strong></a><div class="sep5"></div><span class="fade">rabbitzhang52@yahoo.com</span></td></tr>
+            
+        </tbody></table>
+    </div>
+    <div class="inner"><a href="/backstage/members">浏览所有会员</a></div>
+</div>
+</div>
+$:content
+	</div>
+	<div class="c">
+	</div>
+	<div class="sep20">
+	</div>
+</div>
+		<div id="Bottom">
+			<div class="content">
+				<div class="inner">
+                <div class="sep10">
+                </div>
+                    <div class="fr">
+                        <a href="http://www.linode.com/?r=af313ea8a6bb6f99aff800c67349cabbfee2682f" target="_blank">
+                        	<img src="/static/img/linode.png" border="0" alt="Linode" width="120"></a>
+                    </div>
+                    <strong><a href="/about" class="dark">关于</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/faq" class="dark">FAQ</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/mission" class="dark">我们的愿景</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/advertise" class="dark">广告投放</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="http://workspace.v2ex.com/" target="_blank" class="dark">工作空间</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/gadgetlab" class="dark">Gadget Lab</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="http://livid.v2ex.com/" target="_blank" class="dark">博客</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 
+                    	<a href="/start" class="dark">上网首页</a> &nbsp; 
+                    	<span class="snow">·</span> &nbsp; 285 人在线</strong> &nbsp; 
+                    	<span class="fade">最高记录 362</span>
+                    <div class="sep20">
+                    </div>
+                    创意工作者们的社区
+                    <div class="sep5">
+                    </div>
+                    Lovingly made by <strong><a href="http://www.olivida.com/" class="dark" target="_blank">OLIVIDA</a></strong>
+                    <div class="sep20">
+                    </div>
+                    <span class="small fade">VERSION: 3.0.0-dev · UTC 05:29 · PVG 13:29 · JFK 01:29 · LAX 22:29<br>♥ Do have a faith in what you're doing.</span>
+                <div class="sep10">
+                </div>
+            </div>
+			</div>
+		</div>
+	</body>
 </html>
