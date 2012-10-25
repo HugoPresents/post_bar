@@ -53,6 +53,8 @@ urls = (
     '/node/unfav/(\w+)', pre_fix + 'node.unfav',
     # 后台管理
     '/admin', pre_fix + 'admin.index',
+    # 分类编辑
+    '/admin/cat/(\w+)', pre_fix + 'admin.cat',
     # 其他
     '/.*', pre_fix + 'index.index'
 )
