@@ -41,3 +41,7 @@ class cat(admin):
         if cat is None:
             self.crumb.append('分类不存在')
             return admin_render.index('分类不存在', self.crumb.output())
+        else:
+            self.crumb.append('/admin', '后台')
+            nodes = node_model().get_all({'category_id':cat.id})
+            return admin_render.cat_view(cat.display_name, self.crumb.output(), nodes)
