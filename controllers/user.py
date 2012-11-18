@@ -68,7 +68,6 @@ class signup:
             user = user_model().get_one(condition)
             # 对密码进行 md5 加密
             password = hashlib.md5(self.form.d.password).hexdigest()
-            user = get_user(condition)
             if user is not None:
                 raise ValueExistsError('用户名已经存在')
             condition = {'email' : email}

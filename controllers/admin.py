@@ -11,13 +11,13 @@ from models.comment_model import *
 from libraries.crumb import Crumb
 
 class admin:
+    crumb = Crumb()
     def __init__(self):
         if session.user_id != 1:
             raise web.SeeOther('/')
+        self.crumb.append('后台', '/admin')
 
 class index(admin):
-    
-    crumb = Crumb()
     
     def GET(self):
         
@@ -26,12 +26,10 @@ class index(admin):
         for cat in cat_result:
             node_total = node_model().count_table({'category_id':cat.id})
             cats.append({'cat':cat, 'node_total':node_total})
-        self.crumb.append('后台')
         return admin_render.index('后台', cats, self.crumb.output())
 
 class cat(admin):
-    
-    crumb = Crumb()
+
     form = cat_model().modify_form
 
     def GET(self, cat_name):
@@ -40,7 +38,7 @@ class cat(admin):
             self.crumb.append('分类不存在')
             return admin_render.index('分类不存在', self.crumb.output())
         else:
-            self.crumb.append('后台', '/admin')
+            self.crumb.append(cat.display_name)
             nodes = node_model().get_all({'category_id':cat.id})
             self.form.name.set_value(cat.name)
             self.form.display_name.set_value(cat.display_name)
@@ -63,4 +61,27 @@ class cat(admin):
                 web.SeeOther('/admin/cat/'+cat.name)
 
 class create_cat(admin):
-    pass
+    form = cat_model.create_form
+
+    def GET(self):
+        self.crumb.append('添加新分类')
+        return admin_render.create_cat('添加新分类', self.crumb.output(), self.form)
+    def POST(self):
+        if self.form.validates():
+            if cat_model().unique_insert({'name':self.form.d.name}):
+                try:
+                    cat_model().update({'name':self.form.d.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
+                except:
+                    cat_model().delete({'name':self.form.d.name})
+                web.SeeOther('/admin/cat/'+self.form.d.name)
+            else:
+                return admin_render.create_cat('分类名已存在', self.crumb.output(), self.form)
+
+class node(admin):
+    form = node_model.modify_form
+
+    def GET(self, node_name):
+        node = node_model().get_one({'name':node_name})
+        if node is None:
+            return admin_render.index('节点不存在', self.crumb.output())
+        self.crumb.append('添加新分类')
