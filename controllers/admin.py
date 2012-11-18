@@ -40,8 +40,9 @@ class cat(admin):
             self.crumb.append('分类不存在')
             return admin_render.index('分类不存在', self.crumb.output())
         else:
-            self.crumb.append('/admin', '后台')
+            self.crumb.append('后台', '/admin')
             nodes = node_model().get_all({'category_id':cat.id})
             return admin_render.cat_view(cat.display_name, self.crumb.output(), cat, self.form, nodes)
 
     def POST(self, cat_name):
+        pass
