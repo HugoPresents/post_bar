@@ -64,11 +64,11 @@ $else:
 <div id="Wrapper">
 <div class="content">
 <div id="Rightbar">
-	$if content.widgets:
-		$for cur_widget in content.widgets:
-			<div class="sep20">
-			</div>
-			$:widget.generator(cur_widget)
+    $if content.widgets:
+        $for cur_widget in content.widgets:
+            <div class="sep20">
+            </div>
+            $:widget.generator(cur_widget)
 </div>
 $:content
 	</div>

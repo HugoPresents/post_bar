@@ -18,13 +18,13 @@ web.template.Template.globals['widget'] = widget
 app = web.application(urls, globals())
 
 if web.config.get('_session') is None:
-	session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'user_id': None})
-	web.config._session = session
+    session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'user_id': None})
+    web.config._session = session
 else:
-	session = web.config._session
+    session = web.config._session
 
 # 如果这里不 不将 session 赋值给模板全局变量， 模板中将不能得到此变量
 web.template.Template.globals['session'] = session
 web.template.Template.globals['site_url'] = 'http://127.0.0.1:8080'
 if __name__ == "__main__":
-	app.run()
+    app.run()

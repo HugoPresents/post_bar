@@ -32,7 +32,8 @@ class index(admin):
 class cat(admin):
     
     crumb = Crumb()
-    
+    form = cat_model().form
+
     def GET(self, cat_name):
         cat = cat_model().get_one({'name':cat_name})
         if cat is None:
@@ -41,4 +42,6 @@ class cat(admin):
         else:
             self.crumb.append('/admin', '后台')
             nodes = node_model().get_all({'category_id':cat.id})
-            return admin_render.cat_view(cat.display_name, self.crumb.output(), nodes)
+            return admin_render.cat_view(cat.display_name, self.crumb.output(), cat, self.form, nodes)
+
+    def POST(self, cat_name):
