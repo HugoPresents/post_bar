@@ -112,7 +112,7 @@ class settings:
             self.settings_form.email.set_value(user.email)
             return render.settings('设置', user, self.settings_form, self.pass_form, self.crumb.output())
         else:
-            user_model().update({'id':user.id}, email=self.settings_form.d.email)
+            user_model().update({'id':user.id}, {'email':self.settings_form.d.email})
             raise web.SeeOther('/settings')
 
 class profile:

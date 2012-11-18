@@ -12,7 +12,7 @@ urls = (
     # 节点主题列表
     '/node/(\w+)', pre_fix + 'node.index',
     # 评论主题
-    '/comment/(\d+)', pre_fix + 'comment.add',
+    '/comment/(\d+)', pre_fix + 'comment.create',
     # 感谢评论
     '/comment/thanks', pre_fix + 'comment.thanks',
     # 注册
@@ -55,6 +55,10 @@ urls = (
     '/admin', pre_fix + 'admin.index',
     # 分类编辑
     '/admin/cat/(\w+)', pre_fix + 'admin.cat',
+    # 添加分类
+    '/admin/create_cat', pre_fix + 'admin.create_cat',
+    # 添加节点
+    '/admin/ceate_node/(\w+)', pre_fix + 'admin.create_node',
     # 其他
     '/.*', pre_fix + 'index.index'
 )

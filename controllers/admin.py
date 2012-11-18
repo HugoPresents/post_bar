@@ -32,7 +32,7 @@ class index(admin):
 class cat(admin):
     
     crumb = Crumb()
-    form = cat_model().form
+    form = cat_model().modify_form
 
     def GET(self, cat_name):
         cat = cat_model().get_one({'name':cat_name})
@@ -42,7 +42,25 @@ class cat(admin):
         else:
             self.crumb.append('后台', '/admin')
             nodes = node_model().get_all({'category_id':cat.id})
+            self.form.name.set_value(cat.name)
+            self.form.display_name.set_value(cat.display_name)
+            self.form.description.set_value(cat.description)
             return admin_render.cat_view(cat.display_name, self.crumb.output(), cat, self.form, nodes)
 
     def POST(self, cat_name):
-        pass
+        cat = cat_model().get_one({'name':cat_name})
+        if cat is None:
+            self.crumb.append('分类不存在')
+            return admin_render.index('分类不存在', self.crumb.output())
+        else:
+            if self.form.validates():
+                cat_model().update({'name':cat.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
+                web.SeeOther('/admin/cat/'+cat.name)
+            else:
+                self.form.name.set_value(cat.name)
+                self.form.display_name.set_value(cat.display_name)
+                self.form.description.set_value(cat.description)
+                web.SeeOther('/admin/cat/'+cat.name)
+
+class create_cat(admin):
+    pass

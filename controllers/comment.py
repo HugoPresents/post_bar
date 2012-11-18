@@ -11,7 +11,7 @@ from models.money_type_model import *
 from models.user_model import *
 from libraries.helper import *
 
-class add:
+class create:
     
     form = comment_model().form
     
