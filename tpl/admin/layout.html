@@ -3,7 +3,6 @@ $if content.title is not None:
 	$ title = content.title + ' | ' + site_title
 $else:
 	$ title = site_title
-$ site_count = content.site_count
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="zh-CN">
 	<head> 
@@ -65,29 +64,11 @@ $else:
 <div id="Wrapper">
 <div class="content">
 <div id="Rightbar">
-	<div class="sep20">
-	</div>
-<div class="box">
-    <div class="cell">
-        <span class="fade">社区运行状态</span>
-    </div>
-    <div class="inner">
-        <table cellpadding="3" cellspacing="0" border="0" width="100%">
-            <tbody><tr>
-                <td align="right" width="40%"><span class="fade">注册会员总数</span></td>
-                <td align="left"><strong>$site_count['user']</strong></td>
-            </tr>
-            <tr>
-                <td align="right" width="40%"><span class="fade">主题总数</span></td>
-                <td align="left"><strong>$site_count['post']</strong></td>
-            </tr>
-            <tr>
-                <td align="right" width="40%"><span class="fade">回复总数</span></td>
-                <td align="left"><strong>$site_count['comment']</strong></td>
-            </tr>
-        </tbody></table>
-    </div>
-</div>
+	$if content.widgets:
+		$for cur_widget in content.widgets:
+			<div class="sep20">
+			</div>
+			$:widget.generator(cur_widget)
 </div>
 $:content
 	</div>

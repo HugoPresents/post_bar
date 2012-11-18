@@ -20,17 +20,14 @@ class index(admin):
     crumb = Crumb()
     
     def GET(self):
-        site_count = {}
-        site_count['user'] = user_model().count_table()
-        site_count['post'] = post_model().count_table()
-        site_count['comment'] = comment_model().count_table()
+        
         cat_result = cat_model().get_all()
         cats = []
         for cat in cat_result:
             node_total = node_model().count_table({'category_id':cat.id})
             cats.append({'cat':cat, 'node_total':node_total})
         self.crumb.append('后台')
-        return admin_render.index('后台', site_count, cats, self.crumb.output())
+        return admin_render.index('后台', cats, self.crumb.output())
 
 class cat(admin):
     

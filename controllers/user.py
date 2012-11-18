@@ -25,21 +25,21 @@ class login:
     def __init__(self):
         if session.user_id:
             raise web.SeeOther('/')
-    
-    def GET(self):
-        title = '登录'
+        self.title = '登录'
         self.crumb.append('登录')
-        return render.login(self.form, title, self.crumb.output())
+
+    def GET(self):
+        return render.login(self.form, self.title, self.crumb.output())
     
     def POST(self):
         if not self.form.validates():
-            return render.login(self.form, '登录失败，请重登')
+            return render.login(self.form, '登录失败，请重登', self.crumb.output())
         condition = {'name' : self.form.d.name, 'password' : self.form.d.password}
         # MD5加密 密码
         condition['password'] = hashlib.md5(condition['password']).hexdigest()
         user = user_model().get_one(condition)
         if user is None:
-            return render.login(self.form, '登录失败，请重登')
+            return render.login(self.form, '登录失败，请重登', self.crumb.output())
         user_model().update_session(user.id)
         data = web.input();
         try:
