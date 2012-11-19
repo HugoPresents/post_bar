@@ -58,7 +58,7 @@ urls = (
     # 添加分类
     '/admin/create_cat', pre_fix + 'admin.create_cat',
     # 添加节点
-    '/admin/ceate_node/(\w+)', pre_fix + 'admin.create_node',
+    '/admin/create_node/(\w+)', pre_fix + 'admin.create_node',
     # 编辑节点
     '/admin/node/(\w+)', pre_fix + 'admin.node',
     # 其他

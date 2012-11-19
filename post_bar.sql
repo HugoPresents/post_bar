@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 11 月 17 日 14:52
+-- 生成日期: 2012 年 11 月 19 日 21:26
 -- 服务器版本: 5.5.28-0ubuntu0.12.10.1
 -- PHP 版本: 5.4.6-1ubuntu1
 
@@ -33,14 +33,15 @@ CREATE TABLE IF NOT EXISTS `category` (
   `description` text NOT NULL COMMENT '分类描述',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='节点分类' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='节点分类' AUTO_INCREMENT=5 ;
 
 --
 -- 转存表中的数据 `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `display_name`, `description`) VALUES
-(1, 'test', '测试分类', '分类描述这里是');
+(1, 'test', '分类名', '分类描述这里'),
+(4, 'test2', '能添加？', '分类描述');
 
 -- --------------------------------------------------------
 
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `comment_user` (`user_id`),
   KEY `comment_post` (`post_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='帖子评论' AUTO_INCREMENT=81 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='帖子评论' AUTO_INCREMENT=82 ;
 
 --
 -- 转存表中的数据 `comment`
@@ -144,7 +145,8 @@ INSERT INTO `comment` (`id`, `user_id`, `post_id`, `content`, `time`, `thanks`) 
 (77, 1, 17, '为什么有这种情况~', 1349623564, 0),
 (78, 1, 17, '为什么有这种情况~', 1349623570, 0),
 (79, 1, 17, '为什么有这种情况~', 1349623572, 0),
-(80, 1, 18, '评论一下下勒', 1353134455, 0);
+(80, 1, 18, '评论一下下勒', 1353134455, 0),
+(81, 1, 20, 'oin', 1353246613, 0);
 
 -- --------------------------------------------------------
 
@@ -186,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `money` (
   PRIMARY KEY (`id`),
   KEY `money_money_type` (`money_type_id`),
   KEY `money_user` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='财富收支表' AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='财富收支表' AUTO_INCREMENT=78 ;
 
 --
 -- 转存表中的数据 `money`
@@ -226,7 +228,9 @@ INSERT INTO `money` (`id`, `user_id`, `money_type_id`, `length`, `amount`, `bala
 (72, 1, 4, 0, 10, 217.06, 4),
 (73, 1, 4, 0, -10, 207.06, 5),
 (74, 2, 4, 0, 10, 3975.1, 5),
-(75, 1, 3, 6, -5, 202.06, 80);
+(75, 1, 3, 6, -5, 202.06, 80),
+(76, 1, 2, 12, -20, 182.06, 20),
+(77, 1, 3, 3, -5, 177.06, 81);
 
 -- --------------------------------------------------------
 
@@ -296,14 +300,16 @@ CREATE TABLE IF NOT EXISTS `node` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `node_category` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='所有节点' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='所有节点' AUTO_INCREMENT=6 ;
 
 --
 -- 转存表中的数据 `node`
 --
 
 INSERT INTO `node` (`id`, `category_id`, `name`, `display_name`, `description`, `icon`) VALUES
-(1, 1, 'test', '测试节点', '测试节点的描述', NULL);
+(1, 1, 'test', '测试节点', '测试节点的描述\r\n哎哟，不错哦', NULL),
+(4, 1, 'Tuzki', '兔斯基', '兔斯基节点的描述', NULL),
+(5, 4, 'rabbit', '兔斯基', '兔斯基节点的描述', NULL);
 
 -- --------------------------------------------------------
 
@@ -324,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`id`),
   KEY `post_user` (`user_id`),
   KEY `post_node` (`node_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='所有帖子' AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='所有帖子' AUTO_INCREMENT=21 ;
 
 --
 -- 转存表中的数据 `post`
@@ -333,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `post` (
 INSERT INTO `post` (`id`, `user_id`, `node_id`, `title`, `content`, `time`, `views`, `comments`, `thanks`) VALUES
 (1, 1, 1, '测试标题', '测试内容哦！', 0, 119, 6, 0),
 (2, 1, 1, '测试主题', '测试节点测测试主题', 1346336356, 32, 6, 0),
-(3, 2, 1, '用户创建主题', '这是用户创建的主题', 1346424167, 116, 3, 1),
+(3, 2, 1, '用户创建主题', '这是用户创建的主题', 1346424167, 117, 3, 1),
 (12, 1, 1, '求助，webpy 的东西在ML下跑不起了~', '报错如下\r\n\r\n搜了好久也无果\r\n我成功装上了 web.py 和 python-mysqldb 的, 如果一个 "hello world" 能运行成功，但是这个实在不知道怎么回事了。\r\n它在 win 和 linux 下都能正常运行哒\r\n谁帮帮我嘛~ 先谢谢了\r\n如果有人能帮我看看代码的问题就太感谢了 T_T', 1349271488, 38, 33, 0),
 (13, 1, 1, 'test', 'test ''''""#', 1349273760, 10, 6, 0),
 (14, 1, 1, 'gwragwrag', 'arebaeb', 1349286641, 7, 6, 0),
@@ -341,7 +347,8 @@ INSERT INTO `post` (`id`, `user_id`, `node_id`, `title`, `content`, `time`, `vie
 (16, 1, 1, '这是测试主题', '这是你没', 1349621383, 1, 0, 0),
 (17, 1, 1, '求助，if else 判断不正确~', '这尼玛，坑爹呀', 1349622259, 31, 19, 0),
 (18, 1, 1, '阿宾额头和维特哈如果不', '人工犬瘟热和企鹅天河区退还给', 1349623884, 4, 1, 1),
-(19, 1, 1, '阿宾额头和维特哈如果不', '人工犬瘟热和企鹅天河区退还给', 1349623893, 6, 0, 1);
+(19, 1, 1, '阿宾额头和维特哈如果不', '人工犬瘟热和企鹅天河区退还给', 1349623893, 7, 0, 1),
+(20, 1, 1, '你妹的，如果我再创建一个主题呢', '你会不会给我涨一个？？？', 1353221040, 3, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -400,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `gender`, `regist_time`, `signature`, `avatar`, `outsite_link`, `posts`, `money`, `node_favs`, `post_favs`, `user_favs`, `last_session_id`) VALUES
-(1, 'Rabbit_52', 'rabbitzhang52@gmail.com', 'a51e47f646375ab6bf5dd2c42d3e6181', 1, 1346419212, '兔子不舒服斯基', '1.jpg', NULL, 0, 202.06, 0, 1, 1, NULL),
+(1, 'Rabbit_52', 'rabbitzhang52@gmail.com', 'a51e47f646375ab6bf5dd2c42d3e6181', 1, 1346419212, '兔子不舒服斯基', '1.jpg', NULL, 0, 177.06, 0, 1, 1, NULL),
 (2, 'Tuzki_zhang', 'rabbitzhang52@yahoo.com', 'a51e47f646375ab6bf5dd2c42d3e6181', 1, 1346419212, '兔子不舒服斯基', '2.png', NULL, 0, 3975.1, 1, 2, 1, NULL);
 
 -- --------------------------------------------------------
@@ -445,8 +452,8 @@ ALTER TABLE `comment`
 -- 限制表 `comment_thanks`
 --
 ALTER TABLE `comment_thanks`
-  ADD CONSTRAINT `fk_comment_thanks_2` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`),
-  ADD CONSTRAINT `fk_comment_thanks_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `fk_comment_thanks_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `fk_comment_thanks_2` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`);
 
 --
 -- 限制表 `money`
@@ -472,8 +479,8 @@ ALTER TABLE `post`
 -- 限制表 `post_thanks`
 --
 ALTER TABLE `post_thanks`
-  ADD CONSTRAINT `fk_post_thanks_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
-  ADD CONSTRAINT `fk_post_thanks_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_post_thanks_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_post_thanks_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
 
 --
 -- 限制表 `user_meta`

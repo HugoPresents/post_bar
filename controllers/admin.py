@@ -36,20 +36,20 @@ class cat(admin):
         cat = cat_model().get_one({'name':cat_name})
         if cat is None:
             self.crumb.append('分类不存在')
-            return admin_render.index('分类不存在', self.crumb.output())
+            return admin_render.cat_nf('分类不存在', self.crumb.output())
         else:
             self.crumb.append(cat.display_name)
             nodes = node_model().get_all({'category_id':cat.id})
             self.form.name.set_value(cat.name)
             self.form.display_name.set_value(cat.display_name)
             self.form.description.set_value(cat.description)
-            return admin_render.cat_view(cat.display_name+'分类', self.crumb.output(), cat, self.form, nodes)
+            return admin_render.cat_view(cat.display_name, self.crumb.output(), cat, self.form, nodes)
 
     def POST(self, cat_name):
         cat = cat_model().get_one({'name':cat_name})
         if cat is None:
             self.crumb.append('分类不存在')
-            return admin_render.index('分类不存在', self.crumb.output())
+            return admin_render.cat_nf('分类不存在', self.crumb.output())
         else:
             if self.form.validates():
                 cat_model().update({'name':cat.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
@@ -84,18 +84,22 @@ class node(admin):
     def GET(self, node_name):
         node = node_model().get_one({'name':node_name})
         if node is None:
-            return admin_render.index('节点不存在', self.crumb.output())
-        cat = cat_model()->get_one({'id':node.category_id})
-        self.crumb.append(cat.name, '/admin/cat/'+cat.display_name)
-        self.crumb.append(node.name)
-        return admin_render.node_view(node.display_name+'节点', self.crumb.output(), cat, node, self.form)
+            return admin_render.node_nf('节点不存在', self.crumb.output())
+        ##return node
+        cat = cat_model().get_one({'id':node.category_id})
+        self.form.name.set_value(node.name)
+        self.form.display_name.set_value(node.display_name)
+        self.form.description.set_value(node.description)
+        self.crumb.append(cat.display_name, '/admin/cat/'+cat.name)
+        self.crumb.append(node.display_name)
+        return admin_render.node_view(node.display_name, self.crumb.output(), node, self.form)
 
     def POST(self, node_name):
         node = node_model().get_one({'name':node_name})
         if node is None:
-            return admin_render.index('节点不存在', self.crumb.output())
+            return admin_render.node_nf('节点不存在', self.crumb.output())
         if self.form.validates():
-            node_model().update({'node_name':node.name}, {'display_name':self.d.display_name, 'description':self.d.description})
+            node_model().update({'name':node.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
             raise web.SeeOther('/admin/node/'+node.name)
 
 class create_node(admin):
@@ -105,7 +109,7 @@ class create_node(admin):
         cat = cat_model().get_one({'name':cat_name})
         if cat is None:
             self.crumb.append('分类不存在')
-            return admin_render.index('分类不存在', self.crumb.output())
+            return admin_render.cat_nf('分类不存在', self.crumb.output())
         self.crumb.append(cat.name, '/admin/cat/'+cat.name)
         self.crumb.append('添加新节点')
         return admin_render.create_node('添加新节点', self.crumb.output(), cat, self.form)
@@ -114,14 +118,14 @@ class create_node(admin):
         cat = cat_model().get_one({'name':cat_name})
         if cat is None:
             self.crumb.append('分类不存在')
-            return admin_render.index('分类不存在', self.crumb.output())
+            return admin_render.cat_nf('分类不存在', self.crumb.output())
         if self.form.validates():
             if node_model().unique_insert({'name':self.form.d.name}):
                 # 为了保证不插入空的display_name的节点，故此
                 try:
-                    node_model().update({'name':self.form.d.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
+                    node_model().update({'name':self.form.d.name}, {'category_id':cat.id, 'display_name':self.form.d.display_name, 'description':self.form.d.description})                
                 except:
                     node_model().delete({'name':self.form.d.name})
-                web.SeeOther('/admin/cat/'+self.form.d.name)
+                web.SeeOther('/admin/node/'+self.form.d.name)
             else:
                 return admin_render.create_cat('节点名已存在', self.crumb.output(), self.form)
