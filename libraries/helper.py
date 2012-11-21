@@ -68,6 +68,15 @@ def avatar_url(avatar, mode = 'normal'):
     else:
         return '/'+path+'default.jpg'
 
+def icon_url(icon, mode = 'normal'):
+    import os
+    icon = str(icon)
+    path = 'static/icons/'+mode+'/'
+    if os.path.exists(path+icon) and icon != '':
+        return '/'+path+icon
+    else:
+        return '/'+path+'default.jpg'
+
 def display_money(money):
     money = int(money)
     string = ''

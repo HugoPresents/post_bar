@@ -61,6 +61,8 @@ urls = (
     '/admin/create_node/(\w+)', pre_fix + 'admin.create_node',
     # 编辑节点
     '/admin/node/(\w+)', pre_fix + 'admin.node',
+    # 设置节点图标
+    '/admin/node/icon/(\w+)', pre_fix + 'admin.set_node_icon',
     # 其他
     '/.*', pre_fix + 'index.index'
 )

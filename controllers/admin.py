@@ -102,6 +102,65 @@ class node(admin):
             node_model().update({'name':node.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
             raise web.SeeOther('/admin/node/'+node.name)
 
+class set_node_icon(admin):
+
+    def GET(self, node_name):
+        node = node_model().get_one({'name':node_name})
+        if node is None:
+            return admin_render.node_nf('节点不存在', self.crumb.output())
+        cat = cat_model().get_one({'id':node.category_id})
+        self.crumb.append(cat.display_name, '/admin/cat/'+cat.name)
+        self.crumb.append(node.display_name, '/admin/node/'+node.name)
+        self.crumb.append('设置节点图标')
+        return admin_render.set_node_icon('设置节点图标', self.crumb.output(), node)
+
+    def POST(self, node_name):
+        node = node_model().get_one({'name':node_name})
+        if node is None:
+            return admin_render.node_nf('节点不存在', self.crumb.output())
+        cat = cat_model().get_one({'id':node.category_id})
+        self.crumb.append(cat.display_name, '/admin/cat/'+cat.name)
+        self.crumb.append(node.display_name, '/admin/node/'+node.name)
+        self.crumb.append('设置节点图标')
+        import cgi
+        import os
+        cgi.maxlen = 2 * 1024 * 1024 # 2MB
+        try:
+            x = web.input(icon={})
+        except ValueError:
+            return admin_render.set_node_icon('设置节点图标', self.crumb.output(), node, ' <<超过大小限制')
+        if 'icon' in x:
+            #客户端为windows时注意
+            filepath=x.icon.filename.replace('\\','/')
+            #获取文件名
+            filename=filepath.split('/')[-1]
+            #获取后缀
+            ext = filename.split('.', 1)[1].lower()
+            ext_allow = ('jpg', 'png', 'gif', 'jpeg')
+            #判断文件后缀名 
+            if ext in ext_allow:
+                #要上传的路径
+                filedir = 'static/icons/tmp/'
+                try:
+                    os.makedirs('static/icons/tmp')
+                except:
+                    pass
+                filename = str(session.user_id) +'.'+ext
+                if os.path.exists(filedir+filename):
+                    os.remove(filedir+filename)
+                fout = open(filedir + filename, 'wb')
+                fout.write(x.icon.file.read())
+                fout.close()
+                node_model().set_icon(filename, node.id)
+                error = False
+            else:
+                message = ' <<请上传指定格式文件'
+                error = True
+        if error:
+            return admin_render.set_node_icon('设置节点图标', self.crumb.output(), node, message)
+        else:
+            raise web.SeeOther('/admin/node/icon/'+node.name)
+
 class create_node(admin):
     form = node_model.create_form
 
