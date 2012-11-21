@@ -34,4 +34,4 @@ web.py 的贴吧
 
 4. ~~很蛋疼的是没有在 MAC 下跑成功，建议在 linux 和 win 下部署~~ MAC 下默认的 python 版本是 2.7.2 从官网下载升级到2.7.3之后就能成功运行了，话说python的版本差异也太大了嘛
 
-5. 环境依赖 必须：python 2.7.3、PIL、webpy 0.37、mysql，可选 Apache、mode_wsgi
+5. 环境依赖 必须：python 2.7.3、mysql-python、PIL、webpy 0.37、mysql，可选 Apache、mode_wsgi
