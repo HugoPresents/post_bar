@@ -7,9 +7,9 @@ def dict2where(dict):
         where_str = ''
         for key, value in dict.items():
             if isinstance(value, list):
-                where_str += str(key) + ' in (' + ', '.join('\''+str(_value)+'\'' for _value in value) + ') AND'
+                where_str += '`'+str(key)+'`' + ' in (' + ', '.join('\''+str(_value)+'\'' for _value in value) + ') AND'
             else:
-                where_str += str(key) + '=\'' + str(value) + '\' AND '
+                where_str += '`'+str(key)+'`' + '=\'' + str(value) + '\' AND '
         where_len = len(where_str)
         where = where_str[0 : where_len-4]
         return where
@@ -21,7 +21,7 @@ def dict2update(dict):
     if dict is not None:
         update_str = ''
         for key,value in dict.items():
-            update_str += str(key) + '=\'' + str(value) + '\','
+            update_str += '`'+str(key)+'`' + '=\'' + str(value) + '\','
         update_len = len(update_str)
         update = update_str[0:update_len-1]
         return update
@@ -122,3 +122,5 @@ def html2db(str):
     #str = str.encode()
     str = str.replace("'", "\\'").replace('"', '\\"').replace('$', '\\$')
     return str 
+def site_option(key):
+    pass

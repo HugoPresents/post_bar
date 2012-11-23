@@ -8,6 +8,7 @@ from models.cat_model import *
 from models.post_model import *
 from models.user_model import *
 from models.comment_model import *
+from models.site_model import *
 from libraries.crumb import Crumb
 
 class admin:
@@ -27,6 +28,29 @@ class index(admin):
             node_total = node_model().count_table({'category_id':cat.id})
             cats.append({'cat':cat, 'node_total':node_total})
         return admin_render.index('后台', cats, self.crumb.output())
+
+class site(admin):
+
+    form = site_model.form
+    site = site_model().get_options()
+    form.title.set_value(site['title'])
+    form.description.set_value(site['description'])
+
+    def GET(self):
+        self.crumb.append('站点设置')
+        return admin_render.site('站点设置', self.crumb.output(), self.form)
+
+    def POST(self):
+        if self.form.validates():
+            site_model().update({'key':'title'}, {'value':self.form.d.title})
+            site_model().update({'key':'description'}, {'value':self.form.d.description})
+            # 不知道这里为什么还要clear一次才能保证crumb的干净
+            self.crumb.clear()
+            raise web.SeeOther('/admin/site')
+        else:
+            self.crumb.append('站点设置')
+            return admin_render.site('站点设置', self.crumb.output(), self.form)
+
 
 class cat(admin):
 

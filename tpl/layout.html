@@ -1,8 +1,8 @@
 $def with (content, title = 'Post_bar')
 $if content.title is not None:
-	$ title = content.title + ' | ' + site_title
+    $ title = content.title + ' | ' + site_options['title']
 $else:
-	$ title = site_title
+    $ title = site_options['title']
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="zh-CN">
 	<head> 
@@ -175,14 +175,14 @@ $:content
                     	<span class="snow">·</span> &nbsp; 
                     	<a href="/gadgetlab" class="dark">Gadget Lab</a> &nbsp; 
                     	<span class="snow">·</span> &nbsp; 
-                    	<a href="http://livid.v2ex.com/" target="_blank" class="dark">博客</a> &nbsp; 
+                    	<a href="http://rabbit52.com/" target="_blank" class="dark">博客</a> &nbsp; 
                     	<span class="snow">·</span> &nbsp; 
                     	<a href="/start" class="dark">上网首页</a> &nbsp; 
                     	<span class="snow">·</span> &nbsp; 285 人在线</strong> &nbsp; 
                     	<span class="fade">最高记录 362</span>
                     <div class="sep20">
                     </div>
-                    创意工作者们的社区
+                    $site_options['description']
                     <div class="sep5">
                     </div>
                     Lovingly made by <strong><a href="http://www.olivida.com/" class="dark" target="_blank">OLIVIDA</a></strong>
