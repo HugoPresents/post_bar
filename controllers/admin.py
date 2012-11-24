@@ -77,11 +77,13 @@ class cat(admin):
         else:
             if self.form.validates():
                 cat_model().update({'name':cat.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
+                self.crumb.clear()
                 web.SeeOther('/admin/cat/'+cat.name)
             else:
                 self.form.name.set_value(cat.name)
                 self.form.display_name.set_value(cat.display_name)
                 self.form.description.set_value(cat.description)
+                self.crumb.clear()
                 web.SeeOther('/admin/cat/'+cat.name)
 
 class create_cat(admin):

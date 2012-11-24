@@ -14,6 +14,7 @@ from models.money_model import *
 from models.money_type_model import *
 from libraries.crumb import Crumb
 from libraries.helper import *
+from libraries.pagination import *
 
 # 查看单个帖子
 class view:
@@ -45,7 +46,11 @@ class view:
                 if post_thanks_model().get_one({'user_id':session.user_id, 'post_id':post.id}):
                     thanks = True
             condition = {'post_id' : post.id}
-            comments_result = comment_model().get_all(condition, order = 'time ASC')
+            # Pagination
+            total = comment_model().count_table(condition)
+            pagination = Pagination('/post/'+str(post.id), total, limit = 100)
+            page = pagination.true_page(web.input(p=(total/100)*100 + 1)['p'])
+            comments_result = comment_model().get_all(condition, order = 'time ASC', limit = 100, offset = (page-1)*100)
             comments = []
             if comments_result is not None:
                 for comment_result in comments_result:
@@ -56,7 +61,7 @@ class view:
                             comment_thanks = True
                     comments.append({'comment':comment_result, 'user':comment_user, 'thanks':comment_thanks})
             form = comment_model().form
-            return render.post_view(post, user, comments, form, post_fav, favs, thanks, self.crumb.output())
+            return render.post_view(post, user, comments, form, post_fav, favs, thanks, self.crumb.output(), pagination)
 
 # 创建帖子
 class create:

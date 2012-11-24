@@ -5,7 +5,7 @@ $var title : $title
 </div>
 <div class="box">
 	<div class="cell" id="Tabs">
-		<a href="http://www.v2ex.com/?tab=all" class="tab_current">全部</a>
+		<a href="/" class="tab_current">全部</a>
 	</div>
 $for post_cur in posts:
 	$ post = post_cur['post']
@@ -38,6 +38,9 @@ $for post_cur in posts:
 		    </tbody>
 	    </table>
 	</div>
+<div class="inner">
+    <span class="chevron">→</span> <a href="/recent">更多新主题</a>
+</div>
 </div>
 <div class="sep20">
 </div>
