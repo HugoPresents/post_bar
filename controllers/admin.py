@@ -185,6 +185,7 @@ class set_node_icon(admin):
         if error:
             return admin_render.set_node_icon('设置节点图标', self.crumb.output(), node, message)
         else:
+            self.crumb.clear()
             raise web.SeeOther('/admin/node/icon/'+node.name)
 
 class create_node(admin):
