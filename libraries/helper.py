@@ -120,7 +120,7 @@ def str2entity(str):
 
 def html2db(str):
     #str = str.encode()
-    str = str.replace("'", "\\'").replace('"', '\\"').replace('$', '\\$')
+    str = str.replace("'", "\\'").replace('"', '\\"').replace('$', '\\$').replace('<', '&lt;').replace('>', '&gt;')
     return str 
 def site_option(key):
     pass
