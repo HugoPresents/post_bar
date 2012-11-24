@@ -27,6 +27,8 @@ urls = (
     '/settings', pre_fix + 'user.settings',
     # 上传头像
     '/settings/avatar', pre_fix + 'user.avatar',
+    # 设置密码
+    '/settings/password', pre_fix + 'user.password',
     # 用户中心
     '/profile/(\w+)', pre_fix + 'user.profile',
     # 财富中心

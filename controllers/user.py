@@ -3,6 +3,8 @@ import web
 session = web.config._session
 import hashlib
 import time
+import random
+import string
 from config.config import render
 from models.user_model import *
 from models.user_meta_model import *
@@ -34,12 +36,15 @@ class login:
     def POST(self):
         if not self.form.validates():
             return render.login(self.form, '登录失败，请重登', self.crumb.output())
-        condition = {'name' : self.form.d.name, 'password' : self.form.d.password}
+        condition = {'name' : self.form.d.name}
         # MD5加密 密码
-        condition['password'] = hashlib.md5(condition['password']).hexdigest()
+        #condition['password'] = hashlib.md5(condition['password']).hexdigest()
         user = user_model().get_one(condition)
         if user is None:
-            return render.login(self.form, '登录失败，请重登', self.crumb.output())
+            return render.login(self.form, '用户名不存在', self.crumb.output())
+        auth_from_form = hashlib.md5(hashlib.md5(self.form.d.password).hexdigest() + user.auth).hexdigest()
+        if auth_from_form != user.password:
+            return render.login(self.form, '密码错误', self.crumb.output())
         user_model().update_session(user.id)
         data = web.input();
         try:
@@ -67,17 +72,19 @@ class signup:
             condition = {'name':self.form.d.name}
             user = user_model().get_one(condition)
             # 对密码进行 md5 加密
-            password = hashlib.md5(self.form.d.password).hexdigest()
+            auth = string.join(random.sample(['z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'], 5)).replace(' ','')
+            password = hashlib.md5(hashlib.md5(self.form.d.password).hexdigest() + auth).hexdigest()
+            #password = hashlib.md5(self.form.d.password).hexdigest()
             if user is not None:
                 raise ValueExistsError('用户名已经存在')
-            condition = {'email' : email}
+            condition = {'email' : self.form.d.email}
             user = user_model().get_one(condition)
             if user is not None:
                 raise ValueExistsError('邮箱已经存在')
-            user_model().insert({'name' : name, 'email' : email, 'password' : password, 'regist_time' : time.time()})
+            user_model().insert({'name' : self.form.d.name, 'email' : self.form.d.email, 'password' : password, 'regist_time' : time.time(), 'auth' : auth})
         except ValueExistsError, x:
             return render.signup(self.form, x.message, self.crumb.output())
-        raise web.seeOther('/')
+        raise web.SeeOther('/')
 
 # 注销
 class logout:
@@ -89,30 +96,58 @@ class logout:
 # 设置
 class settings:
     
-    settings_form = user_model().setting_form
+    setting_form = user_model().setting_form
     pass_form = user_model().pass_form
     crumb = Crumb()
     crumb.append('设置')
-    
+
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/settings')
     
     def GET(self):
         user = user_model().get_one({'id':session.user_id})
-        self.settings_form.name.set_value(user.name)
-        self.settings_form.email.set_value(user.email)
-        return render.settings('设置', user, self.settings_form, self.pass_form, self.crumb.output())
+        self.setting_form.name.set_value(user.name)
+        self.setting_form.email.set_value(user.email)
+        return render.settings('设置', user, self.setting_form, self.pass_form, self.crumb.output())
     def POST(self):
         user = user_model().get_one({'id':session.user_id})
-        self.settings_form.name.set_value(user.name)
-        if not self.settings_form.validates():
-            self.settings_form.name.set_value(user.name)
-            self.settings_form.email.set_value(user.email)
-            return render.settings('设置', user, self.settings_form, self.pass_form, self.crumb.output())
+        self.setting_form.name.set_value(user.name)
+        if not self.setting_form.validates():
+            self.setting_form.name.set_value(user.name)
+            self.setting_form.email.set_value(user.email)
+            return render.settings('设置', user, self.setting_form, self.pass_form, self.crumb.output())
         else:
-            user_model().update({'id':user.id}, {'email':self.settings_form.d.email})
+            user_model().update({'id':user.id}, {'email':self.setting_form.d.email})
             raise web.SeeOther('/settings')
+
+class password:
+    form = user_model().pass_form
+    crumb = Crumb()
+    
+    def __init__(self):
+        if session.user_id is None:
+            raise web.SeeOther('/login?next=/settings/password')
+    def GET(self):
+        self.crumb.append('设置', '/settings')
+        self.crumb.append('修改密码')
+        return render.password('修改密码', self.crumb.output(), self.form)
+    def POST(self):
+        self.crumb.append('设置', '/settings')
+        self.crumb.append('修改密码')
+        user = user_model().get_one({'id':session.user_id})
+        if self.form.validates():
+            password = hashlib.md5(hashlib.md5(self.form.d.origin_password).hexdigest() + user.auth).hexdigest()
+            if user.password == password:
+                auth = string.join(random.sample(['z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'], 5)).replace(' ','')
+                new_password = hashlib.md5(hashlib.md5(self.form.d.new_password).hexdigest() + auth).hexdigest()
+                user_model().update({'id':user.id}, {'password':new_password, 'auth':auth})
+                raise web.SeeOther('/settings')
+            else:
+                return render.password('原密码不正确', self.crumb.output(), self.form)
+        else:
+            return render.password('修改密码', self.crumb.output(), self.form)
+
 
 class profile:
     
