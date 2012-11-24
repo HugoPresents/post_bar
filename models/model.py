@@ -55,6 +55,9 @@ class model:
         db.query(sql)
         return True
     
+    def query_result(self, sql):
+        return db.query(sql)
+
     def last_insert_id(self):
         return db.query('select last_insert_id() as id')[0].id
     

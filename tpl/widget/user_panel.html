@@ -1,0 +1,80 @@
+$if session.user_id:
+    <div class="box">
+    <div class="cell">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody>
+                <tr>
+                    <td width="48" valign="top">
+                        <a href="/profile/$session.name">
+                            <img src="$helper.avatar_url(session.avatar)" class="avatar" border="0">
+                        </a>
+                    </td>
+                    <td width="10" valign="top">
+                    </td>
+                    <td width="auto" align="left"><span class="bigger"><a href="/profile/$session.name">$session.name</a></span>
+                        <div class="sep5">
+                        </div>
+                        <span class="fade">$session.signature</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="sep10">
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody><tr>
+                <td width="33%" align="center">
+                    <a href="/my/nodes" class="dark" style="display: block;">
+                        <span class="bigger">$session.node_favs</span>
+                        <div class="sep3">
+                        </div>
+                        <span class="fade">节点收藏</span>
+                    </a>
+                </td>
+                <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center">
+                    <a href="/my/posts" class="dark" style="display: block;">
+                        <span class="bigger">$session.post_favs</span>
+                        <div class="sep3">
+                        </div>
+                        <span class="fade">主题收藏</span>
+                    </a>
+                </td>
+                <td width="33%" align="center">
+                    <a href="/my/following" class="dark" style="display: block;">
+                        <span class="bigger">$session.user_favs</span>
+                        <div class="sep3">
+                        </div>
+                        <span class="fade">特别关注</span>
+                    </a>
+                </td>
+            </tr>
+        </tbody></table>
+    </div>
+    <div class="inner">
+        <div class="fr" id="money">
+            <a href="/balance" class="balance_area">
+                $:helper.display_money(session.money)
+            </a>
+        </div>
+        <a href="/notifications" class="fade">0 条未读提醒</a>
+    </div>
+    </div>
+$else:
+    <div class="box">
+        <div class="cell">
+            <strong>V2EX = way to explore</strong>
+            <div class="sep5">
+            </div>
+            <span class="fade">V2EX 是一个关于分享和探索的地方</span>
+        </div>
+        <div class="inner">
+            <div class="sep5">
+            </div>
+            <div align="center"><a href="/signup" class="super normal button">现在注册</a>
+            <div class="sep5">
+            </div>
+            <div class="sep10">
+            </div>
+            已注册用户请 <a href="/login">登入</a></div>
+        </div>
+    </div>
