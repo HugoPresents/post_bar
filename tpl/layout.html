@@ -3,7 +3,6 @@ $if content.title is not None:
     $ title = content.title + ' | ' + site_options['title']
 $else:
     $ title = site_options['title']
-$ widgets = ['user_panel_widget', 'hot_posts_today_widget', 'site_statics_widget']
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="zh-CN">
 	<head> 
@@ -65,8 +64,8 @@ $else:
 		<div id="Wrapper">
 			<div class="content">
 <div id="Rightbar">
-$if widgets:
-    $for cur_widget in widgets:
+$if content.widgets:
+    $for cur_widget in content.widgets:
         <div class="sep20">
         </div>
         $:widget.generator(cur_widget)
