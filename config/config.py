@@ -13,6 +13,6 @@ site_title = 'Post_bar'
 
 # 表单验证规则
 notnull = web.form.Validator("必填", bool)
-vname = web.form.regexp(r".{3,20}$", '用户名长度必须在3-20个字符之间')
-vpass = web.form.regexp(r".{5,20}$", '密码长度必须在5-20个字符之间')
-vemail = web.form.regexp(r".*@.*", "请输入正确的电子邮箱")
+vname = web.form.regexp(r".{3,20}$", ' 用户名长度必须在3-20个字符之间')
+vpass = web.form.regexp(r".{5,20}$", ' 密码长度必须在5-20个字符之间')
+vemail = web.form.regexp('^\+?[a-z0-9](([-+.]|[_]+)?[a-z0-9]+)*@([a-z0-9]+(\.|\-))+[a-z]{2,6}$', " 请输入正确格式的电子邮箱")
