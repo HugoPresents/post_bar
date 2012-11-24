@@ -4,9 +4,9 @@ import os
 if sys.getdefaultencoding() != 'utf-8':
     reload(sys)
     sys.setdefaultencoding('utf-8')
-#abspath = os.path.dirname(__file__)
-#sys.path.append(abspath)
-#os.chdir(abspath)
+abspath = os.path.dirname(__file__)
+sys.path.append(abspath)
+os.chdir(abspath)
 
 #sys.path.append('/Users/rabbit/Documents/Proj/post_bar')
 #os.chdir('/Users/rabbit/Documents/Proj/post_bar')
