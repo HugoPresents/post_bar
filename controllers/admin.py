@@ -35,6 +35,8 @@ class site(admin):
     site = site_model().get_options()
     form.title.set_value(site['title'])
     form.description.set_value(site['description'])
+    form.site_url.set_value(site['site_url'])
+    form.cookie_expires.set_value(site['cookie_expires'])
 
     def GET(self):
         self.crumb.append('站点设置')
@@ -44,6 +46,8 @@ class site(admin):
         if self.form.validates():
             site_model().update({'key':'title'}, {'value':self.form.d.title})
             site_model().update({'key':'description'}, {'value':self.form.d.description})
+            site_model().update({'key':'site_url'}, {'value':self.form.d.site_url})
+            site_model().update({'key':'cookie_expires'}, {'value':self.form.d.cookie_expires})
             # 不知道这里为什么还要clear一次才能保证crumb的干净
             self.crumb.clear()
             raise web.SeeOther('/admin/site')

@@ -8,6 +8,8 @@ class site_model(model):
 
     form = web.form.Form(
         web.form.Textbox('title', notnull, size=45, description="站点标题", class_='sl'),
+        web.form.Textbox('site_url', notnull, size=45, description="站点url", class_='sl',post='<div class="sep5"></div><span class="fade">不需要加http://</span>'),
+        web.form.Textbox('cookie_expires', notnull, size=45, description="cookie 过期时间（秒）", class_='sl'),
         web.form.Textarea('description', notnull, class_='mle tall', description='站点描述'),
         web.form.Button('保存', class_='super normal button')
     )
