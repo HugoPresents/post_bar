@@ -98,7 +98,8 @@ class create:
             return render.no_money('财富不够', '你的财富值不够，不能创建改主题 :(', self.crumb.output())
         title = html2db(self.form.d.title)
         content = html2db(self.form.d.content)
-        post_id = post_model().insert({'title' : title, 'content' : content, 'node_id' : node.id, 'time' : time.time(), 'user_id' : session.user_id})
+        create_time = time.time()
+        post_id = post_model().insert({'title' : title, 'content' : content, 'node_id' : node.id, 'time' : create_time, 'last_update':create_time, 'user_id' : session.user_id})
         money_type_id = money_type_model().get_one({'name':'post'})['id']
         money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'length':length, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':post_id})
         

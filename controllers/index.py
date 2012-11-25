@@ -13,11 +13,12 @@ from libraries.pagination import *
 class index:
     def GET(self):
     	title = '首页'
-        sql = 'SELECT post_id FROM comment GROUP BY post_id ORDER BY MAX(time) DESC LIMIT 20'
-        post_ids = post_model().query_result(sql)
+        #sql = 'SELECT post_id FROM comment GROUP BY post_id ORDER BY MAX(time) DESC LIMIT 20'
+        #post_ids = post_model().query_result(sql)
+        post_results = post_model().get_all(order='last_update DESC', limit=20)
         posts = []
-        for row in post_ids:
-            post_result = post_model().get_one({'id':row.post_id})
+        for post_result in post_results:
+            #post_result = post_model().get_one({'id':row.post_id})
             post = {'post':post_result}
             user = user_model().get_one({'id':post_result.user_id})
             post['user'] = user
