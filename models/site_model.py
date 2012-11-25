@@ -20,3 +20,6 @@ class site_model(model):
         for site_option in self.get_all():
             site[site_option.key] = site_option.value
         return site
+
+    def get_option(self, key):
+        return self.get_one({'key':key}).value

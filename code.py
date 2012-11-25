@@ -9,6 +9,7 @@ from config.urls import *
 from libraries import helper
 from libraries import widget
 from models.site_model import *
+from models.user_model import *
 
 #web.template.Template.globals['render'] = render
 #web.template.Template.globals['admin_render'] = admin_render
@@ -25,8 +26,11 @@ if web.config.get('_session') is None:
 else:
     session = web.config._session
 
+#user_model.auth_cookie()
+app.add_processor(user_model().auth_cookie)
+
 # 如果这里不 不将 session 赋值给模板全局变量， 模板中将不能得到此变量
 web.template.Template.globals['session'] = session
-web.template.Template.globals['site_url'] = 'http://127.0.0.1:8080'
+#web.template.Template.globals['site_url'] = 'http://127.0.0.1:8080'
 if __name__ == "__main__":
     app.run()

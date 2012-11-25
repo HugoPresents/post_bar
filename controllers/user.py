@@ -46,6 +46,7 @@ class login:
         if auth_from_form != user.password:
             return render.login(self.form, '密码错误', self.crumb.output())
         user_model().update_session(user.id)
+        user_model().set_cookie(user.id)
         data = web.input();
         try:
             if data['next'] is not None:
@@ -91,6 +92,7 @@ class logout:
     
     def GET(self):
         session.kill()
+        web.setcookie('auth', '', -1)
         raise web.SeeOther('/')
 
 # 设置

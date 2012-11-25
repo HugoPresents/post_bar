@@ -1,6 +1,9 @@
 #  coding: utf8 
 __metaclass__ = type
+import web
+import base64
 from models.model import *
+from models.site_model import *
 from config.config import *
 
 class user_model(model):
@@ -93,3 +96,22 @@ class user_model(model):
         sql = 'UPDATE ' + self._tb + ' SET money = money + ' + str(cost) +' WHERE id=' + str(user_id)
         super(user_model, self).query(sql)
         return self.get_one({'id':user_id}).money
+
+    def auth_cookie(self, handler):
+        try:
+            if web.config._session.user_id is None:
+                auth = web.cookies().get('auth')
+                auth_list = base64.decodestring(auth).split('|')
+                user = self.get_one({'id':auth_list[1], 'password':auth_list[0]})
+                if user is None:
+                    web.setcookie('auth', auth, -1)
+                else:
+                    self.update_session(user.id)
+        except:
+            pass
+        return handler()
+
+    def set_cookie(self, user_id):
+        user = self.get_one({'id':user_id})
+        auth = base64.encodestring(user.password+'|'+str(user.id))
+        web.setcookie('auth', auth, site_model().get_option('cookie_expires'))
