@@ -28,7 +28,7 @@ $for post_cur in posts:
 		            </div>
 		            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.time)
 					$if comment_user is not None:
-						 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$user.name">$comment_user.name</a></strong>
+						 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong>
 					</span>
 		            </td>
 		            <td width="50" align="right" valign="middle">

@@ -24,7 +24,7 @@ class index:
             post['user'] = user
             node = node_model().get_one({'id':post_result.node_id})
             post['node'] = node
-            comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+            comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
             if comment:
                 comment_user = user_model().get_one({'id':comment.user_id})
                 post['comment_user'] = comment_user
@@ -58,7 +58,7 @@ class recent:
             post['user'] = user
             node = node_model().get_one({'id':post_result.node_id})
             post['node'] = node
-            comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+            comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
             if comment:
                 comment_user = user_model().get_one({'id':comment.user_id})
                 post['comment_user'] = comment_user

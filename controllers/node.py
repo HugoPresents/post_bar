@@ -36,7 +36,7 @@ class index:
                 post = {'post':post_result}
                 user = user_model().get_one({'id':post_result.user_id})
                 post['user'] = user
-                comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
                 if comment:
                     comment_user = user_model().get_one({'id':comment.user_id})
                     post['comment_user'] = comment_user

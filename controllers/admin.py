@@ -104,6 +104,7 @@ class create_cat(admin):
                     cat_model().update({'name':self.form.d.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
                 except:
                     cat_model().delete({'name':self.form.d.name})
+                self.crumb.clear()
                 web.SeeOther('/admin/cat/'+self.form.d.name)
             else:
                 return admin_render.create_cat('分类名已存在', self.crumb.output(), self.form)
@@ -216,6 +217,7 @@ class create_node(admin):
                     node_model().update({'name':self.form.d.name}, {'category_id':cat.id, 'display_name':self.form.d.display_name, 'description':self.form.d.description})                
                 except:
                     node_model().delete({'name':self.form.d.name})
+                self.crumb.clear()
                 web.SeeOther('/admin/node/'+self.form.d.name)
             else:
                 return admin_render.create_cat('节点名已存在', self.crumb.output(), self.form)

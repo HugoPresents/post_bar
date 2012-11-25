@@ -168,7 +168,7 @@ class profile:
                     post = {'post':post_result}
                     node = node_model().get_one({'id':post_result.node_id})
                     post['node'] = node
-                    comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                    comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
                     if comment:
                         comment_user = user_model().get_one({'id':comment.user_id})
                         post['comment_user'] = comment_user
@@ -270,7 +270,7 @@ class post_favs():
                 post['user'] = user
                 node = node_model().get_one({'id':post_result.node_id})
                 post['node'] = node
-                comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
                 if comment:
                     comment_user = user_model().get_one({'id':comment.user_id})
                     post['comment_user'] = comment_user
@@ -310,7 +310,7 @@ class node_favs:
                 post['user'] = user
                 node = node_model().get_one({'id':post_result.node_id})
                 post['node'] = node
-                comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
                 if comment:
                     comment_user = user_model().get_one({'id':comment.user_id})
                     post['comment_user'] = comment_user
@@ -343,7 +343,7 @@ class posts:
                 post = {'post':post_result}
                 node = node_model().get_one({'id':post_result.node_id})
                 post['node'] = node
-                comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+                comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
                 if comment:
                     comment_user = user_model().get_one({'id':comment.user_id})
                     post['comment_user'] = comment_user
@@ -446,7 +446,7 @@ class following:
                post['user'] = user
                node = node_model().get_one({'id':post_result.node_id})
                post['node'] = node
-               comment = comment_model().get_one({'post_id':post_result.id}, 'time DESC')
+               comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
                if comment:
                    comment_user = user_model().get_one({'id':comment.user_id})
                    post['comment_user'] = comment_user
