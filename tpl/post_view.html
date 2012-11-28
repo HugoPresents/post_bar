@@ -32,7 +32,7 @@ $if session.user_id:
 	    	<a href="/post/unfav/$post.id" class="tb">取消收藏</a>
 	    $else:
 	    	<a href="/post/fav/$post.id" class="tb">加入收藏</a>
-	    <a href="###" onclick="window.open('https://twitter.com/share?url=http://$site_options['site_url']/post/$post.id&amp;related=v2ex&amp;hashtags=$site_options['title']&amp;text=$post.title', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tb">Tweet</a> &nbsp;
+	    <a href="###" onclick="window.open('https://twitter.com/share?url=http://$site_options['site_url']/post/$post.id&amp;related=$site_options['title']&amp;hashtags=$site_options['title']&amp;text=$post.title', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'twitter.com');" class="tb">Tweet</a> &nbsp;
 	    <a href="###" onclick="window.open('http://service.weibo.com/share/share.php?url=http://$site_options['site_url']/post/$post.id&amp;title=$post.title#site_title#', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');" class="tb">Weibo</a> &nbsp;
 	    <div id="topic_thank">
 	    $if thanks:
@@ -108,7 +108,7 @@ $if session.user_id:
 	    	</form>
 	    </div>
 	    <div class="inner">
-	        <div class="fr"><a href="/">← Post_bar</a></div>
+	        <div class="fr"><a href="/">← $site_options['title']</a></div>
 	        &nbsp;
 	    </div>
 	</div>
