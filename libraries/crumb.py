@@ -1,11 +1,13 @@
 # -- coding: utf8 --
 
 # 面包屑导航类
+from models.site_model import *
 class Crumb:
     
     def __init__(self):
         self.separator = '<span class="chevron">&nbsp;›&nbsp;</span>'
-        self.content = [['Post_bar', '/']]
+
+        self.content = [[site_model().get_option('title'), '/']]
     
     def set_separator(self, separator):
         self.separator = separator
