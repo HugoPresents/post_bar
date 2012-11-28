@@ -30,7 +30,7 @@ $else:
 	                            var dispatch = function() {
 	                                q = document.getElementById("q");
 	                                if (q.value != "") {
-	                                    window.open('http://www.google.com/search?q=site:v2ex.com/t%20' + q.value, "_blank");
+	                                    window.open('https://encrypted.google.com/search?q=site%3A$site_options['site_url']%2Fpost+' + q.value, "_blank");
 	                                    return false;
 	                                } else {
 	                                    return false;
@@ -82,13 +82,13 @@ $:content
                 <div class="inner">
                 <div class="sep10">
                 </div>
-                    <strong><a href="###" class="dark">关于</a> &nbsp; 
+                    <strong><a href="/about" class="dark">关于</a> &nbsp; 
                     <div class="sep20">
                     </div>
                     $site_options['description']
                     <div class="sep5">
                     </div>
-                    Copy By <strong><a href="http://rabbit52.com/" class="dark" target="_blank">Rabbit_52</a></strong>
+                    Copy from <strong><a href="http://v2ex.com">V2EX</a></strong> By <strong><a href="http://rabbit52.com/" class="dark" target="_blank">Rabbit_52</a></strong>
                     <div class="sep20">
                     </div>
                 <div class="sep10">
