@@ -24,7 +24,7 @@ $if posts is not None:
                         </td>
                         <td width="10">
                         </td>
-                        <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
+                        <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$:post.title</a></span>
                         <div class="sep5">
                         </div>
                         <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.last_update)

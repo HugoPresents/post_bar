@@ -61,7 +61,7 @@ $if posts:
 			            </td>
 			            <td width="10">
 			            </td>
-			            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
+			            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$:post.title</a></span>
 			            <div class="sep5">
 			            </div>
 			            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.time)
@@ -98,7 +98,7 @@ $if comments:
 	    <div class="dock_area">
 	        <table cellpadding="0" cellspacing="0" border="0" width="100%">
 	            <tbody><tr>
-	                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">$helper.stamp2during(comment_cur.time)</span></div><span class="gray">回复了 $post_user.name 创建的主题 <span class="chevron">›</span> <a href="/post/$post.id#reply-$comment_cur.id">$post.title</a></span></td> 
+	                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">$helper.stamp2during(comment_cur.time)</span></div><span class="gray">回复了 $post_user.name 创建的主题 <span class="chevron">›</span> <a href="/post/$post.id#reply-$comment_cur.id">$:post.title</a></span></td> 
 	            </tr>
 	            <tr>
 	                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
