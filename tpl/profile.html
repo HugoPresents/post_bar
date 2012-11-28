@@ -36,20 +36,10 @@ $var widgets = None
         </div>
     </div>
     <div class="inner">
-        <div class="sep5">
-        </div>
-        <img src="/static/img/twitter.png" align="absmiddle">&nbsp;<a href="https://twitter.com/Rabbit_52" target="_blank">Rabbit_52</a>
-        <div class="sep5">
-        </div>
-        <img src="/static/img/mobileme.png" align="absmiddle">&nbsp;<a href="http://rabbit52.com" target="_blank">rabbit52.com</a>
-        <div class="sep5">
-        </div>
-        <img src="/static/img/location.png" align="absmiddle">&nbsp;<a href="http://www.google.com/maps?q=成都" target="_blank">成都</a>
-        <div class="sep5">
-        </div>
-        <img src="/static/img/github.png" align="absmiddle">&nbsp;<a href="http://github.com/Rabbit52" target="_blank">Rabbit52</a>
-        <div class="sep5">
-        </div>
+        $if user.outsite_link:
+            <div class="sep5">
+            </div>
+            <img src="/static/img/mobileme.png" align="absmiddle">&nbsp;<a href="http://$user.outsite_link" target="_blank">$user.outsite_link</a>
     </div>
 </div>
 <div class="sep20">

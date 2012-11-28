@@ -3,6 +3,8 @@ pre_fix = 'controllers.'
 urls = (
     # 首页
     '/index', pre_fix + 'index.index',
+    # 关于
+    '/about', pre_fix + 'index.about',
     # 最近的主题
     '/recent', pre_fix + 'index.recent',
     # 浏览主题

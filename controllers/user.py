@@ -101,26 +101,32 @@ class settings:
     setting_form = user_model().setting_form
     pass_form = user_model().pass_form
     crumb = Crumb()
-    crumb.append('设置')
 
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/settings')
     
     def GET(self):
+        self.crumb.append('设置')
         user = user_model().get_one({'id':session.user_id})
         self.setting_form.name.set_value(user.name)
         self.setting_form.email.set_value(user.email)
+        self.setting_form.signature.set_value(user.signature)
+        self.setting_form.outsite_link.set_value(user.outsite_link)
         return render.settings('设置', user, self.setting_form, self.pass_form, self.crumb.output())
     def POST(self):
+        self.crumb.append('设置')
         user = user_model().get_one({'id':session.user_id})
         self.setting_form.name.set_value(user.name)
         if not self.setting_form.validates():
             self.setting_form.name.set_value(user.name)
             self.setting_form.email.set_value(user.email)
+            self.setting_form.email.set_value(user.signature)
+            self.setting_form.email.set_value(user.outsite_link)
             return render.settings('设置', user, self.setting_form, self.pass_form, self.crumb.output())
         else:
-            user_model().update({'id':user.id}, {'email':self.setting_form.d.email})
+            user_model().update({'id':user.id}, {'email':self.setting_form.d.email, 'signature':self.setting_form.d.signature, 'outsite_link':self.setting_form.d.outsite_link.replace('http://', '').replace('https://', '')})
+            self.crumb.clear()
             raise web.SeeOther('/settings')
 
 class password:

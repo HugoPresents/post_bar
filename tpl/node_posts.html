@@ -2,67 +2,67 @@ $def with (posts, node, total_rows, node_fav, crumb, pagination)
 $var title: $node.description
 $var widgets=['user_panel_widget']
 <div id="Main">
-	<div class="sep20">
-	</div>
-	<div class="box">
-		<div class="header">
-			<div style="float: left; display: inline-block; margin-right: 10px; margin-bottom: 10px;">
-				<img src="$helper.icon_url(node.icon, 'big')" border="0" align="default" width="auto">
-			</div>
-			<div class="fr f12">
-				<span class="snow">主题总数</span> 
-				<strong class="gray">$total_rows</strong> 
-				<span class="snow">&nbsp;•&nbsp;</span>
-				$if node_fav:
-					<a href="/node/unfav/$node.name">取消收藏这个节点</a>
-				$else:
-					<a href="/node/fav/$node.name">收藏这个节点</a>
-			</div>
-			$:crumb
-		    <div class="sep10">
-		    </div>
-		    <span class="f12 gray">$node.description</span>
-		    <div class="sep10">
-		    </div>
-		    <input type="button" class="super normal button" value="创建新主题" onclick="location.href = '/create/$node.name';">
-	    </div>
-	    <div id="TopicsNode">
+    <div class="sep20">
+    </div>
+    <div class="box">
+        <div class="header">
+            <div style="float: left; display: inline-block; margin-right: 10px; margin-bottom: 10px;">
+                <img src="$helper.icon_url(node.icon, 'big')" border="0" align="default" width="auto">
+            </div>
+            <div class="fr f12">
+                <span class="snow">主题总数</span> 
+                <strong class="gray">$total_rows</strong> 
+                <span class="snow">&nbsp;•&nbsp;</span>
+                $if node_fav:
+                    <a href="/node/unfav/$node.name">取消收藏这个节点</a>
+                $else:
+                    <a href="/node/fav/$node.name">收藏这个节点</a>
+            </div>
+            $:crumb
+            <div class="sep10">
+            </div>
+            <span class="f12 gray">$node.description</span>
+            <div class="sep10">
+            </div>
+            <input type="button" class="super normal button" value="创建新主题" onclick="location.href = '/create/$node.name';">
+        </div>
+        <div id="TopicsNode">
 $if posts:
-	$for post_cur in posts:
-		$ user = post_cur['user']
-		$ post = post_cur['post']
-		$ comment_user = post_cur['comment_user']
-		<div class="cell from_8965">
-		    <table cellpadding="0" cellspacing="0" border="0" width="100%">
-		        <tbody>
-		        	<tr>
-			            <td width="48" valign="top" align="center"><a href="/profile/$user.name">
-			            	<img src="$helper.avatar_url(user.avatar)" class="avatar" border="0" align="default" auto=""></a></td>
-			            <td width="10">
-			            </td>
-			            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
-			            <div class="sep5">
-			            </div>
-			            <span class="small fade"><strong><a href="/profile/$user.name">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2during(post.time)
-			            $if comment_user is not None:
-							 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong>
-			            </span>
-			            </td>
-			            <td width="50" align="right" valign="middle">
-			            $if post.comments > 0:
-			            	<a href="/post/$post.id" class="count_livid">$post.comments</a>
-			            </td>
-			        </tr>
-			    </tbody>
-		    </table>
-		</div>
-	<div class="inner">
-	        $:pagination
-	</div>
+    $for post_cur in posts:
+        $ user = post_cur['user']
+        $ post = post_cur['post']
+        $ comment_user = post_cur['comment_user']
+        <div class="cell from_8965">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td width="48" valign="top" align="center"><a href="/profile/$user.name">
+                            <img src="$helper.avatar_url(user.avatar)" class="avatar" border="0" align="default" auto=""></a></td>
+                        <td width="10">
+                        </td>
+                        <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
+                        <div class="sep5">
+                        </div>
+                        <span class="small fade"><strong><a href="/profile/$user.name">$user.name</a></strong> &nbsp;•&nbsp; $helper.stamp2during(post.last_update)
+                        $if comment_user is not None:
+                             &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong>
+                        </span>
+                        </td>
+                        <td width="50" align="right" valign="middle">
+                        $if post.comments > 0:
+                            <a href="/post/$post.id" class="count_livid">$post.comments</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <div class="inner">
+            $:pagination
+    </div>
 $else:
-	<div class="cell item">
-		暂时还莫有~
-	</div>
+    <div class="cell item">
+        暂时还莫有~
+    </div>
 </div>
 </div>
 </div>

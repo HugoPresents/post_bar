@@ -23,6 +23,8 @@ class user_model(model):
     setting_form = web.form.Form(
          web.form.Textbox('name', size=30, description="用户名", class_='sl', disabled='disabled'),
          web.form.Textbox('email', vemail, size=30, description="邮箱", class_='sl'),
+         web.form.Textbox('signature', web.form.regexp(r".{0,100}$", ' 请不要超过100个字符'), size=30, description="签名", class_='sl'),
+         web.form.Textbox('outsite_link', web.form.regexp(r".{0,200}$", ' 请不要超过200个字符'), size=30, description="主页", class_='sl'),
          web.form.Button('保存设置', class_='super normal button')
      )
     

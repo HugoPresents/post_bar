@@ -67,3 +67,9 @@ class recent:
             posts.append(post)
         crumb.append('最近的主题')
         return render.recent('最近的主题', total, crumb.output(), posts, pagination.output())
+
+class about:
+    def GET(self):
+        crumb = Crumb()
+        crumb.append('关于')
+        return render.about('关于', crumb.output())

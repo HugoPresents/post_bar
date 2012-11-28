@@ -5,97 +5,96 @@ $else:
     $ title = site_options['title']
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="zh-CN">
-	<head> 
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link rel="icon" type="image/png" href="/static/img/favicon.ico">
-		<link rel="stylesheet" href="/static/css/shared.css" />
-		<link rel="stylesheet" href="/static/css/main.css" />
-		<link rel="stylesheet" href="/static/css/desktop.css" />
-		<script type="text/javascript" src="/static/js/jquery.js"></script>
-		<script type="text/javascript" src="/static/js/main.js"></script>
-		<title>$title</title>
-	</head>
-	<body>
-		<div id="Top">
-	        <div class="content">
-	            <div style="padding-top: 6px;">
-	            <table cellpadding="0" cellspacing="0" border="0" width="100%">
-	                <tbody><tr>
-	                    <td width="120" align="left"><a href="/" name="top">
-		                    	<img src="/static/img/logo@2x.png" alt="V2EX" width="94" height="30">
-		                    </a>
-	                    </td>
-	                    <td width="auto" align="left">
-	                        <script type="text/javascript">
-	                            var dispatch = function() {
-	                                q = document.getElementById("q");
-	                                if (q.value != "") {
-	                                    window.open('http://www.google.com/search?q=site:v2ex.com/t%20' + q.value, "_blank");
-	                                    return false;
-	                                } else {
-	                                    return false;
-	                                }
-	                            }
-	                        </script>
-	                        <div id="Search">
-	                        	<form onsubmit="return dispatch()">
-	                        		<div style="width: 276px; height: 28px; background-image: url('/static/img/qbar.png'); background-repeat: no-repeat; display: inline-block;">
-	                        			<input type="text" maxlength="40" name="q" id="q" value="">
-	                        		</div>
-	                        	</form>
-	                        </div>
-	                    </td>
-	                    <td width="500" align="right" style="padding-top: 2px;">
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="icon" type="image/png" href="/static/img/favicon.ico">
+        <link rel="stylesheet" href="/static/css/shared.css" />
+        <link rel="stylesheet" href="/static/css/main.css" />
+        <link rel="stylesheet" href="/static/css/desktop.css" />
+        <script type="text/javascript" src="/static/js/jquery.js"></script>
+        <script type="text/javascript" src="/static/js/main.js"></script>
+        <title>$title</title>
+    </head>
+    <body>
+        <div id="Top">
+            <div class="content">
+                <div style="padding-top: 6px;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tbody><tr>
+                        <td width="120" align="left"><a href="/" name="top">
+                                <img src="/static/img/logo@2x.png" alt="$site_options['title']" width="94" height="30">
+                            </a>
+                        </td>
+                        <td width="auto" align="left">
+                            <script type="text/javascript">
+                                var dispatch = function() {
+                                    q = document.getElementById("q");
+                                    if (q.value != "") {
+                                        window.open('https://encrypted.google.com/search?q=site%3A$site_options['site_url']%2Fpost+' + q.value, "_blank");
+                                        return false;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            </script>
+                            <div id="Search">
+                                <form onsubmit="return dispatch()">
+                                    <div style="width: 276px; height: 28px; background-image: url('/static/img/qbar.png'); background-repeat: no-repeat; display: inline-block;">
+                                        <input type="text" maxlength="40" name="q" id="q" value="">
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+                        <td width="500" align="right" style="padding-top: 2px;">
 $if session.user_id:
-	<a href="/profile/$session.name" class="top">$session.name</a>&nbsp;&nbsp;&nbsp;
-	<a href="/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;
-	$if session.user_id == 1:
-		<a href="/admin" class="top">后台</a>&nbsp;&nbsp;&nbsp;
-	<a href="/logout" class="top">登出</a>
+    <a href="/profile/$session.name" class="top">$session.name</a>&nbsp;&nbsp;&nbsp;
+    <a href="/settings" class="top">设置</a>&nbsp;&nbsp;&nbsp;
+    $if session.user_id == 1:
+        <a href="/admin" class="top">后台</a>&nbsp;&nbsp;&nbsp;
+    <a href="/logout" class="top">登出</a>
 $else:
-	<a href="/" class="top">首页</a>&nbsp;&nbsp;&nbsp;
-	<a href="/signup" class="top">注册</a>&nbsp;&nbsp;&nbsp;
-	<a href="/login" class="top">登录</a>&nbsp;&nbsp;&nbsp;
-</td>	                </tr>
-	            </tbody></table>
-	            </div>
-	        </div>
-	    </div>
-		<div id="Wrapper">
-			<div class="content">
+    <a href="/" class="top">首页</a>&nbsp;&nbsp;&nbsp;
+    <a href="/signup" class="top">注册</a>&nbsp;&nbsp;&nbsp;
+    <a href="/login" class="top">登录</a>&nbsp;&nbsp;&nbsp;
+</td>                    </tr>
+                </tbody></table>
+                </div>
+            </div>
+        </div>
+        <div id="Wrapper">
+            <div class="content">
 <div id="Rightbar">
 $if content.widgets:
     $for cur_widget in content.widgets:
         <div class="sep20">
         </div>
         $:widget.generator(cur_widget)
-
 </div>
 $:content
-	</div>
-	<div class="c">
-	</div>
-	<div class="sep20">
-	</div>
+    </div>
+    <div class="c">
+    </div>
+    <div class="sep20">
+    </div>
 </div>
-		<div id="Bottom">
-			<div class="content">
-				<div class="inner">
+        <div id="Bottom">
+            <div class="content">
+                <div class="inner">
                 <div class="sep10">
                 </div>
-                    <strong><a href="###" class="dark">关于</a> &nbsp; 
+                    <strong><a href="/about" class="dark">关于</a> &nbsp; 
                     <div class="sep20">
                     </div>
                     $site_options['description']
                     <div class="sep5">
                     </div>
-                    Copy By <strong><a href="http://rabbit52.com/" class="dark" target="_blank">Rabbit_52</a></strong>
+                    Copy from <strong><a href="http://v2ex.com">V2EX</a></strong> By <strong><a href="http://rabbit52.com/" class="dark" target="_blank">Rabbit_52</a></strong>
                     <div class="sep20">
                     </div>
                 <div class="sep10">
                 </div>
             </div>
-			</div>
-		</div>
-	</body>
+            </div>
+        </div>
+    </body>
 </html>

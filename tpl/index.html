@@ -5,40 +5,40 @@ $var widgets = ['user_panel_widget', 'hot_posts_today_widget', 'site_statics_wid
 <div class="sep20">
 </div>
 <div class="box">
-	<div class="cell" id="Tabs">
-		<a href="/" class="tab_current">全部</a>
-	</div>
+    <div class="cell" id="Tabs">
+        <a href="/" class="tab_current">全部</a>
+    </div>
 $for post_cur in posts:
-	$ post = post_cur['post']
-	$ user = post_cur['user']
-	$ node = post_cur['node']
-	$ comment_user = post_cur['comment_user']
-	<div class="cell item">
-	    <table cellpadding="0" cellspacing="0" border="0" width="100%">
-	        <tbody>
-		        <tr>
-		            <td width="48" valign="top" align="center"><a href="/profile/$user.name">
-			            	<img src="$helper.avatar_url(user.avatar)" class="avatar">
-			            </a>
-		            </td>
-		            <td width="10">
-		            </td>
-		            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
-		            <div class="sep5">
-		            </div>
-		            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.time)
-					$if comment_user is not None:
-						 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong>
-					</span>
-		            </td>
-		            <td width="50" align="right" valign="middle">
-		                $if post.comments > 0:
-		                	<a href="/post/$post.id" class="count_livid">$post.comments</a>
-		            </td>
-		        </tr>
-		    </tbody>
-	    </table>
-	</div>
+    $ post = post_cur['post']
+    $ user = post_cur['user']
+    $ node = post_cur['node']
+    $ comment_user = post_cur['comment_user']
+    <div class="cell item">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody>
+                <tr>
+                    <td width="48" valign="top" align="center"><a href="/profile/$user.name">
+                            <img src="$helper.avatar_url(user.avatar)" class="avatar">
+                        </a>
+                    </td>
+                    <td width="10">
+                    </td>
+                    <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$post.title</a></span>
+                    <div class="sep5">
+                    </div>
+                    <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.last_update)
+                    $if comment_user is not None:
+                         &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong>
+                    </span>
+                    </td>
+                    <td width="50" align="right" valign="middle">
+                        $if post.comments > 0:
+                            <a href="/post/$post.id" class="count_livid">$post.comments</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 <div class="inner">
     <span class="chevron">→</span> <a href="/recent">更多新主题</a>
 </div>
@@ -46,24 +46,24 @@ $for post_cur in posts:
 <div class="sep20">
 </div>
 <div class="box">
-    <div class="cell"><div class="fr"><a>这儿就是全部节点=.=</a></div><span class="fade"><strong>Post_bar</strong> / 节点导航</span></div>
+    <div class="cell"><div class="fr"><a>这儿就是全部节点=.=</a></div><span class="fade"><strong>$site_options['title']</strong> / 节点导航</span></div>
 $for cat_cur in cats:
-	$ cat = cat_cur['cat']
-	$ nodes = cat_cur['node']
+    $ cat = cat_cur['cat']
+    $ nodes = cat_cur['node']
     <div class="cell">
-    	<table cellpadding="0" cellspacing="0" border="0">
-    		<tbody>
-    			<tr>
-    				<td align="right" width="60">
-    					<span class="fade">$cat.name</span>
-    				</td>
-    				<td style="line-height: 200%; padding-left: 10px;">
-    					$for node in nodes:
-    						<a href="/node/$node.name" style="font-size: 14px;">$node.display_name</a>&nbsp; &nbsp; 
-    				</td>
-    			</tr>
-   			</tbody>
-   		</table>
-   	</div>
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+                <tr>
+                    <td align="right" width="60">
+                        <span class="fade">$cat.name</span>
+                    </td>
+                    <td style="line-height: 200%; padding-left: 10px;">
+                        $for node in nodes:
+                            <a href="/node/$node.name" style="font-size: 14px;">$node.display_name</a>&nbsp; &nbsp; 
+                    </td>
+                </tr>
+               </tbody>
+           </table>
+       </div>
 </div>
 </div>
