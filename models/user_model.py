@@ -116,4 +116,4 @@ class user_model(model):
     def set_cookie(self, user_id):
         user = self.get_one({'id':user_id})
         auth = base64.encodestring(user.password+'|'+str(user.id))
-        web.setcookie('auth', auth, site_model().get_option('cookie_expires'))
+        web.setcookie('auth', auth, int(site_model().get_option('cookie_expires')))
