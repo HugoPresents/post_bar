@@ -13,11 +13,11 @@ $var widgets = None
                 </td>
                 <td width="auto" valign="top" align="left">
                     <div class="fr">
-                    	$if user.id != session.user_id:
-                    		$if following:
-	                        	<input type="button" value="取消特别关注" onclick="location.href = '/unfollow/$user.name';" class="super inverse button">
-	                        $else:
-	                        	<input type="button" value="加入特别关注" onclick="location.href = '/follow/$user.name';" class="super special button">
+                        $if user.id != session.user_id:
+                            $if following:
+                                <input type="button" value="取消特别关注" onclick="location.href = '/unfollow/$user.name';" class="super inverse button">
+                            $else:
+                                <input type="button" value="加入特别关注" onclick="location.href = '/follow/$user.name';" class="super special button">
                     </div>
                     <h1 style="margin-bottom: 5px;">$user.name</h1>
                     <span class="bigger gray">$user.signature</span>
@@ -27,7 +27,7 @@ $var widgets = None
                     <div class="sep10">
                     </div>
                     <div class="balance_area" style="">
-                    	$:helper.display_money(user.money)
+                        $:helper.display_money(user.money)
                     </div>
                 </td>
             </tr>
@@ -47,36 +47,30 @@ $var widgets = None
 <div class="box">
     <div class="cell"><span class="gray">$user.name 最近创建的主题</span></div>
 $if posts:
-	$for post_cur in posts:
-		$ post = post_cur['post']
-		$ comment_user = post_cur['comment_user']
-		$ node = post_cur['node']
-		<div class="cell item">
-		    <table cellpadding="0" cellspacing="0" border="0" width="100%">
-		        <tbody>
-			        <tr>
-			            <td width="48" valign="top" align="center"><a href="/profile/$user.name">
-				            	<img src="$helper.avatar_url(user.avatar)" class="avatar">
-				            </a>
-			            </td>
-			            <td width="10">
-			            </td>
-			            <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$:post.title</a></span>
-			            <div class="sep5">
-			            </div>
-			            <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.time)
-						$if comment_user is not None:
-							 &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$user.name">$comment_user.name</a></strong>
-						</span>
-			            </td>
-			            <td width="50" align="right" valign="middle">
-			                $if post.comments > 0:
-			                	<a href="/post/$post.id" class="count_livid">$post.comments</a>
-			            </td>
-			        </tr>
-			    </tbody>
-		    </table>
-		</div>
+    $for post_cur in posts:
+        $ post = post_cur['post']
+        $ comment_user = post_cur['comment_user']
+        $ node = post_cur['node']
+        <div class="cell item">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$:post.title</a></span>
+                        <div class="sep5">
+                        </div>
+                        <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.time)
+                        $if comment_user is not None:
+                             &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$user.name">$comment_user.name</a></strong>
+                        </span>
+                        </td>
+                        <td width="50" align="right" valign="middle">
+                            $if post.comments > 0:
+                                <a href="/post/$post.id" class="count_livid">$post.comments</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 <div class="inner"><span class="chevron">»</span> <a href="/profile/$user.name/posts">$user.name 创建的更多主题</a></div>
     
 </div>
@@ -85,29 +79,29 @@ $if posts:
 <div class="box">
     <div class="cell"><span class="gray">$user.name 最近回复了</span></div>
 $if comments:
-	$ comment_len = len(comments)
-	$ comment_len_mark = 0
-	$ class_t = 'inner'
-	$for comment in comments:
-		$ comment_len_mark += 1
-		$if comment_len_mark == comment_len:
-			$ class_t = 'cell'
-		$ comment_cur = comment['comment']
-		$ post = comment['post']
-		$ post_user = comment['post_user'] 
-	    <div class="dock_area">
-	        <table cellpadding="0" cellspacing="0" border="0" width="100%">
-	            <tbody><tr>
-	                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">$helper.stamp2during(comment_cur.time)</span></div><span class="gray">回复了 $post_user.name 创建的主题 <span class="chevron">›</span> <a href="/post/$post.id#reply-$comment_cur.id">$:post.title</a></span></td> 
-	            </tr>
-	            <tr>
-	                <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
-	            </tr>
-	        </tbody></table>
-	    </div>
-	    <div class="$class_t">
-	        <div class="reply_content">$comment_cur.content</div>
-	    </div>
+    $ comment_len = len(comments)
+    $ comment_len_mark = 0
+    $ class_t = 'inner'
+    $for comment in comments:
+        $ comment_len_mark += 1
+        $if comment_len_mark == comment_len:
+            $ class_t = 'cell'
+        $ comment_cur = comment['comment']
+        $ post = comment['post']
+        $ post_user = comment['post_user'] 
+        <div class="dock_area">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody><tr>
+                    <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">$helper.stamp2during(comment_cur.time)</span></div><span class="gray">回复了 $post_user.name 创建的主题 <span class="chevron">›</span> <a href="/post/$post.id#reply-$comment_cur.id">$:post.title</a></span></td> 
+                </tr>
+                <tr>
+                    <td align="left"><img src="/static/img/arrow.png" style="margin-left: 20px;"></td>
+                </tr>
+            </tbody></table>
+        </div>
+        <div class="$class_t">
+            <div class="reply_content">$comment_cur.content</div>
+        </div>
 <div class="inner"><span class="chevron">»</span> <a href="/profile/$user.name/comments">$user.name 创建的更多回复</a></div>
 </div>
 </div>
