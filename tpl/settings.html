@@ -5,12 +5,12 @@ $var widgets=['user_panel_widget']
 <div class="sep20"></div>          
 <div class="box">
     <div class="header">
-    	$:crumb
+        $:crumb
     </div>
     
     <div class="inner">
         <form method="post" action="/settings">
-        	$:settings_form.render()
+            $:settings_form.render()
         </form>
     </div>
 </div>
@@ -22,9 +22,9 @@ $var widgets=['user_panel_widget']
             <tbody><tr>
                 <td width="120" align="right">当前头像</td>
                 <td width="auto" align="left">
-                	<img src="$helper.avatar_url(user.avatar, 'big')" class="avatar" border="0"> &nbsp; 
-                	<img src="$helper.avatar_url(user.avatar, 'normal')" class="avatar" border="0"> &nbsp; 
-                	<img src="$helper.avatar_url(user.avatar, 'tiny')" class="avatar" border="0">
+                    <img src="$helper.avatar_url(user.avatar, 'big')" class="avatar" border="0"> &nbsp; 
+                    <img src="$helper.avatar_url(user.avatar, 'normal')" class="avatar" border="0"> &nbsp; 
+                    <img src="$helper.avatar_url(user.avatar, 'tiny')" class="avatar" border="0">
                 </td>
             </tr>
             <tr>
@@ -39,7 +39,7 @@ $var widgets=['user_panel_widget']
     <div class="cell"><div class="fr"><span class="fade">如果你不打算更改密码，请留空以下区域</span></div>更改密码</div>
     <div class="inner">
         <form method="post" action="/settings/password">
-        	$:pass_form.render()
+            $:pass_form.render()
         </form>
     </div>
 </div>

@@ -29,6 +29,8 @@ urls = (
     '/notifications', pre_fix + 'notifications.index',
     # 提醒检查
     '/notifications/check', pre_fix + 'notifications.check',
+    # 删除提醒
+    '/notifications/delete/(\w+)', pre_fix + 'notifications.delete',
     # 设置
     '/settings', pre_fix + 'user.settings',
     # 上传头像

@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.28)
 # Database: post_bar_init
-# Generation Time: 2012-12-02 09:46:42 +0000
+# Generation Time: 2012-12-02 13:16:35 +0000
 # ************************************************************
 
 
@@ -192,9 +192,9 @@ CREATE TABLE `notify` (
   KEY `nofity_user` (`user_id`),
   KEY `notify_user_receiver` (`receiver`),
   KEY `notify__notify_type` (`type_id`),
-  CONSTRAINT `notify__notify_type` FOREIGN KEY (`type_id`) REFERENCES `notify_type` (`id`),
   CONSTRAINT `nofity_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `notify_user_receiver` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`)
+  CONSTRAINT `notify_user_receiver` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`),
+  CONSTRAINT `notify__notify_type` FOREIGN KEY (`type_id`) REFERENCES `notify_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -218,9 +218,7 @@ INSERT INTO `notify_type` (`id`, `name`, `comment`)
 VALUES
 	(1,'comment','收到评论'),
 	(2,'post_at','在帖子中提及'),
-	(3,'comment_at','在回复中提及'),
-	(4,'post_thanks','对帖子表示感谢'),
-	(5,'comment_thanks','对回复感谢');
+	(3,'comment_at','在回复中提及');
 
 /*!40000 ALTER TABLE `notify_type` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -7,6 +7,8 @@ class Pagination:
     def __init__(self, base_url, total, limit = 10):
         self.base_url = base_url
         self.total = int(math.ceil(float(total)/float(limit)))
+        if self.total == 0:
+            self.total = 1
         self.limit = limit
         self.cur_page = 1
     

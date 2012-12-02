@@ -35,3 +35,6 @@ class notify_model(model):
             user = user_model().get_one({'name':user_list})
             if user is not None:
                 self.insert({'user_id':user_id, 'receiver':user.id, 'type_id':self.types[notify_type], 'foreign_id':foreign_id})
+
+    def mark_as_read(self, receiver):
+        return self.update({'receiver':receiver}, {'unread':0})

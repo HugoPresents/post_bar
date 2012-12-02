@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.28)
 # Database: post_bar
-# Generation Time: 2012-12-02 09:47:08 +0000
+# Generation Time: 2012-12-02 13:16:47 +0000
 # ************************************************************
 
 
@@ -164,7 +164,10 @@ VALUES
 	(92,1,14,'马上回复',1354120896,0),
 	(93,2,35,'@tuzki',1354439619,0),
 	(94,2,35,'@tuzki test',1354439642,0),
-	(95,2,35,'@<a href=\"/profile/tuzki\">tuzki</a> @<a href=\"/profile/demo\">demo</a> @<a href=\"/profile/rabbit52\">rabbit52</a>',1354440477,0);
+	(95,2,35,'@<a href=\"/profile/tuzki\">tuzki</a> @<a href=\"/profile/demo\">demo</a> @<a href=\"/profile/rabbit52\">rabbit52</a>',1354440477,0),
+	(96,2,35,'@<a href=\"/profile/tuzki\">tuzki</a> @<a href=\"/profile/demo\">demo</a> @<a href=\"/profile/rabbit52\">rabbit52</a>',1354448677,0),
+	(97,3,12,'@<a href=\"/profile/rabbit52\">rabbit52</a> 我给你说嘛',1354453266,0),
+	(98,3,36,'@<a href=\"/profile/rabbit52\">rabbit52</a> 我给你说嘛',1354453298,0);
 
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -308,7 +311,15 @@ VALUES
 	(121,2,5,0,-10,3917.1,3),
 	(122,1,5,0,10,7999900,3),
 	(123,2,5,0,-10,3907.1,4),
-	(124,1,5,0,10,7999900,4);
+	(124,1,5,0,10,7999900,4),
+	(125,2,3,22,-5,3902.1,96),
+	(126,1,3,22,5,7999910,96),
+	(127,2,2,9,-20,3882.1,37),
+	(128,3,3,15,-5,1980,97),
+	(129,1,3,15,5,7999920,97),
+	(130,3,2,17,-20,1960,38),
+	(131,3,3,15,-5,1955,98),
+	(132,2,3,15,5,3887.1,98);
 
 /*!40000 ALTER TABLE `money` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -419,9 +430,9 @@ CREATE TABLE `notify` (
   KEY `nofity_user` (`user_id`),
   KEY `notify_user_receiver` (`receiver`),
   KEY `notify__notify_type` (`type_id`),
-  CONSTRAINT `notify__notify_type` FOREIGN KEY (`type_id`) REFERENCES `notify_type` (`id`),
   CONSTRAINT `nofity_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `notify_user_receiver` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`)
+  CONSTRAINT `notify_user_receiver` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`),
+  CONSTRAINT `notify__notify_type` FOREIGN KEY (`type_id`) REFERENCES `notify_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `notify` WRITE;
@@ -429,12 +440,10 @@ LOCK TABLES `notify` WRITE;
 
 INSERT INTO `notify` (`id`, `user_id`, `receiver`, `type_id`, `foreign_id`, `unread`)
 VALUES
-	(1,1,2,2,35,1),
-	(2,2,1,4,34,1),
-	(3,2,1,4,35,1),
-	(4,2,1,1,95,1),
-	(5,2,3,3,95,1),
-	(9,2,1,5,20,1);
+	(1,2,1,1,96,0),
+	(4,3,1,1,97,0),
+	(5,3,1,2,38,0),
+	(7,3,1,3,98,0);
 
 /*!40000 ALTER TABLE `notify` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -459,9 +468,7 @@ INSERT INTO `notify_type` (`id`, `name`, `comment`)
 VALUES
 	(1,'comment','收到评论'),
 	(2,'post_at','在帖子中提及'),
-	(3,'comment_at','在回复中提及'),
-	(4,'post_thanks','对帖子表示感谢'),
-	(5,'comment_thanks','对回复感谢');
+	(3,'comment_at','在回复中提及');
 
 /*!40000 ALTER TABLE `notify_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -498,7 +505,7 @@ VALUES
 	(1,1,1,'测试标题','测试内容哦！',1346336356,132,10,0,1346336356),
 	(2,1,1,'测试主题','测试节点测测试主题',1346336356,35,6,0,1346336356),
 	(3,2,1,'用户创建主题','这是用户创建的主题',1346424167,120,4,1,1353848502),
-	(12,1,1,'求助，webpy 的东西在ML下跑不起了~','报错如下\r\n\r\n搜了好久也无果\r\n我成功装上了 web.py 和 python-mysqldb 的, 如果一个 \"hello world\" 能运行成功，但是这个实在不知道怎么回事了。\r\n它在 win 和 linux 下都能正常运行哒\r\n谁帮帮我嘛~ 先谢谢了\r\n如果有人能帮我看看代码的问题就太感谢了 T_T',1349271488,42,34,0,1353824058),
+	(12,1,1,'求助，webpy 的东西在ML下跑不起了~','报错如下\r\n\r\n搜了好久也无果\r\n我成功装上了 web.py 和 python-mysqldb 的, 如果一个 \"hello world\" 能运行成功，但是这个实在不知道怎么回事了。\r\n它在 win 和 linux 下都能正常运行哒\r\n谁帮帮我嘛~ 先谢谢了\r\n如果有人能帮我看看代码的问题就太感谢了 T_T',1349271488,53,35,0,1354453266),
 	(13,1,1,'test','test \'\'\"\"#',1349273760,10,6,0,1346336356),
 	(14,1,1,'gwragwrag','arebaeb',1349286641,18,10,0,1354120896),
 	(15,1,1,'这是测试主题','这是你没',1349621198,3,0,0,1346336356),
@@ -511,9 +518,9 @@ VALUES
 	(22,1,1,'&lt;a&gt;test&lt;/a&gt;','content',1354122609,2,0,0,1354122609),
 	(23,1,1,'测试提醒系统','@<a href=\"/profile/t\">t</a>uzki\r\n你能听见我在呼唤你吗',1354437842,0,0,0,1354437842),
 	(24,1,1,'测试提醒系统','@<a href=\"/profile/t\">t</a>uzki\r\n你能听见我在呼唤你吗',1354437863,1,0,0,1354437863),
-	(25,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗',1354437927,3,0,0,1354437927),
+	(25,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗',1354437927,4,0,0,1354437927),
 	(26,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗\r\n&lt;a href=\"javascript:location.reload();\"&gt;Click Me!&lt;/a&gt;',1354438066,1,0,0,1354438066),
-	(27,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗\r\n&lt;a href=\"javascript:location.reload();\"&gt;Click Me!&lt;/a&gt;',1354438202,1,0,0,1354438202),
+	(27,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗\r\n&lt;a href=\"javascript:location.reload();\"&gt;Click Me!&lt;/a&gt;',1354438202,2,0,0,1354438202),
 	(28,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438369,0,0,0,1354438369),
 	(29,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438400,0,0,0,1354438400),
 	(30,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438475,0,0,0,1354438475),
@@ -521,8 +528,10 @@ VALUES
 	(32,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438511,0,0,0,1354438511),
 	(33,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438526,0,0,0,1354438526),
 	(34,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438548,1,0,1,1354438548),
-	(35,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438689,11,3,1,1354440477),
-	(36,2,1,'ceshi ','@<a href=\"/profile/tuzki\">tuzki</a>',1354439661,2,0,0,1354439661);
+	(35,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438689,35,4,1,1354448677),
+	(36,2,1,'ceshi ','@<a href=\"/profile/tuzki\">tuzki</a>',1354439661,5,1,0,1354453298),
+	(37,2,1,'ceshi ','@<a href=\"/profile/rabbit52\">rabbit52</a>',1354448695,3,0,0,1354448695),
+	(38,3,1,'tes','我再给你说嘛\r\n@<a href=\"/profile/rabbit52\">rabbit52</a>',1354453289,1,0,0,1354453289);
 
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -617,9 +626,9 @@ LOCK TABLES `user` WRITE;
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `gender`, `regist_time`, `signature`, `avatar`, `outsite_link`, `posts`, `money`, `node_favs`, `post_favs`, `user_favs`, `auth`)
 VALUES
-	(1,'rabbit52','rabbitzhang52@gmail.com','f5caf37dae4bdbe417d98569b0549bba',1,1346419212,'签名在此','1.jpg','rabbit52.com',0,7999900,0,2,1,'komfw'),
-	(2,'tuzki','rabbitzhang52@yahoo.com','eece25c32e2facc831227fbbef5ceec6',1,1346419212,'兔子不舒服斯基','2.png',NULL,0,3907.1,1,2,1,'test'),
-	(3,'demo','demo@demo.com','eed7170200d71e81b73430b03317d6ac',1,1353777567,NULL,NULL,NULL,0,1985,0,0,0,'azngu');
+	(1,'rabbit52','rabbitzhang52@gmail.com','f5caf37dae4bdbe417d98569b0549bba',1,1346419212,'签名在此','1.jpg','rabbit52.com',0,7999920,0,2,1,'komfw'),
+	(2,'tuzki','rabbitzhang52@yahoo.com','eece25c32e2facc831227fbbef5ceec6',1,1346419212,'兔子不舒服斯基','2.png',NULL,0,3887.1,1,2,1,'test'),
+	(3,'demo','demo@demo.com','eece25c32e2facc831227fbbef5ceec6',1,1353777567,NULL,NULL,NULL,0,1955,0,0,0,'test');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -73,8 +73,6 @@ class thanks:
                     money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':comment_thanks_id})
                     money_model().insert({'user_id':comment.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':comment_thanks_id, 'balance':user_model().update_money(comment.user_id, cost)})
                     comment_model().count_thanks(comment_id)
-                    # notify
-                    notify_model().insert({'user_id':session.user_id, 'receiver':comment.user_id, 'type_id':notify_type_model().get_one({'name':'comment_thanks'}).id, 'foreign_id':comment.id})
                     user_model().update_session(session.user_id)
                     json_dict['success'] = 1
                 else:

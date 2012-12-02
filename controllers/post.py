@@ -51,7 +51,7 @@ class view:
             # Pagination
             total = comment_model().count_table(condition)
             pagination = Pagination('/post/'+str(post.id), total, limit = 100)
-            page = pagination.true_page(web.input(p=(total/100)*100 + 1)['p'])
+            page = pagination.true_page(web.input(p=1)['p'])
             comments_result = comment_model().get_all(condition, order = 'time ASC', limit = 100, offset = (page-1)*100)
             comments = []
             if comments_result is not None:
@@ -158,8 +158,6 @@ class thanks:
                     money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':post_thanks_id})
                     money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':post_thanks_id, 'balance':user_model().update_money(post.user_id, cost)})
                     post_model().count_thanks(post_id)
-                    # notify
-                    notify_model().insert({'user_id':session.user_id, 'receiver':post.user_id, 'type_id':notify_type_model().get_one({'name':'post_thanks'}).id, 'foreign_id':post.id})
                     user_model().update_session(session.user_id)
                     json_dict['success'] = 1
                 else:
