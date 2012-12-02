@@ -9,6 +9,8 @@ from models.post_model import *
 from models.money_model import *
 from models.money_type_model import *
 from models.user_model import *
+from models.notify_model import *
+from models.notify_type_model import *
 from libraries.helper import *
 
 class create:
@@ -32,12 +34,18 @@ class create:
                     self.crumb.append('财富不够')
                     return render.no_money('财富不够', '你的财富值不够，不能创建改主题 :(', self.crumb.output())
                 content = html2db(self.form.d.content)
+                content, receiver_list = notify_model().convert_content(content)
                 create_time = time.time()
                 comment_id = comment_model().insert({'user_id' : session.user_id, 'post_id' : post_id, 'content' : content, 'time' : create_time})
                 money_type_id = money_type_model().get_one({'name':'comment'})['id']
                 money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'length':length, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':comment_id})
                 if session.user_id != post.user_id:
                     money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'length':length, 'foreign_id':comment_id, 'balance':user_model().update_money(post.user_id, cost)})
+                    # notify
+                    notify_model().insert({'user_id':session.user_id, 'receiver':post.user_id, 'type_id':notify_type_model().get_one({'name':'comment'}).id, 'foreign_id':comment_id})
+                # notify
+                receiver_list = list_diff(receiver_list, [session.name, user_model().get_one({'id':post.user_id}).name])
+                notify_model().insert_notify(session.user_id, receiver_list, 'comment_at', comment_id)
                 user_model().update_session(session.user_id)
                 post_model().update({'id':post_id}, {'last_update':create_time})
                 post_model().count_comment(post_id)
@@ -65,6 +73,8 @@ class thanks:
                     money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':comment_thanks_id})
                     money_model().insert({'user_id':comment.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':comment_thanks_id, 'balance':user_model().update_money(comment.user_id, cost)})
                     comment_model().count_thanks(comment_id)
+                    # notify
+                    notify_model().insert({'user_id':session.user_id, 'receiver':comment.user_id, 'type_id':notify_type_model().get_one({'name':'comment_thanks'}).id, 'foreign_id':comment.id})
                     user_model().update_session(session.user_id)
                     json_dict['success'] = 1
                 else:

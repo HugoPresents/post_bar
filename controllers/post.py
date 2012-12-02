@@ -12,6 +12,8 @@ from models.comment_model import *
 from models.comment_thanks_model import *
 from models.money_model import *
 from models.money_type_model import *
+from models.notify_model import *
+from models.notify_type_model import *
 from libraries.crumb import Crumb
 from libraries.helper import *
 from libraries.pagination import *
@@ -98,11 +100,15 @@ class create:
             return render.no_money('财富不够', '你的财富值不够，不能创建改主题 :(', self.crumb.output())
         title = html2db(self.form.d.title)
         content = html2db(self.form.d.content)
+        content, receiver_list = notify_model().convert_content(content)
         create_time = time.time()
         post_id = post_model().insert({'title' : title, 'content' : content, 'node_id' : node.id, 'time' : create_time, 'last_update':create_time, 'user_id' : session.user_id})
+        # money
         money_type_id = money_type_model().get_one({'name':'post'})['id']
         money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'length':length, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':post_id})
-        
+        # notify
+        receiver_list = list_diff(receiver_list, [session.name])
+        notify_model().insert_notify(session.user_id, receiver_list, 'post_at', post_id)
         user_model().update_session(session.user_id)
         raise web.seeother('/post/' + str(post_id))
 
@@ -152,6 +158,8 @@ class thanks:
                     money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':post_thanks_id})
                     money_model().insert({'user_id':post.user_id, 'money_type_id':money_type_id, 'amount':cost, 'foreign_id':post_thanks_id, 'balance':user_model().update_money(post.user_id, cost)})
                     post_model().count_thanks(post_id)
+                    # notify
+                    notify_model().insert({'user_id':session.user_id, 'receiver':post.user_id, 'type_id':notify_type_model().get_one({'name':'post_thanks'}).id, 'foreign_id':post.id})
                     user_model().update_session(session.user_id)
                     json_dict['success'] = 1
                 else:

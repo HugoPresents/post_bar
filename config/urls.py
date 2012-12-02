@@ -25,6 +25,10 @@ urls = (
     '/login', pre_fix + 'user.login',
     # 注销
     '/logout', pre_fix + 'user.logout',
+    # 提醒
+    '/notifications', pre_fix + 'notifications.index',
+    # 提醒检查
+    '/notifications/check', pre_fix + 'notifications.check',
     # 设置
     '/settings', pre_fix + 'user.settings',
     # 上传头像

@@ -126,8 +126,13 @@ def html2db(str):
 def unique_list(list_):
     u_list = []
     for item in list_:
-        if item is not in u_list:
+        if item not in u_list:
             u_list.append(item)
-    if len(u_list) == 0:
-        return None
     return u_list
+
+def list_diff(list_1, list_2):
+    list_ = []
+    for item in list_1:
+        if item not in list_2:
+            list_.append(item)
+    return list_
