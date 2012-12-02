@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.28)
 # Database: post_bar
-# Generation Time: 2012-11-25 06:15:00 +0000
+# Generation Time: 2012-12-02 09:47:08 +0000
 # ************************************************************
 
 
@@ -32,7 +32,7 @@ CREATE TABLE `category` (
   `description` text NOT NULL COMMENT '分类描述',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='节点分类';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='节点分类';
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
@@ -63,7 +63,7 @@ CREATE TABLE `comment` (
   KEY `comment_post` (`post_id`),
   CONSTRAINT `comment_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `comment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COMMENT='帖子评论';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='帖子评论';
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
@@ -89,7 +89,7 @@ VALUES
 	(17,1,13,'ethgth',1349273884,0),
 	(18,1,13,'ethgth',1349273887,0),
 	(19,1,12,'$',1349281274,0),
-	(20,1,12,'$',1349281278,0),
+	(20,1,12,'$',1349281278,1),
 	(21,1,12,'$r',1349281285,0),
 	(22,1,12,'$rR',1349281289,0),
 	(23,1,12,'',1349281293,0),
@@ -126,8 +126,8 @@ VALUES
 	(54,1,14,'rgragabhb',1349286850,0),
 	(55,1,14,'rgragabhb',1349286905,0),
 	(56,1,2,'娃儿，不要屁话多',1349286931,0),
-	(57,1,2,'娃儿，不要屁话多',1349286978,0),
-	(58,1,2,'娃儿，不要屁话多好不好~,,,',1349286992,0),
+	(57,1,2,'娃儿，不要屁话多',1349286978,1),
+	(58,1,2,'娃儿，不要屁话多好不好~,,,',1349286992,1),
 	(59,1,14,'这是什么情况',1349621169,0),
 	(60,1,12,'为什么有这种情况~',1349622213,0),
 	(61,2,17,'这尼玛~',1349622899,0),
@@ -159,7 +159,12 @@ VALUES
 	(87,1,14,'你现在还给我缓存不~？？？？',1353821270,0),
 	(88,1,14,'你现在还给我缓存不~？？？？',1353821939,0),
 	(89,1,14,'你现在还给我缓存不~？？？？',1353821972,0),
-	(90,1,12,'zuixin',1353824058,0);
+	(90,1,12,'zuixin',1353824058,0),
+	(91,1,3,'二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧二哥头吧',1353848502,0),
+	(92,1,14,'马上回复',1354120896,0),
+	(93,2,35,'@tuzki',1354439619,0),
+	(94,2,35,'@tuzki test',1354439642,0),
+	(95,2,35,'@<a href=\"/profile/tuzki\">tuzki</a> @<a href=\"/profile/demo\">demo</a> @<a href=\"/profile/rabbit52\">rabbit52</a>',1354440477,0);
 
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -180,14 +185,17 @@ CREATE TABLE `comment_thanks` (
   KEY `fk_comment_thanks_2` (`comment_id`),
   CONSTRAINT `fk_comment_thanks_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_comment_thanks_2` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `comment_thanks` WRITE;
 /*!40000 ALTER TABLE `comment_thanks` DISABLE KEYS */;
 
 INSERT INTO `comment_thanks` (`id`, `user_id`, `comment_id`, `time`)
 VALUES
-	(1,2,62,1353133939);
+	(1,2,62,1353133939),
+	(2,2,57,1354440985),
+	(3,2,58,1354441101),
+	(4,2,20,1354441266);
 
 /*!40000 ALTER TABLE `comment_thanks` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -211,7 +219,7 @@ CREATE TABLE `money` (
   KEY `money_user` (`user_id`),
   CONSTRAINT `money_money_type` FOREIGN KEY (`money_type_id`) REFERENCES `money_type` (`id`),
   CONSTRAINT `money_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COMMENT='财富收支表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='财富收支表';
 
 LOCK TABLES `money` WRITE;
 /*!40000 ALTER TABLE `money` DISABLE KEYS */;
@@ -266,7 +274,41 @@ VALUES
 	(87,1,3,14,-5,172.06,88),
 	(88,1,3,14,-5,167.06,89),
 	(89,1,2,7,-20,147.06,21),
-	(90,1,3,6,-5,142.06,90);
+	(90,1,3,6,-5,142.06,90),
+	(91,1,3,1300,-17,125.06,91),
+	(92,2,3,1300,17,3992.1,91),
+	(93,1,3,4,-5,120.06,92),
+	(94,1,2,7,-20,100.06,22),
+	(95,1,2,18,-20,80.06,23),
+	(96,1,2,18,-20,60.06,24),
+	(97,1,2,18,-20,40.06,25),
+	(98,1,2,73,-20,20.06,26),
+	(99,1,2,73,-20,0.0599976,27),
+	(100,1,2,18,-20,7999980,28),
+	(101,1,2,18,-20,7999960,29),
+	(102,1,2,18,-20,7999940,30),
+	(103,1,2,18,-20,7999920,31),
+	(104,1,2,18,-20,7999900,32),
+	(105,1,2,18,-20,7999880,33),
+	(106,1,2,18,-20,7999860,34),
+	(107,1,2,18,-20,7999840,35),
+	(108,2,4,0,-10,3982.1,6),
+	(109,1,4,0,10,7999850,6),
+	(110,2,4,0,-10,3972.1,7),
+	(111,1,4,0,10,7999860,7),
+	(112,2,3,6,-5,3967.1,93),
+	(113,1,3,6,5,7999860,93),
+	(114,2,3,11,-5,3962.1,94),
+	(115,1,3,11,5,7999870,94),
+	(116,2,2,6,-20,3942.1,36),
+	(117,2,3,22,-5,3937.1,95),
+	(118,1,3,22,5,7999880,95),
+	(119,2,5,0,-10,3927.1,2),
+	(120,1,5,0,10,7999880,2),
+	(121,2,5,0,-10,3917.1,3),
+	(122,1,5,0,10,7999900,3),
+	(123,2,5,0,-10,3907.1,4),
+	(124,1,5,0,10,7999900,4);
 
 /*!40000 ALTER TABLE `money` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -284,7 +326,7 @@ CREATE TABLE `money_option` (
   `comment` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='全站配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全站配置';
 
 LOCK TABLES `money_option` WRITE;
 /*!40000 ALTER TABLE `money_option` DISABLE KEYS */;
@@ -313,7 +355,7 @@ CREATE TABLE `money_type` (
   `name` varchar(50) DEFAULT NULL,
   `comment` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='财富的获取或支出类型';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='财富的获取或支出类型';
 
 LOCK TABLES `money_type` WRITE;
 /*!40000 ALTER TABLE `money_type` DISABLE KEYS */;
@@ -346,7 +388,7 @@ CREATE TABLE `node` (
   UNIQUE KEY `name` (`name`),
   KEY `node_category` (`category_id`),
   CONSTRAINT `node_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='所有节点';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='所有节点';
 
 LOCK TABLES `node` WRITE;
 /*!40000 ALTER TABLE `node` DISABLE KEYS */;
@@ -358,6 +400,70 @@ VALUES
 	(5,4,'rabbit','兔斯基','兔斯基节点的描述','1.png');
 
 /*!40000 ALTER TABLE `node` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table notify
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `notify`;
+
+CREATE TABLE `notify` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `receiver` int(11) NOT NULL,
+  `type_id` int(11) unsigned NOT NULL,
+  `foreign_id` int(11) NOT NULL,
+  `unread` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `nofity_user` (`user_id`),
+  KEY `notify_user_receiver` (`receiver`),
+  KEY `notify__notify_type` (`type_id`),
+  CONSTRAINT `notify__notify_type` FOREIGN KEY (`type_id`) REFERENCES `notify_type` (`id`),
+  CONSTRAINT `nofity_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `notify_user_receiver` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `notify` WRITE;
+/*!40000 ALTER TABLE `notify` DISABLE KEYS */;
+
+INSERT INTO `notify` (`id`, `user_id`, `receiver`, `type_id`, `foreign_id`, `unread`)
+VALUES
+	(1,1,2,2,35,1),
+	(2,2,1,4,34,1),
+	(3,2,1,4,35,1),
+	(4,2,1,1,95,1),
+	(5,2,3,3,95,1),
+	(9,2,1,5,20,1);
+
+/*!40000 ALTER TABLE `notify` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table notify_type
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `notify_type`;
+
+CREATE TABLE `notify_type` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `comment` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `notify_type` WRITE;
+/*!40000 ALTER TABLE `notify_type` DISABLE KEYS */;
+
+INSERT INTO `notify_type` (`id`, `name`, `comment`)
+VALUES
+	(1,'comment','收到评论'),
+	(2,'post_at','在帖子中提及'),
+	(3,'comment_at','在回复中提及'),
+	(4,'post_thanks','对帖子表示感谢'),
+	(5,'comment_thanks','对回复感谢');
+
+/*!40000 ALTER TABLE `notify_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -382,7 +488,7 @@ CREATE TABLE `post` (
   KEY `post_node` (`node_id`),
   CONSTRAINT `post_node` FOREIGN KEY (`node_id`) REFERENCES `node` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='所有帖子';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='所有帖子';
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
@@ -390,18 +496,33 @@ LOCK TABLES `post` WRITE;
 INSERT INTO `post` (`id`, `user_id`, `node_id`, `title`, `content`, `time`, `views`, `comments`, `thanks`, `last_update`)
 VALUES
 	(1,1,1,'测试标题','测试内容哦！',1346336356,132,10,0,1346336356),
-	(2,1,1,'测试主题','测试节点测测试主题',1346336356,32,6,0,1346336356),
-	(3,2,1,'用户创建主题','这是用户创建的主题',1346424167,117,3,1,1346336356),
-	(12,1,1,'求助，webpy 的东西在ML下跑不起了~','报错如下\r\n\r\n搜了好久也无果\r\n我成功装上了 web.py 和 python-mysqldb 的, 如果一个 \"hello world\" 能运行成功，但是这个实在不知道怎么回事了。\r\n它在 win 和 linux 下都能正常运行哒\r\n谁帮帮我嘛~ 先谢谢了\r\n如果有人能帮我看看代码的问题就太感谢了 T_T',1349271488,40,34,0,1353824058),
+	(2,1,1,'测试主题','测试节点测测试主题',1346336356,35,6,0,1346336356),
+	(3,2,1,'用户创建主题','这是用户创建的主题',1346424167,120,4,1,1353848502),
+	(12,1,1,'求助，webpy 的东西在ML下跑不起了~','报错如下\r\n\r\n搜了好久也无果\r\n我成功装上了 web.py 和 python-mysqldb 的, 如果一个 \"hello world\" 能运行成功，但是这个实在不知道怎么回事了。\r\n它在 win 和 linux 下都能正常运行哒\r\n谁帮帮我嘛~ 先谢谢了\r\n如果有人能帮我看看代码的问题就太感谢了 T_T',1349271488,42,34,0,1353824058),
 	(13,1,1,'test','test \'\'\"\"#',1349273760,10,6,0,1346336356),
-	(14,1,1,'gwragwrag','arebaeb',1349286641,15,9,0,1346336356),
-	(15,1,1,'这是测试主题','这是你没',1349621198,1,0,0,1346336356),
+	(14,1,1,'gwragwrag','arebaeb',1349286641,18,10,0,1354120896),
+	(15,1,1,'这是测试主题','这是你没',1349621198,3,0,0,1346336356),
 	(16,1,1,'这是测试主题','这是你没',1349621383,1,0,0,1346336356),
-	(17,1,1,'求助，if else 判断不正确~','这尼玛，坑爹呀',1349622259,32,19,0,1346336356),
+	(17,1,1,'求助，if else 判断不正确~','这尼玛，坑爹呀',1349622259,35,19,0,1346336356),
 	(18,1,1,'阿宾额头和维特哈如果不','人工犬瘟热和企鹅天河区退还给',1349623884,5,1,1,1346336356),
 	(19,1,1,'阿宾额头和维特哈如果不','人工犬瘟热和企鹅天河区退还给',1349623893,8,0,1,1346336356),
 	(20,1,1,'你妹的，如果我再创建一个主题呢','你会不会给我涨一个？？？',1353221040,11,2,0,1346336356),
-	(21,1,4,'卧槽，怎么会有重复的节点名','这是什么情况啊',1353823226,1,0,0,1346336356);
+	(21,1,4,'卧槽，怎么会有重复的节点名','这是什么情况啊',1353823226,1,0,0,1346336356),
+	(22,1,1,'&lt;a&gt;test&lt;/a&gt;','content',1354122609,2,0,0,1354122609),
+	(23,1,1,'测试提醒系统','@<a href=\"/profile/t\">t</a>uzki\r\n你能听见我在呼唤你吗',1354437842,0,0,0,1354437842),
+	(24,1,1,'测试提醒系统','@<a href=\"/profile/t\">t</a>uzki\r\n你能听见我在呼唤你吗',1354437863,1,0,0,1354437863),
+	(25,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗',1354437927,3,0,0,1354437927),
+	(26,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗\r\n&lt;a href=\"javascript:location.reload();\"&gt;Click Me!&lt;/a&gt;',1354438066,1,0,0,1354438066),
+	(27,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a>\r\n你能听见我在呼唤你吗\r\n&lt;a href=\"javascript:location.reload();\"&gt;Click Me!&lt;/a&gt;',1354438202,1,0,0,1354438202),
+	(28,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438369,0,0,0,1354438369),
+	(29,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438400,0,0,0,1354438400),
+	(30,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438475,0,0,0,1354438475),
+	(31,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438490,0,0,0,1354438490),
+	(32,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438511,0,0,0,1354438511),
+	(33,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438526,0,0,0,1354438526),
+	(34,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438548,1,0,1,1354438548),
+	(35,1,1,'测试提醒系统','@<a href=\"/profile/tuzki\">tuzki</a> 你能听见我在呼唤你吗？',1354438689,11,3,1,1354440477),
+	(36,2,1,'ceshi ','@<a href=\"/profile/tuzki\">tuzki</a>',1354439661,2,0,0,1354439661);
 
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -422,7 +543,7 @@ CREATE TABLE `post_thanks` (
   KEY `fk_post_thanks_2` (`post_id`),
   CONSTRAINT `fk_post_thanks_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_post_thanks_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `post_thanks` WRITE;
 /*!40000 ALTER TABLE `post_thanks` DISABLE KEYS */;
@@ -431,7 +552,9 @@ INSERT INTO `post_thanks` (`id`, `user_id`, `post_id`, `time`)
 VALUES
 	(3,2,19,1353133885),
 	(4,2,18,1353133972),
-	(5,1,3,1353134024);
+	(5,1,3,1353134024),
+	(6,2,34,1354439247),
+	(7,2,35,1354439436);
 
 /*!40000 ALTER TABLE `post_thanks` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -447,7 +570,7 @@ CREATE TABLE `site` (
   `key` varchar(50) DEFAULT NULL,
   `value` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `site` WRITE;
 /*!40000 ALTER TABLE `site` DISABLE KEYS */;
@@ -487,15 +610,15 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户';
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `gender`, `regist_time`, `signature`, `avatar`, `outsite_link`, `posts`, `money`, `node_favs`, `post_favs`, `user_favs`, `auth`)
 VALUES
-	(1,'Rabbit_52','rabbitzhang52@gmail.com','3995856b4b2dbd2d41c42543fa5cde65',1,1346419212,'兔子不舒服斯基','1.jpg',NULL,0,142.06,0,2,1,'yndzv'),
-	(2,'Tuzki_zhang','rabbitzhang52@yahoo.com','eece25c32e2facc831227fbbef5ceec6',1,1346419212,'兔子不舒服斯基','2.png',NULL,0,3975.1,1,2,1,'test'),
+	(1,'rabbit52','rabbitzhang52@gmail.com','f5caf37dae4bdbe417d98569b0549bba',1,1346419212,'签名在此','1.jpg','rabbit52.com',0,7999900,0,2,1,'komfw'),
+	(2,'tuzki','rabbitzhang52@yahoo.com','eece25c32e2facc831227fbbef5ceec6',1,1346419212,'兔子不舒服斯基','2.png',NULL,0,3907.1,1,2,1,'test'),
 	(3,'demo','demo@demo.com','eed7170200d71e81b73430b03317d6ac',1,1353777567,NULL,NULL,NULL,0,1985,0,0,0,'azngu');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
@@ -515,7 +638,7 @@ CREATE TABLE `user_meta` (
   PRIMARY KEY (`id`),
   KEY `user_meta_user` (`user_id`),
   CONSTRAINT `user_meta_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='用户扩展表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户扩展表';
 
 LOCK TABLES `user_meta` WRITE;
 /*!40000 ALTER TABLE `user_meta` DISABLE KEYS */;

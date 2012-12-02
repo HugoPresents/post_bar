@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.28)
 # Database: post_bar_init
-# Generation Time: 2012-11-25 13:25:35 +0000
+# Generation Time: 2012-12-02 09:46:42 +0000
 # ************************************************************
 
 
@@ -110,7 +110,7 @@ CREATE TABLE `money_option` (
   `comment` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='全站配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全站配置';
 
 LOCK TABLES `money_option` WRITE;
 /*!40000 ALTER TABLE `money_option` DISABLE KEYS */;
@@ -139,7 +139,7 @@ CREATE TABLE `money_type` (
   `name` varchar(50) DEFAULT NULL,
   `comment` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='财富的获取或支出类型';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='财富的获取或支出类型';
 
 LOCK TABLES `money_type` WRITE;
 /*!40000 ALTER TABLE `money_type` DISABLE KEYS */;
@@ -174,6 +174,56 @@ CREATE TABLE `node` (
   CONSTRAINT `node_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='所有节点';
 
+
+
+# Dump of table notify
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `notify`;
+
+CREATE TABLE `notify` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `receiver` int(11) NOT NULL,
+  `type_id` int(11) unsigned NOT NULL,
+  `foreign_id` int(11) NOT NULL,
+  `unread` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `nofity_user` (`user_id`),
+  KEY `notify_user_receiver` (`receiver`),
+  KEY `notify__notify_type` (`type_id`),
+  CONSTRAINT `notify__notify_type` FOREIGN KEY (`type_id`) REFERENCES `notify_type` (`id`),
+  CONSTRAINT `nofity_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `notify_user_receiver` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table notify_type
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `notify_type`;
+
+CREATE TABLE `notify_type` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `comment` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `notify_type` WRITE;
+/*!40000 ALTER TABLE `notify_type` DISABLE KEYS */;
+
+INSERT INTO `notify_type` (`id`, `name`, `comment`)
+VALUES
+	(1,'comment','收到评论'),
+	(2,'post_at','在帖子中提及'),
+	(3,'comment_at','在回复中提及'),
+	(4,'post_thanks','对帖子表示感谢'),
+	(5,'comment_thanks','对回复感谢');
+
+/*!40000 ALTER TABLE `notify_type` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table post
@@ -230,7 +280,7 @@ CREATE TABLE `site` (
   `key` varchar(50) DEFAULT NULL,
   `value` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `site` WRITE;
 /*!40000 ALTER TABLE `site` DISABLE KEYS */;
