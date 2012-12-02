@@ -122,5 +122,12 @@ def html2db(str):
     #str = str.encode()
     str = str.replace("'", "\\'").replace('"', '\\"').replace('$', '\\$').replace('<', '&lt;').replace('>', '&gt;')
     return str 
-def site_option(key):
-    pass
+
+def unique_list(list_):
+    u_list = []
+    for item in list_:
+        if item is not in u_list:
+            u_list.append(item)
+    if len(u_list) == 0:
+        return None
+    return u_list

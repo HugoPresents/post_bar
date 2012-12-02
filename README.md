@@ -29,16 +29,16 @@ web.py 的贴吧
 7. 用Apache 部署请 chown -R apache:apache ./ && chmod -R 755 ./
 
 8. 在Apache中创建形如下面的虚拟主机 example:
-	<pre>
+    <pre>
     &lt;VirtualHost *:80&gt;
-		ServerAdmin admin@localhost
-		DocumentRoot /var/www/post_bar
-		ServerName post_bar.localhost 
-		ErrorLog "logs/post_bar.log"
-	    CustomLog "logs/post_bar.log" combined
-		WSGIScriptAlias / /var/www/post_bar/index.py
-		Alias /static /var/www/post_bar/static
-		AddType text/html .py
-	&lt;/VirtualHost&gt;
-	</pre>
+        ServerAdmin admin@localhost
+        DocumentRoot /var/www/post_bar
+        ServerName post_bar.localhost 
+        ErrorLog "logs/post_bar.log"
+        CustomLog "logs/post_bar.log" combined
+        WSGIScriptAlias / /var/www/post_bar/index.py
+        Alias /static /var/www/post_bar/static
+        AddType text/html .py
+    &lt;/VirtualHost&gt;
+    </pre>
 9. 有疑问请 rabbitzhang52#gmail.com

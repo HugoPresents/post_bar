@@ -1,3 +1,6 @@
+$(function() {
+	var html = '<img src="/static/img/dot_orange.png" align="absmiddle"><strong><a href="/notifications">11 条未读提醒</a></strong>';
+})
 function thankReply(comment_id) {
 	$.post(
 		'/comment/thanks', {
