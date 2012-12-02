@@ -56,9 +56,14 @@ $if session.user_id:
                 $:helper.display_money(session.money)
             </a>
         </div>
-        <a href="/notifications" class="fade">0 条未读提醒</a>
+        <span id="notifications">
+            <a href="/notifications" class="fade">0 条未读提醒</a>
+        </span>
     </div>
     </div>
+    <script type="text/javascript">
+        check_notify()
+    </script>
 $else:
     <div class="box">
         <div class="cell">

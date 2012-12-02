@@ -1,0 +1,56 @@
+$def with(title, crumb, total, notifications, pagination)
+$var title:$title
+$var widgets=['user_panel_widget']
+<div id="Main">
+<div class="sep20"></div>
+                
+<div class="box">
+    <div class="header">
+        <div class="fr f12">
+            <span class="snow">总共收到提醒&nbsp;</span> <strong class="gray">$total</strong>
+        </div>
+        $:crumb
+    </div>
+$for notify_cur in notifications:
+    $ notify = notify_cur['notify']
+    $ post = notify_cur['post']
+    $ comment = notify_cur['comment']
+    $ user = notify_cur['user']
+    $ type = notify_cur['type']
+    <div class="cell">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody>
+                <tr>
+                <td width="32" align="left" valign="top">
+                    <a href="/profile/$user.name"><img src="$helper.avatar_url(user.avatar, 'tiny')" class="avatar" border="0" align="default" auto=""></a>
+                </td>
+                <td valign="top">
+                    $if type == 'post_at':
+                        <span class="fade"><a href="/profile/$user.name"><strong>$user.name</strong></a> 在发表 <a href="/post/$post.id">$post.title</a> 时提到了你</span> &nbsp; <span class="snow">$helper.stamp2during(post.time)</span> <a href="/notifications/delete/$notify.id" class="node">删除</a>
+                        <div class="sep5"></div>
+                        <div class="payload">
+                            $:post.content
+                        </div>
+                    $elif type == 'comment':
+                        <span class="fade"><a href="/profile/$user.name"><strong>$user.name</strong></a> 在 <a href="/post/$post.id#reply-$comment.id">$post.title</a> 里回复了你</span> &nbsp; <span class="snow">$helper.stamp2during(post.time)</span> <a href="/notifications/delete/$notify.id" class="node">删除</a>
+                        <div class="sep5"></div>
+                        <div class="payload">
+                            $:comment.content
+                        </div>
+                    $elif type == 'comment_at':
+                        <span class="fade"><a href="/profile/$user.name"><strong>$user.name</strong></a> 在回复 <a href="/post/$post.id#reply-$comment.id">$post.title</a> 时提到了你</span> &nbsp; <span class="snow">$helper.stamp2during(post.time)</span> <a href="/notifications/delete/$notify.id" class="node">删除</a>
+                        <div class="sep5"></div>
+                        <div class="payload">
+                            $:comment.content
+                        </div>
+                </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<div class="inner">
+$:pagination
+</div>
+</div>
+<div class="sep20"></div>
+</div>

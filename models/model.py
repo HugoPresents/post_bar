@@ -39,7 +39,7 @@ class model:
         where = dict2where(condition)
         update = dict2update(values)
         if values is not None:
-            sql_query = 'UPDATE ' + self._tb + ' SET ' + update + ' WHERE ' + where + ' LIMIT 1'
+            sql_query = 'UPDATE ' + self._tb + ' SET ' + update + ' WHERE ' + where
             db.query(sql_query)
         return True
     

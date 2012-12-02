@@ -29,18 +29,18 @@ web.py 的贴吧
 7. 用Apache 部署请 chown -R apache:apache ./ && chmod -R 755 ./
 
 8. 在Apache中创建形如下面的虚拟主机 example:
-	<pre>
+    <pre>
     &lt;VirtualHost *:80&gt;
-		ServerAdmin admin@localhost
-		DocumentRoot /var/www/post_bar
-		ServerName post_bar.localhost 
-		ErrorLog "logs/post_bar.log"
-	    CustomLog "logs/post_bar.log" combined
-		WSGIScriptAlias / /var/www/post_bar/index.py
-		Alias /static /var/www/post_bar/static
-		AddType text/html .py
-	&lt;/VirtualHost&gt;
-	</pre>
+        ServerAdmin admin@localhost
+        DocumentRoot /var/www/post_bar
+        ServerName post_bar.localhost 
+        ErrorLog "logs/post_bar.log"
+        CustomLog "logs/post_bar.log" combined
+        WSGIScriptAlias / /var/www/post_bar/index.py
+        Alias /static /var/www/post_bar/static
+        AddType text/html .py
+        &lt;/VirtualHost&gt;
+    </pre>
 9. 有疑问请 rabbitzhang52#gmail.com
 
 10. 有人问到开源协议，我对那个确实没什么研究，本身就是抄袭了V2EX的设计，我只想跟大家交流一下python 的开发经验。你可以用这个做任何事只要不侵犯丝毫V2EX的权益。 
