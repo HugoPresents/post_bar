@@ -32,13 +32,13 @@ $for notify_cur in notifications:
                             $:post.content
                         </div>
                     $elif type == 'comment':
-                        <span class="fade"><a href="/profile/$user.name"><strong>$user.name</strong></a> 在 <a href="/post/$post.id#reply-$comment.id">$post.title</a> 里回复了你</span> &nbsp; <span class="snow">$helper.stamp2during(post.time)</span> <a href="/notifications/delete/$notify.id" class="node">删除</a>
+                        <span class="fade"><a href="/profile/$user.name"><strong>$user.name</strong></a> 在 <a href="/post/$post.id#reply-$comment.id">$post.title</a> 里回复了你</span> &nbsp; <span class="snow">$helper.stamp2during(comment.time)</span> <a href="/notifications/delete/$notify.id" class="node">删除</a>
                         <div class="sep5"></div>
                         <div class="payload">
                             $:comment.content
                         </div>
                     $elif type == 'comment_at':
-                        <span class="fade"><a href="/profile/$user.name"><strong>$user.name</strong></a> 在回复 <a href="/post/$post.id#reply-$comment.id">$post.title</a> 时提到了你</span> &nbsp; <span class="snow">$helper.stamp2during(post.time)</span> <a href="/notifications/delete/$notify.id" class="node">删除</a>
+                        <span class="fade"><a href="/profile/$user.name"><strong>$user.name</strong></a> 在回复 <a href="/post/$post.id#reply-$comment.id">$post.title</a> 时提到了你</span> &nbsp; <span class="snow">$helper.stamp2during(comment.time)</span> <a href="/notifications/delete/$notify.id" class="node">删除</a>
                         <div class="sep5"></div>
                         <div class="payload">
                             $:comment.content
