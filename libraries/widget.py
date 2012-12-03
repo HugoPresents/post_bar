@@ -47,3 +47,7 @@ class hot_posts_today_widget(widget):
 class user_panel_widget(widget):
     def run(self):
         return render.user_panel()
+
+class ga_widget(widget):
+    def run(self):
+        return render.ga()
