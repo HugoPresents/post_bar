@@ -21,7 +21,8 @@ from libraries.pagination import *
 # 查看单个帖子
 class view:
     
-    crumb = Crumb()
+    def __init__(self):
+        self.crumb = Crumb()
     
     def POST(self, id):
         raise web.SeeOther('/post/' + str(id))
@@ -68,8 +69,9 @@ class view:
 # 创建帖子
 class create:
     
-    crumb = Crumb()
-    form = post_model().form
+    def __init__(self):
+        self.crumb = Crumb()
+        self.form = post_model().form
     
     def GET(self, node_name):
         if session.user_id is None:
@@ -115,7 +117,8 @@ class create:
 # 收藏帖子
 class fav:
     
-    crumb = Crumb()
+    def __init__(self):
+        self.crumb = Crumb()
     
     def GET(self, post_id):
         post = post_model().get_one({'id':post_id})

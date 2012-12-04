@@ -7,36 +7,37 @@ from models.site_model import *
 from config.config import *
 
 class user_model(model):
-    login_form = web.form.Form(
-        web.form.Textbox('name', notnull, size=30, description="用户名", class_='sl'),
-        web.form.Password('password', notnull, size=30, description="密码", class_='sl'),
-        web.form.Button('登录', class_='super normal button')
-    )
     
-    signup_form = web.form.Form(
-        web.form.Textbox('name', web.form.regexp('^[a-z0-9]+$', ' 请使用小写和数字的组合'), vname, size=30, description="用户名", class_='sl', post='<div class="sep5"></div><span class="fade">请使用半角的 a-z 和数字 0-9 的组合，长度至少为3个字符</span>'),
-        web.form.Textbox('email', vemail, size=30, description="邮箱", class_='sl', post='<div class="sep5"></div><span class="fade">请使用真实电子邮箱注册，我们不会将你的邮箱地址分享给任何人</span>'),
-        web.form.Password('password', vpass, size=30, description="密码", class_='sl'),
-        web.form.Button('注册', class_='super normal button')
-    )
-    
-    setting_form = web.form.Form(
-         web.form.Textbox('name', size=30, description="用户名", class_='sl', disabled='disabled'),
-         web.form.Textbox('email', vemail, size=30, description="邮箱", class_='sl'),
-         web.form.Textbox('signature', web.form.regexp(r".{0,100}$", ' 请不要超过100个字符'), size=30, description="签名", class_='sl'),
-         web.form.Textbox('outsite_link', web.form.regexp(r".{0,200}$", ' 请不要超过200个字符'), size=30, description="主页", class_='sl'),
-         web.form.Button('保存设置', class_='super normal button')
-     )
-    
-    pass_form = web.form.Form(
-        web.form.Password('origin_password', notnull, size=30, description="原密码", class_='sl'),
-        web.form.Password('new_password', vpass, size=30, description="新密码", class_='sl'),
-        web.form.Password('check_password', vpass, size=30, description="确认密码", class_='sl'),
-        web.form.Button('修改密码', class_='super normal button'),
-        validators = [web.form.Validator(" 新密码不一致", lambda i: i.new_password == i.check_password)]
-    )
     def __init__(self):
         super(user_model, self).__init__('user')
+        self.login_form = web.form.Form(
+            web.form.Textbox('name', notnull, size=30, description="用户名", class_='sl'),
+            web.form.Password('password', notnull, size=30, description="密码", class_='sl'),
+            web.form.Button('登录', class_='super normal button')
+        )
+        
+        self.signup_form = web.form.Form(
+            web.form.Textbox('name', web.form.regexp('^[a-z0-9]+$', ' 请使用小写和数字的组合'), vname, size=30, description="用户名", class_='sl', post='<div class="sep5"></div><span class="fade">请使用半角的 a-z 和数字 0-9 的组合，长度至少为3个字符</span>'),
+            web.form.Textbox('email', vemail, size=30, description="邮箱", class_='sl', post='<div class="sep5"></div><span class="fade">请使用真实电子邮箱注册，我们不会将你的邮箱地址分享给任何人</span>'),
+            web.form.Password('password', vpass, size=30, description="密码", class_='sl'),
+            web.form.Button('注册', class_='super normal button')
+        )
+        
+        self.setting_form = web.form.Form(
+             web.form.Textbox('name', size=30, description="用户名", class_='sl', disabled='disabled'),
+             web.form.Textbox('email', vemail, size=30, description="邮箱", class_='sl'),
+             web.form.Textbox('signature', web.form.regexp(r".{0,100}$", ' 请不要超过100个字符'), size=30, description="签名", class_='sl'),
+             web.form.Textbox('outsite_link', web.form.regexp(r".{0,200}$", ' 请不要超过200个字符'), size=30, description="主页", class_='sl'),
+             web.form.Button('保存设置', class_='super normal button')
+         )
+        
+        self.pass_form = web.form.Form(
+            web.form.Password('origin_password', notnull, size=30, description="原密码", class_='sl'),
+            web.form.Password('new_password', vpass, size=30, description="新密码", class_='sl'),
+            web.form.Password('check_password', vpass, size=30, description="确认密码", class_='sl'),
+            web.form.Button('修改密码', class_='super normal button'),
+            validators = [web.form.Validator(" 新密码不一致", lambda i: i.new_password == i.check_password)]
+        )
     
     def update_session(self, user_id):
         user = self.get_one({'id':user_id})

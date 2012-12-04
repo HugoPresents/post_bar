@@ -15,7 +15,8 @@ from libraries.helper import *
 
 class create:
     
-    form = comment_model().form
+    def __init__(self):
+        self.form = comment_model().form
     
     def GET(self, post_id):
         raise web.SeeOther('/post/' + post_id)

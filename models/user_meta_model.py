@@ -4,6 +4,7 @@ from models.model import *
 from config.config import *
 
 class user_meta_model(model):
+    
     def __init__(self):
         super(user_meta_model, self).__init__('user_meta')
     

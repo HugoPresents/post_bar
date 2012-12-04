@@ -21,14 +21,13 @@ from libraries.pagination import *
 
 class login:
     
-    form = user_model().login_form
-    crumb = Crumb()
-    
     def __init__(self):
         if session.user_id:
             raise web.SeeOther('/')
         self.title = '登录'
+        self.crumb = Crumb()
         self.crumb.append('登录')
+        self.form = user_model().login_form
 
     def GET(self):
         return render.login(self.form, self.title, self.crumb.output())
@@ -57,10 +56,11 @@ class login:
             raise web.SeeOther('/')
 
 class signup:
-    
-    form = user_model().signup_form
-    crumb = Crumb()
-    crumb.append('注册')
+
+    def __init__(self):
+        self.form = user_model().signup_form
+        self.crumb = Crumb()
+        self.crumb.append('注册')
     
     def GET(self):
         title = '注册'
@@ -97,14 +97,13 @@ class logout:
 
 # 设置
 class settings:
-    
-    setting_form = user_model().setting_form
-    pass_form = user_model().pass_form
-    crumb = Crumb()
 
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/settings')
+        self.setting_form = user_model().setting_form
+        self.pass_form = user_model().pass_form
+        self.crumb = Crumb()
     
     def GET(self):
         self.crumb.append('设置')
@@ -126,16 +125,16 @@ class settings:
             return render.settings('设置', user, self.setting_form, self.pass_form, self.crumb.output())
         else:
             user_model().update({'id':user.id}, {'email':self.setting_form.d.email, 'signature':self.setting_form.d.signature, 'outsite_link':self.setting_form.d.outsite_link.replace('http://', '').replace('https://', '')})
-            self.crumb.clear()
+            
             raise web.SeeOther('/settings')
 
 class password:
-    form = user_model().pass_form
-    crumb = Crumb()
-    
+
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/settings/password')
+        self.form = user_model().pass_form
+        self.crumb = Crumb()
     def GET(self):
         self.crumb.append('设置', '/settings')
         self.crumb.append('修改密码')
@@ -201,11 +200,10 @@ class profile:
 
 class avatar:
     
-    crumb = Crumb()
-    
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/settings/avatar')
+        self.crumb = Crumb()
         self.user = user_model().get_one({'id':session.user_id})
     
     def GET(self):
@@ -254,11 +252,11 @@ class avatar:
 
 # 收藏的主题
 class post_favs():
-    crumb = Crumb()
-    
+
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/my/posts')
+        self.crumb = Crumb()
     
     def GET(self):
         limit = 10
@@ -289,12 +287,11 @@ class post_favs():
 
 # 来自收藏节点的主题
 class node_favs:
-    
-    crumb = Crumb()
-    
+
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/my/nodes')
+        self.crumb = Crumb()
     
     def GET(self):
         limit = 10
@@ -426,11 +423,10 @@ class unfollow:
 # 来自关注用户的帖子
 class following:
     
-    crumb = Crumb()
-    
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/user/nodes')
+        self.crumb = Crumb()
     
     def GET(self):
         limit = 10
@@ -468,11 +464,10 @@ class following:
 
 class balance:
     
-    crumb = Crumb()
-    
     def __init__(self):
         if session.user_id is None:
             raise web.SeeOther('/login?next=/balance')
+        self.crumb = Crumb()
         
     def GET(self):
         limit = 20

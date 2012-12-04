@@ -13,7 +13,8 @@ from libraries.pagination import Pagination
 # 显示某节点的文章
 class index:
     
-    crumb = Crumb()
+    def __init__(self):
+        self.crumb = Crumb()
     
     def GET(self, node_name):
         limit = 10
@@ -47,7 +48,8 @@ class index:
 
 class fav:
     
-    crumb = Crumb()
+    def __init__(self):
+        self.crumb = Crumb()
     
     def GET(self, node_name):
         node = node_model().get_one({'name': node_name})
@@ -63,7 +65,8 @@ class fav:
 
 class unfav:
     
-    crumb = Crumb()
+    def __init__(self):
+        self.crumb = Crumb()
     
     def GET(self, node_name):
         node = node_model().get_one({'name': node_name})

@@ -5,21 +5,20 @@ from config.config import *
 
 class node_model(model):
 
-    create_form = web.form.Form(
-        web.form.Textbox('name', notnull, size=45, description="节点名，用于url，english please", class_='sl'),
-        web.form.Textbox('display_name', notnull, size=45, description="显示名", class_='sl'),
-        web.form.Textarea('description', notnull, class_='mle tall', description='分类描述'),
-        web.form.Button('创建', class_='super normal button')
-    )
-    modify_form = web.form.Form(
-        web.form.Textbox('name', size=45, description="node name", class_='sl', disabled="disabled"),
-        web.form.Textbox('display_name', notnull, size=45, description="display name", class_='sl'),
-        web.form.Textarea('description', notnull, class_='mle tall', description='分类描述'),
-        web.form.Button('修改', class_='super normal button')
-    )
-
     def __init__(self):
         super(node_model, self).__init__('node')
+        self.create_form = web.form.Form(
+            web.form.Textbox('name', notnull, size=45, description="节点名，用于url，english please", class_='sl'),
+            web.form.Textbox('display_name', notnull, size=45, description="显示名", class_='sl'),
+            web.form.Textarea('description', notnull, class_='mle tall', description='分类描述'),
+            web.form.Button('创建', class_='super normal button')
+        )
+        self.modify_form = web.form.Form(
+            web.form.Textbox('name', size=45, description="node name", class_='sl', disabled="disabled"),
+            web.form.Textbox('display_name', notnull, size=45, description="display name", class_='sl'),
+            web.form.Textarea('description', notnull, class_='mle tall', description='分类描述'),
+            web.form.Button('修改', class_='super normal button')
+        )
     
     def set_icon(self, filename, node_id):
         import Image

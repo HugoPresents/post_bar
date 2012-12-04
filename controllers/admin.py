@@ -12,16 +12,15 @@ from models.site_model import *
 from libraries.crumb import Crumb
 
 class admin:
-    crumb = Crumb()
     def __init__(self):
         if session.user_id != 1:
             raise web.SeeOther('/')
+        self.crumb = Crumb()
         self.crumb.append('后台', '/admin')
 
 class index(admin):
     
     def GET(self):
-        
         cat_result = cat_model().get_all()
         cats = []
         for cat in cat_result:
@@ -31,12 +30,14 @@ class index(admin):
 
 class site(admin):
 
-    form = site_model.form
-    site = site_model().get_options()
-    form.title.set_value(site['title'])
-    form.description.set_value(site['description'])
-    form.site_url.set_value(site['site_url'])
-    form.cookie_expires.set_value(site['cookie_expires'])
+    def __init__(self):
+        super(site, self).__init__()
+        self.form = site_model().form
+        self.site = site_model().get_options()
+        self.form.title.set_value(self.site['title'])
+        self.form.description.set_value(self.site['description'])
+        self.form.site_url.set_value(self.site['site_url'])
+        self.form.cookie_expires.set_value(self.site['cookie_expires'])
 
     def GET(self):
         self.crumb.append('站点设置')
@@ -49,7 +50,7 @@ class site(admin):
             site_model().update({'key':'site_url'}, {'value':self.form.d.site_url})
             site_model().update({'key':'cookie_expires'}, {'value':self.form.d.cookie_expires})
             # 不知道这里为什么还要clear一次才能保证crumb的干净
-            self.crumb.clear()
+            
             raise web.SeeOther('/admin/site')
         else:
             self.crumb.append('站点设置')
@@ -58,7 +59,9 @@ class site(admin):
 
 class cat(admin):
 
-    form = cat_model().modify_form
+    def __init__(self):
+        super(cat, self).__init__()
+        self.form = cat_model().modify_form
 
     def GET(self, cat_name):
         cat = cat_model().get_one({'name':cat_name})
@@ -81,17 +84,20 @@ class cat(admin):
         else:
             if self.form.validates():
                 cat_model().update({'name':cat.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
-                self.crumb.clear()
+                
                 web.SeeOther('/admin/cat/'+cat.name)
             else:
                 self.form.name.set_value(cat.name)
                 self.form.display_name.set_value(cat.display_name)
                 self.form.description.set_value(cat.description)
-                self.crumb.clear()
+                
                 web.SeeOther('/admin/cat/'+cat.name)
 
 class create_cat(admin):
-    form = cat_model.create_form
+
+    def __init__(self):
+        super(create_cat, self).__init__()
+        self.form = cat_model().create_form
 
     def GET(self):
         self.crumb.append('添加新分类')
@@ -104,13 +110,16 @@ class create_cat(admin):
                     cat_model().update({'name':self.form.d.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
                 except:
                     cat_model().delete({'name':self.form.d.name})
-                self.crumb.clear()
+                
                 web.SeeOther('/admin/cat/'+self.form.d.name)
             else:
                 return admin_render.create_cat('分类名已存在', self.crumb.output(), self.form)
 
 class node(admin):
-    form = node_model.modify_form
+
+    def __init__(self):
+        super(node, self).__init__()
+        self.form = node_model().modify_form
 
     def GET(self, node_name):
         node = node_model().get_one({'name':node_name})
@@ -190,11 +199,14 @@ class set_node_icon(admin):
         if error:
             return admin_render.set_node_icon('设置节点图标', self.crumb.output(), node, message)
         else:
-            self.crumb.clear()
+            
             raise web.SeeOther('/admin/node/icon/'+node.name)
 
 class create_node(admin):
-    form = node_model.create_form
+    
+    def __init__(self):
+        super(create_node, self).__init__()
+        self.form = node_model().create_form
 
     def GET(self, cat_name):
         cat = cat_model().get_one({'name':cat_name})
@@ -217,7 +229,9 @@ class create_node(admin):
                     node_model().update({'name':self.form.d.name}, {'category_id':cat.id, 'display_name':self.form.d.display_name, 'description':self.form.d.description})                
                 except:
                     node_model().delete({'name':self.form.d.name})
-                self.crumb.clear()
+                
                 web.SeeOther('/admin/node/'+self.form.d.name)
             else:
                 return admin_render.create_cat('节点名已存在', self.crumb.output(), self.form)
+        else:
+            return admin_render.create_node('添加新节点', self.crumb.output(), cat, self.form)
