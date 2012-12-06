@@ -100,7 +100,7 @@ class create:
         if session.money < cost:
             self.crumb.append('财富不够')
             return render.no_money('财富不够', '你的财富值不够，不能创建改主题 :(', self.crumb.output())
-        title = html2db(self.form.d.title)
+        title = strip_tags(self.form.d.title)
         content = html2db(self.form.d.content)
         content, receiver_list = notify_model().convert_content(content)
         create_time = time.time()

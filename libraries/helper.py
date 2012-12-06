@@ -136,3 +136,14 @@ def list_diff(list_1, list_2):
         if item not in list_2:
             list_.append(item)
     return list_
+
+def strip_tags(html):
+    from HTMLParser import HTMLParser
+    html=html.strip()
+    html=html.strip("\n")
+    result=[]
+    parse=HTMLParser()
+    parse.handle_data=result.append
+    parse.feed(html)
+    parse.close()
+    return "".join(result)
