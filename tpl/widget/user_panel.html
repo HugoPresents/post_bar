@@ -57,13 +57,14 @@ $if session.user_id:
             </a>
         </div>
         <span id="notifications">
-            <a href="/notifications" class="fade">0 条未读提醒</a>
+            $if session.notifications > 0:
+                <img src="/static/img/dot_orange.png" align="absmiddle"><strong><a href="/notifications">$session.notifications 条未读提醒</a></strong>
+            $else:
+                <a href="/notifications" class="fade">0 条未读提醒</a>
+
         </span>
     </div>
     </div>
-    <script type="text/javascript">
-        check_notify()
-    </script>
 $else:
     <div class="box">
         <div class="cell">

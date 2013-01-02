@@ -1,6 +1,6 @@
 #  coding: utf8 
 __metaclass__ = type
-
+import web
 import re
 from models.model import *
 from models.user_model import *
@@ -38,3 +38,10 @@ class notify_model(model):
 
     def mark_as_read(self, receiver):
         return self.update({'receiver':receiver}, {'unread':0})
+
+    def check(self, handler):
+        if web.config._session.user_id is None:
+            web.config._session.notifications = 0
+        else:
+            web.config._session.notifications = self.count_table({'receiver':web.config._session.user_id, 'unread':'1'})
+        return handler()

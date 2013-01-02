@@ -10,6 +10,7 @@ from libraries import helper
 from libraries import widget
 from models.site_model import *
 from models.user_model import *
+from models.notify_model import *
 
 #web.template.Template.globals['render'] = render
 #web.template.Template.globals['admin_render'] = admin_render
@@ -28,6 +29,7 @@ else:
 
 #user_model.auth_cookie()
 app.add_processor(user_model().auth_cookie)
+app.add_processor(notify_model().check)
 
 # 如果这里不 不将 session 赋值给模板全局变量， 模板中将不能得到此变量
 web.template.Template.globals['session'] = session
