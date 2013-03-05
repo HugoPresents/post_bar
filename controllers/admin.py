@@ -185,7 +185,7 @@ class set_node_icon(admin):
                     os.makedirs('static/icons/tmp')
                 except:
                     pass
-                filename = str(session.user_id) +'.'+ext
+                filename = str(node.id) +'.'+ext
                 if os.path.exists(filedir+filename):
                     os.remove(filedir+filename)
                 fout = open(filedir + filename, 'wb')
