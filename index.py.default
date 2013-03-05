@@ -44,3 +44,4 @@ web.template.Template.globals['session'] = session
 application = app.wsgifunc()
 #if __name__ == "__main__":
 #    app.run()
+# 我擦，肿么出现合并死循环了！
