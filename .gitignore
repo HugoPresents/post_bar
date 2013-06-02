@@ -30,3 +30,4 @@ pip-log.txt
 .settings
 sessions
 index.py
+.DS_store

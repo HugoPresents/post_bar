@@ -17,6 +17,7 @@ from libraries import widget
 from libraries import helper
 from models.site_model import *
 from models.user_model import *
+from models.notify_model import *
 
 #web.template.Template.globals['render'] = render
 #web.template.Template.globals['site_title'] = site_title
@@ -35,6 +36,7 @@ else:
     session = web.config._session
 
 app.add_processor(user_model().auth_cookie)
+app.add_processor(notify_model().check)
     
 # 如果这里不 不将 session 赋值给模板全局变量， 模板中将不能得到此变量
 web.template.Template.globals['session'] = session
@@ -42,3 +44,4 @@ web.template.Template.globals['session'] = session
 application = app.wsgifunc()
 #if __name__ == "__main__":
 #    app.run()
+# 我擦，肿么出现合并死循环了！
