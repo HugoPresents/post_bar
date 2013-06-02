@@ -10,11 +10,11 @@ urls = (
     # 浏览主题
     '/post/(\d+)', pre_fix + 'post.view',
     # 创建主题
-    '/create/(\w+)', pre_fix + 'post.create',
+    '/create/([a-z\-]*)', pre_fix + 'post.create',
     # 感谢主题
     '/post/thanks', pre_fix + 'post.thanks',
     # 节点主题列表
-    '/node/(\w+)', pre_fix + 'node.index',
+    '/node/([a-z\-]*)', pre_fix + 'node.index',
     # 评论主题
     '/comment/(\d+)', pre_fix + 'comment.create',
     # 感谢评论
@@ -58,25 +58,25 @@ urls = (
     # 用户创建的回复
     '/profile/(\w+)/comments', pre_fix + 'user.comments',
     # 收藏节点
-    '/node/fav/(\w+)', pre_fix + 'node.fav',
+    '/node/fav/([a-z\-]*)', pre_fix + 'node.fav',
     # 收藏节点的主题
     '/my/nodes', pre_fix + 'user.node_favs',
     # 取消收藏节点
-    '/node/unfav/(\w+)', pre_fix + 'node.unfav',
+    '/node/unfav/([a-z\-]*)', pre_fix + 'node.unfav',
     # 后台管理
     '/admin', pre_fix + 'admin.index',
     # 站点设置
     '/admin/site', pre_fix + 'admin.site',
     # 分类编辑
-    '/admin/cat/(\w+)', pre_fix + 'admin.cat',
+    '/admin/cat/([a-z\-]*)', pre_fix + 'admin.cat',
     # 添加分类
     '/admin/create_cat', pre_fix + 'admin.create_cat',
     # 添加节点
-    '/admin/create_node/(\w+)', pre_fix + 'admin.create_node',
+    '/admin/create_node/([a-z\-]*)', pre_fix + 'admin.create_node',
     # 编辑节点
-    '/admin/node/(\w+)', pre_fix + 'admin.node',
+    '/admin/node/([a-z\-]*)', pre_fix + 'admin.node',
     # 设置节点图标
-    '/admin/node/icon/(\w+)', pre_fix + 'admin.set_node_icon',
+    '/admin/node/icon/([a-z\-]*)', pre_fix + 'admin.set_node_icon',
     # 其他
     '/.*', pre_fix + 'index.index'
 )
