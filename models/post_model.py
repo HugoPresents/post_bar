@@ -33,12 +33,17 @@ class post_model(model):
                    p.comments,
                    u.id   AS post_user_id,
                    u.name AS post_user_name,
+                   u.avatar AS post_user_avatar,
                    c.time,
                    c.content,
-                   cu.name
+                   cu.name AS comment_user_name,
+                   n.name AS node_name,
+                   n.display_name AS node_display_name
             FROM   post p
                    JOIN user u
                      ON p.`user_id` = u.id
+                   JOIN node n
+                     ON n.id = p.node_id
                    LEFT JOIN comment c
                           ON c.post_id = p.id
                    LEFT JOIN comment c1

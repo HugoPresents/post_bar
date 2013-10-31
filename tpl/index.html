@@ -8,17 +8,13 @@ $var widgets = ['user_panel_widget', 'hot_posts_today_widget', 'site_statics_wid
     <div class="cell" id="Tabs">
         <a href="/" class="tab_current">全部</a>
     </div>
-$for post_cur in posts:
-    $ post = post_cur['post']
-    $ user = post_cur['user']
-    $ node = post_cur['node']
-    $ comment_user = post_cur['comment_user']
+$for post in posts:
     <div class="cell item">
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <tbody>
                 <tr>
-                    <td width="48" valign="top" align="center"><a href="/profile/$user.name">
-                            <img src="$helper.avatar_url(user.avatar)" class="avatar">
+                    <td width="48" valign="top" align="center"><a href="/profile/$post.post_user_name">
+                            <img src="$helper.avatar_url(post.post_user_avatar)" class="avatar" alt="$post.post_user_name" title="$post.post_user_name">
                         </a>
                     </td>
                     <td width="10">
@@ -26,9 +22,9 @@ $for post_cur in posts:
                     <td width="auto" valign="middle"><span class="item_title"><a href="/post/$post.id">$:post.title</a></span>
                     <div class="sep5">
                     </div>
-                    <span class="small fade"><a class="node" href="/node/$node.name">$node.display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$user.name">$user.name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.last_update)
-                    $if comment_user is not None:
-                         &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$comment_user.name">$comment_user.name</a></strong>
+                    <span class="small fade"><a class="node" href="/node/$post.node_name">$post.node_display_name</a> &nbsp;•&nbsp; <strong><a href="/profile/$post.post_user_name">$post.post_user_name</a></strong>&nbsp;•&nbsp; $helper.stamp2during(post.last_update)
+                    $if post.comment_user_name:
+                         &nbsp;•&nbsp; 最后回复来自 <strong><a href="/profile/$post.comment_user_name">$post.comment_user_name</a></strong>
                     </span>
                     </td>
                     $if post.comments > 0:

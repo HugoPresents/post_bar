@@ -15,24 +15,8 @@ class index:
         title = '首页'
         #sql = 'SELECT post_id FROM comment GROUP BY post_id ORDER BY MAX(time) DESC LIMIT 20'
         #post_ids = post_model().query_result(sql)
-        test_value = post_model().trends()
-        raise 0
-        post_results = post_model().get_all(order='last_update DESC', limit=20)
-        posts = []
-        for post_result in post_results:
-            #post_result = post_model().get_one({'id':row.post_id})
-            post = {'post':post_result}
-            user = user_model().get_one({'id':post_result.user_id})
-            post['user'] = user
-            node = node_model().get_one({'id':post_result.node_id})
-            post['node'] = node
-            comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
-            if comment:
-                comment_user = user_model().get_one({'id':comment.user_id})
-                post['comment_user'] = comment_user
-            else:
-                post['comment_user'] = None
-            posts.append(post)
+        posts = post_model().trends()
+
         cats_result = cat_model().get_all()
         cats = []
         for cat_result in cats_result:
