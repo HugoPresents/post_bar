@@ -8,6 +8,7 @@ class model:
     _tb = None
     def __init__(self, tb = None):
         self._tb = tb
+        self.db = db
     
     def get_one(self, conditions = None, what = '*', order = None):
         where = dict2where(conditions)

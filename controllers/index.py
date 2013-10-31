@@ -12,9 +12,11 @@ from libraries.pagination import *
 
 class index:
     def GET(self):
-    	title = '首页'
+        title = '首页'
         #sql = 'SELECT post_id FROM comment GROUP BY post_id ORDER BY MAX(time) DESC LIMIT 20'
         #post_ids = post_model().query_result(sql)
+        test_value = post_model().trends()
+        raise 0
         post_results = post_model().get_all(order='last_update DESC', limit=20)
         posts = []
         for post_result in post_results:
