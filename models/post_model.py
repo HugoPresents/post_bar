@@ -25,7 +25,7 @@ class post_model(model):
     def count_thanks(self, post_id):
         super(post_model, self).query('update ' + self._tb + ' set thanks = (select count(*) from ' + post_thanks_model().table_name() + ' where ' + post_thanks_model().table_name() + '.post_id = ' + str(post_id) + ') where id = ' + str(post_id))
 
-    def trends(self, limit = 20, node_id = None):
+    def trends(self, limit = 20, offset = 0, node_id = None):
         sql = '''
             SELECT p.id,
                    p.title,
@@ -60,6 +60,6 @@ class post_model(model):
         sql += '''
             GROUP  BY p.id
             ORDER  BY p.last_update DESC
-            LIMIT  $limit
+            LIMIT  $offset, $limit
         '''
-        return self.db.query(sql, vars = {'limit': limit, 'node_id': node_id})
+        return self.db.query(sql, vars = {'limit': limit, 'offset':offset, 'node_id': node_id})
