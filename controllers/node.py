@@ -31,19 +31,7 @@ class index:
             total_rows = post_model().count_table({'node_id':node.id})
             pagination = Pagination('/node/'+node_name, total_rows, limit = limit)
             page = pagination.true_page(web.input(p=1)['p'])
-            posts_result = post_model().get_all({'node_id' : node.id}, limit = limit, offset = (page-1)*limit , order = 'time DESC')
-            posts = []
-            for post_result in posts_result:
-                post = {'post':post_result}
-                user = user_model().get_one({'id':post_result.user_id})
-                post['user'] = user
-                comment = comment_model().get_one({'post_id':post_result.id}, order='time DESC')
-                if comment:
-                    comment_user = user_model().get_one({'id':comment.user_id})
-                    post['comment_user'] = comment_user
-                else:
-                    post['comment_user'] = None
-                posts.append(post)
+            posts = post_model().trends(node_id=node.id)
             return render.node_posts(posts, node, total_rows, node_fav, self.crumb.output(), pagination.output())
 
 class fav:

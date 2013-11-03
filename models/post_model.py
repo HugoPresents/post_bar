@@ -26,37 +26,41 @@ class post_model(model):
         super(post_model, self).query('update ' + self._tb + ' set thanks = (select count(*) from ' + post_thanks_model().table_name() + ' where ' + post_thanks_model().table_name() + '.post_id = ' + str(post_id) + ') where id = ' + str(post_id))
 
     def trends(self, limit = 20, offset = 0, node_id = None):
-        sql = '''
-            SELECT p.id,
-                   p.title,
-                   p.last_update,
-                   p.comments,
-                   u.id   AS post_user_id,
-                   u.name AS post_user_name,
-                   u.avatar AS post_user_avatar,
-                   c.time,
-                   c.content,
-                   cu.name AS comment_user_name,
-                   n.name AS node_name,
-                   n.display_name AS node_display_name
-            FROM   post p
-                   JOIN user u
-                     ON p.`user_id` = u.id
-                   JOIN node n
-                     ON n.id = p.node_id
-                   LEFT JOIN comment c
-                          ON c.post_id = p.id
-                   LEFT JOIN comment c1
-                          ON c1.post_id = c.post_id
-                             AND c1.`time` > c.time
-                   LEFT JOIN user cu
-                          ON cu.id = c.user_id
-            WHERE  c1.time IS NULL
-        '''
+        select = [
+            'p.id',
+            'p.title',
+            'p.last_update',
+            'p.comments',
+            'u.id AS post_user_id',
+            'u.name AS post_user_name',
+            'u.avatar AS post_user_avatar',
+            'c.time',
+            'c.content',
+            'cu.name AS comment_user_name'
+        ]
+
+        from_ = [
+            'post p',
+            'JOIN user u ON p.user_id = u.id',
+            'LEFT JOIN comment c ON c.post_id = p.id',
+            'LEFT JOIN comment c1 ON c1.post_id = c.post_id AND c1.`time` > c.`time`'
+            'LEFT JOIN user cu ON cu.id = c.user_id'
+        ]
+
+        where = [
+            'c1.time IS NULL'
+        ]
+
         if node_id is not None:
-            sql += '''
-                AND p.node_id = $node_id
-            '''
+            where.append('p.node_id = $node_id')
+        else:
+            select.append('n.name AS node_name')
+            select.append('n.display_name AS node_display_name')
+            from_.append('JOIN node n ON n.id = p.node_id')
+        sql = 'SELECT '
+        sql += ', '.join(select)
+        sql += ' FROM '
+        sql += '\n'.join(from_)
         sql += '''
             GROUP  BY p.id
             ORDER  BY p.last_update DESC
