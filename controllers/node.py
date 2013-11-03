@@ -31,7 +31,7 @@ class index:
             total_rows = post_model().count_table({'node_id':node.id})
             pagination = Pagination('/node/'+node_name, total_rows, limit = limit)
             page = pagination.true_page(web.input(p=1)['p'])
-            posts = post_model().trends(node_id=node.id)
+            posts = post_model().trends(limit, (page-1) * limit, node.id)
             return render.node_posts(posts, node, total_rows, node_fav, self.crumb.output(), pagination.output())
 
 class fav:

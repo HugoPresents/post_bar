@@ -61,6 +61,8 @@ class post_model(model):
         sql += ', '.join(select)
         sql += ' FROM '
         sql += '\n'.join(from_)
+        sql += '\n WHERE '
+        sql += ' AND '.join(where)
         sql += '''
             GROUP  BY p.id
             ORDER  BY p.last_update DESC
